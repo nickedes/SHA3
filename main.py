@@ -87,7 +87,7 @@ def pi(A, w):
     return A_
 
 
-def chi(A):
+def chi(A, w):
     """
     Chi step mapping - XOR each bit with Non linear operation of two other bits in the same row
     """
@@ -147,9 +147,18 @@ def keccak_p(S, nr):
     l = int(log2(w))
     A = getState(S, w)
     for i in range(12+2*l - nr, 12 + 2*l):
-        A = round(A, i)
+        A = round(A, i, w)
     S = getString(A, w)
     return S
+
+
+def keccak_f(S):
+    """
+    """
+    b = len(S)
+    w = b//25
+    l = int(log2(w))
+    return keccak_p(S, 12 + 2*l)
 
 
 def trunc(S, r):
