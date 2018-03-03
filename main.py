@@ -4,7 +4,7 @@ from math import log2
 def getState(S, w):
     """
     S is the string of b bits.
-    S denotes state for keccak permutation.
+    S denotes state for keccak_p permutation.
     This function returns the corresponding state array.
     """
     A = []
@@ -113,7 +113,7 @@ def rc(t):
         R[4] = R[4] ^ R[8]
         R[5] = R[5] ^ R[8]
         R[6] = R[6] ^ R[8]
-        R = R[:8]
+        R = trunc(R, 8)
     return R[0]
 
 
@@ -140,7 +140,7 @@ def round(A, i):
     return iota(chi(pi(theta(A, w), w), w), i, w)
 
 
-def keccak(S, nr):
+def keccak_p(S, nr):
     """
     """
     w = len(S)//25
@@ -150,6 +150,41 @@ def keccak(S, nr):
         A = round(A, i)
     S = getString(A, w)
     return S
+
+
+def trunc(S, r):
+    """
+    """
+    return S[:r]
+
+
+def pad(x, m):
+    """
+    """
+    j = (- m - 2) % x
+    return '1'+'0'*j+'1'
+
+
+def sponge(N, r, d):
+    """
+    Input : String N
+    Output size of d bits
+    """
+    P = N + pad(r, len(N))
+    n = len(P)//r
+    b, nr = 1600, 24
+    c = b - r
+    S = '0'*b
+    for i in range(n):
+        S_ = "{:0"+str(len(S))+"b}".format(int(S, 2) ^
+                                           int(P[i*r:(i+1)*r] + '0'*c, 2))
+        S = keccak_p(S_, nr)
+    Z = ''
+    while True:
+        Z = Z + trunc(S, r)
+        if d <= len(Z):
+            return trunc(Z, d)
+        S = keccak_p(S)
 
 
 w = 64
