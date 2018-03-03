@@ -185,25 +185,56 @@ def sponge(N, r, d):
     c = b - r
     S = '0'*b
     for i in range(n):
-        S_ = "{:0"+str(len(S))+"b}".format(int(S, 2) ^
-                                           int(P[i*r:(i+1)*r] + '0'*c, 2))
-        S = keccak_p(S_, nr)
+        format_spec = "{:0"+str(len(S))+"b}"
+        S_ = format_spec.format(int(S, 2) ^
+                                int(P[i*r:(i+1)*r] + '0'*c, 2))
+        S = keccak_f(S_)
     Z = ''
     while True:
         Z = Z + trunc(S, r)
         if d <= len(Z):
             return trunc(Z, d)
-        S = keccak_p(S)
+        S = keccak_f(S)
 
 
-w = 64
+def Keccak_c(c, N, d):
+    """
+    """
+    return sponge(N, 1600-c, d)
 
-b = 25*w
 
-# S = ""
-S = []
-for x in range(b):
-    # S += str(x % 2)
-    S += [x]
-A = getState(S, w)
-print(getString(A, w))
+def SHA3_d(M, d):
+    """
+    Generic method for four SHA-3 hash functions
+    d : digest length
+    """
+    return Keccak_c(2*d, M+"01", d)
+
+
+def RawSHAKEc(c, J, d):
+    """
+    """
+    return Keccak_c(2*c, J+"11", d)
+
+
+def SHAKEc(c, M, d):
+    """
+    """
+    return RawSHAKEc(c, M+"11", d)
+
+
+# w = 64
+
+# b = 25*w
+
+# # S = ""
+# S = []
+# for x in range(b):
+#     # S += str(x % 2)
+#     S += [x]
+# A = getState(S, w)
+# print(getString(A, w))
+
+l = SHA3_d("", 224)
+print(l)
+# print(hex(int(l, 2)))
