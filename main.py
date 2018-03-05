@@ -181,7 +181,7 @@ def sponge(N, r, d):
     """
     P = N + pad(r, len(N))
     n = len(P)//r
-    b, nr = 1600, 24
+    b = 1600
     c = b - r
     S = '0'*b
     for i in range(n):
@@ -235,6 +235,10 @@ def SHAKEc(c, M, d):
 # A = getState(S, w)
 # print(getString(A, w))
 
-l = SHA3_d("", 224)
+d = 224
+l = SHA3_d("", d)
+
 print(l)
-# print(hex(int(l, 2)))
+r = 1600 - 2*d
+
+print()
