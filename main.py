@@ -150,6 +150,38 @@ def iota(A, i, w):
 
     for z in range(w):
         A_[0][0][z] = A_[0][0][z] ^ RC[z]
+
+    print("After iota")
+    printformat(getString(A_, w))
+    # input()
+    return A_
+
+
+def iota_(A, i, w):
+    """
+    Iota step mapping - modify some bits of (0, 0) Lane based on round constant
+    """
+    A_ = [[[A[x][y][z] for z in range(w)] for y in range(5)] for x in range(5)]
+
+    RCi = {
+        0: "0000000000000001", 12: "000000008000808B", 1: "0000000000008082", 13: "800000000000008B",
+        2: "800000000000808A", 14: "8000000000008089", 3: "8000000080008000", 15: "8000000000008003",
+        4: "000000000000808B", 16: "8000000000008002", 5: "0000000080000001", 17: "8000000000000080",
+        6: "8000000080008081", 18: "000000000000800A", 7: "8000000000008009", 19: "800000008000000A",
+        8: "000000000000008A", 20: "8000000080008081", 9: "0000000000000088", 21: "8000000000008080",
+        10: "0000000080008009", 22: "0000000080000001", 11: "000000008000000A", 23: "8000000080008008"
+    }
+
+    # 64 bit repr for rc
+    RC_bin = "{:064b}".format(int(RCi[i], 16))
+    RC = [int(x) for x in RC_bin][::-1]
+    print("RC:", RC, i)
+    for z in range(w):
+        A_[0][0][z] = A_[0][0][z] ^ RC[z]
+
+    print("After iota")
+    printformat(getString(A_, w))
+    # input()
     return A_
 
 
@@ -158,7 +190,7 @@ def round(A, i, w):
     A - state
     i - round index
     """
-    return iota(chi(pi(rho(theta(A, w), w), w), w), i, w)
+    return iota_(chi(pi(rho(theta(A, w), w), w), w), i, w)
 
 
 def keccak_p(S, nr):
