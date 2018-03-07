@@ -40,9 +40,10 @@ def theta(A, w):
     C = [[0 for z in range(w)] for x in range(5)]
     for x in range(5):
         for z in range(w):
-            C[x][z] = int(A[x][0][z]) ^ int(A[x][1][z]) ^ \
-                int(A[x][2][z]) ^ int(A[x][3][z]) ^ int(A[x][4][z])
+            C[x][z] = A[x][0][z] ^ A[x][1][z] ^ A[x][2][z] ^ A[x][3][z] ^ A[x][4][z]
+
     D = [[0 for z in range(w)] for x in range(5)]
+
     for x in range(5):
         for z in range(w):
             D[x][z] = C[(x-1) % 5][z] ^ C[(x+1) % 5][(z-1) % w]
@@ -52,8 +53,7 @@ def theta(A, w):
     for x in range(5):
         for y in range(5):
             for z in range(w):
-                A_[x][y][z] = str(int(A[x][y][z]) ^ D[x][z])
-
+                A_[x][y][z] = A[x][y][z] ^ D[x][z]
     return A_
 
 
@@ -62,14 +62,19 @@ def rho(A, w):
     rho step mapping - Rotate the bits of each lane by an offset.
     """
     # init for A_ ?
+
     A_ = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
     for z in range(w):
         A_[0][0][z] = A[0][0][z]
     x, y = 1, 0
     for t in range(24):
         for z in range(w):
-            A_[x][y][z] = A[x][y][(z - (t+1)*(t+2)//2) % w]
-        x, y = y, (2*x + 3*y) % w
+            try:
+                A_[x][y][z] = A[x][y][(z - ((t+1)*(t+2))//2) % w]
+            except Exception as e:
+                # print(x, y, (z - ((t+1)*(t+2))//2) % w)
+                raise e
+        x, y = y, (2*x + 3*y) % 5
     return A_
 
 
@@ -78,7 +83,6 @@ def pi(A, w):
     pi step mapping - Rearrange the positions of the lanes
     """
     A_ = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
-
     for x in range(5):
         for y in range(5):
             for z in range(w):
@@ -94,8 +98,8 @@ def chi(A, w):
     for x in range(5):
         for y in range(5):
             for z in range(w):
-                A_[x][y][z] = str(int(A[x][y][z]) ^ (
-                    (int(A[(x+1) % 5][y][z]) ^ 1) & int(A[(x+2) % 5][y][z])))
+                A_[x][y][z] = A[x][y][z] ^ (
+                    (A[(x+1) % 5][y][z] ^ 1) & A[(x+2) % 5][y][z])
     return A_
 
 
@@ -127,7 +131,7 @@ def iota(A, i, w):
         RC[2**j - 1] = rc(j + 7*i)
 
     for z in range(w):
-        A_[0][0][z] = str(int(A_[0][0][z]) ^ RC[z])
+        A_[0][0][z] = A_[0][0][z] ^ RC[z]
     return A_
 
 
@@ -136,7 +140,7 @@ def round(A, i, w):
     A - state
     i - round index
     """
-    return iota(chi(pi(theta(A, w), w), w), i, w)
+    return iota(chi(pi(rho(theta(A, w), w), w), w), i, w)
 
 
 def keccak_p(S, nr):
