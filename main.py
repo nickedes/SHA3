@@ -285,18 +285,6 @@ def SHAKEc(c, M, d):
     return RawSHAKEc(c, M+"11", d)
 
 
-# w = 64
-
-# b = 25*w
-
-# # S = ""
-# S = []
-# for x in range(b):
-#     # S += str(x % 2)
-#     S += [x]
-# A = getState(S, w)
-# print(getString(A, w))
-
 m = "11001"
 # m = ""
 
