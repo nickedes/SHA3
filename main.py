@@ -63,8 +63,8 @@ def theta(A, w):
         for y in range(5):
             for z in range(w):
                 A_[x][y][z] = A[x][y][z] ^ D[x][z]
-    print("After Theta")
-    printformat(getString(A_, w))
+    # print("After Theta")
+    # printformat(getString(A_, w))
     # input()
     return A_
 
@@ -84,8 +84,8 @@ def rho(A, w):
             A_[x][y][z] = A[x][y][(z - ((t+1)*(t+2))//2) % w]
         x, y = y, (2*x + 3*y) % 5
 
-    print("After rho")
-    printformat(getString(A_, w))
+    # print("After rho")
+    # printformat(getString(A_, w))
     # input()
     return A_
 
@@ -99,8 +99,8 @@ def pi(A, w):
         for y in range(5):
             for z in range(w):
                 A_[x][y][z] = A[(x + 3*y) % 5][x][z]
-    print("After pi")
-    printformat(getString(A_, w))
+    # print("After pi")
+    # printformat(getString(A_, w))
     # input()
     return A_
 
@@ -115,8 +115,8 @@ def chi(A, w):
             for z in range(w):
                 A_[x][y][z] = A[x][y][z] ^ (
                     (A[(x+1) % 5][y][z] ^ 1) * A[(x+2) % 5][y][z])
-    print("After chi")
-    printformat(getString(A_, w))
+    # print("After chi")
+    # printformat(getString(A_, w))
     # input()
     return A_
 
@@ -143,25 +143,6 @@ def iota(A, i, w):
     Iota step mapping - modify some bits of (0, 0) Lane based on round constant
     """
     A_ = [[[A[x][y][z] for z in range(w)] for y in range(5)] for x in range(5)]
-    RC = [0]*w
-    l = int(log2(w))
-    for j in range(l+1):
-        RC[2**j - 1] = rc(j + 7*i)
-
-    for z in range(w):
-        A_[0][0][z] = A_[0][0][z] ^ RC[z]
-
-    print("After iota")
-    printformat(getString(A_, w))
-    # input()
-    return A_
-
-
-def iota_(A, i, w):
-    """
-    Iota step mapping - modify some bits of (0, 0) Lane based on round constant
-    """
-    A_ = [[[A[x][y][z] for z in range(w)] for y in range(5)] for x in range(5)]
 
     RCi = {
         0: "0000000000000001", 12: "000000008000808B", 1: "0000000000008082", 13: "800000000000008B",
@@ -175,12 +156,11 @@ def iota_(A, i, w):
     # 64 bit repr for rc
     RC_bin = "{:064b}".format(int(RCi[i], 16))
     RC = [int(x) for x in RC_bin][::-1]
-    print("RC:", RC, i)
     for z in range(w):
         A_[0][0][z] = A_[0][0][z] ^ RC[z]
 
-    print("After iota")
-    printformat(getString(A_, w))
+    # print("After iota")
+    # printformat(getString(A_, w))
     # input()
     return A_
 
@@ -190,7 +170,7 @@ def round(A, i, w):
     A - state
     i - round index
     """
-    return iota_(chi(pi(rho(theta(A, w), w), w), w), i, w)
+    return iota(chi(pi(rho(theta(A, w), w), w), w), i, w)
 
 
 def keccak_p(S, nr):
@@ -232,23 +212,23 @@ def sponge(N, r, d):
     Input : String N
     Output size of d bits
     """
-    print("before absorb:", N)
+    # print("before absorb:", N)
     P = N + pad(r, len(N))
     n = len(P)//r
     b = 1600
     c = b - r
     S = '0'*b
-    print()
-    print("just before absorb:")
-    print(P)
+    # print()
+    # print("just before absorb:")
+    # print(P)
     # printformat(P)
-    print()
+    # print()
     for i in range(n):
         format_spec = "{:0"+str(len(S))+"b}"
         S_ = format_spec.format(int(S, 2) ^
                                 int(P[i*r:(i+1)*r] + '0'*c, 2))
-        print("XORed State:")
-        printformat(S_)
+        # print("XORed State:")
+        # printformat(S_)
         # input()
         S = keccak_f(S_)
     Z = ''
@@ -290,9 +270,7 @@ m = "11001"
 
 d = 224
 l = SHA3_d(m, d)
-
+print("Message : ", m)
 print("Digest:")
 
 printformat(l)
-
-r = 1600 - 2*d
