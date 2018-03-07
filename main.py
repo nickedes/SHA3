@@ -63,6 +63,9 @@ def theta(A, w):
         for y in range(5):
             for z in range(w):
                 A_[x][y][z] = A[x][y][z] ^ D[x][z]
+    print("After Theta")
+    printformat(getString(A_, w))
+    # input()
     return A_
 
 
@@ -72,18 +75,18 @@ def rho(A, w):
     """
     # init for A_ ?
 
-    A_ = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
+    A_ = [[[A[x][y][z] for z in range(w)] for y in range(5)] for x in range(5)]
     for z in range(w):
         A_[0][0][z] = A[0][0][z]
     x, y = 1, 0
     for t in range(24):
         for z in range(w):
-            try:
-                A_[x][y][z] = A[x][y][(z - ((t+1)*(t+2))//2) % w]
-            except Exception as e:
-                # print(x, y, (z - ((t+1)*(t+2))//2) % w)
-                raise e
+            A_[x][y][z] = A[x][y][(z - ((t+1)*(t+2))//2) % w]
         x, y = y, (2*x + 3*y) % 5
+
+    print("After rho")
+    printformat(getString(A_, w))
+    # input()
     return A_
 
 
@@ -96,6 +99,9 @@ def pi(A, w):
         for y in range(5):
             for z in range(w):
                 A_[x][y][z] = A[(x + 3*y) % 5][x][z]
+    print("After pi")
+    printformat(getString(A_, w))
+    # input()
     return A_
 
 
@@ -108,7 +114,10 @@ def chi(A, w):
         for y in range(5):
             for z in range(w):
                 A_[x][y][z] = A[x][y][z] ^ (
-                    (A[(x+1) % 5][y][z] ^ 1) & A[(x+2) % 5][y][z])
+                    (A[(x+1) % 5][y][z] ^ 1) * A[(x+2) % 5][y][z])
+    print("After chi")
+    printformat(getString(A_, w))
+    # input()
     return A_
 
 
@@ -191,15 +200,24 @@ def sponge(N, r, d):
     Input : String N
     Output size of d bits
     """
+    print("before absorb:", N)
     P = N + pad(r, len(N))
     n = len(P)//r
     b = 1600
     c = b - r
     S = '0'*b
+    print()
+    print("just before absorb:")
+    print(P)
+    # printformat(P)
+    print()
     for i in range(n):
         format_spec = "{:0"+str(len(S))+"b}"
         S_ = format_spec.format(int(S, 2) ^
                                 int(P[i*r:(i+1)*r] + '0'*c, 2))
+        print("XORed State:")
+        printformat(S_)
+        # input()
         S = keccak_f(S_)
     Z = ''
     while True:
@@ -247,10 +265,14 @@ def SHAKEc(c, M, d):
 # A = getState(S, w)
 # print(getString(A, w))
 
+m = "11001"
+# m = ""
+
 d = 224
-l = SHA3_d("", d)
+l = SHA3_d(m, d)
 
-print(l)
+print("Digest:")
+
+printformat(l)
+
 r = 1600 - 2*d
-
-print()
