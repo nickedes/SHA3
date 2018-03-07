@@ -13,7 +13,7 @@ def getState(S, w):
         for y in range(5):
             z_list = []
             for z in range(w):
-                z_list.append(S[w*(5*y + x) + z])
+                z_list.append(int(S[w*(5*y + x) + z]))
                 # A[x][y][z] = S[w*(5*y + x) + z]
             y_list.append(z_list)
         A.append(y_list)
@@ -30,7 +30,6 @@ def getString(A, w):
         for y in range(5):
             for z in range(w):
                 S[w*(5*y + x) + z] = str(A[x][y][z])
-
     return "".join(S)
 
 
