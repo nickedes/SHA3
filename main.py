@@ -1,6 +1,15 @@
 from math import log2
 
 
+def printformat(S):
+    """
+    """
+    out = ""
+    for i in range(len(S)//8):
+        out += "{:02x}".format(int(S[i*8: (i+1)*8][::-1], 2)) + " "
+    print(out)
+
+
 def getState(S, w):
     """
     S is the string of b bits.
