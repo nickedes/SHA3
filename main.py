@@ -207,7 +207,7 @@ def pad(x, m):
     return '1'+'0'*j+'1'
 
 
-def sponge(N, r, d):
+def sponge(N, r, d, nrounds):
     """
     Input : String N
     Output size of d bits
@@ -230,46 +230,57 @@ def sponge(N, r, d):
         # print("XORed State:")
         # printformat(S_)
         # input()
-        S = keccak_f(S_)
+        S = keccak_p(S_, nrounds)
     Z = ''
     while True:
         Z = Z + trunc(S, r)
         if d <= len(Z):
             return trunc(Z, d)
-        S = keccak_f(S)
+        S = keccak_p(S, nrounds)
 
 
-def Keccak_c(c, N, d):
+def Keccak_c(c, N, d, stateSize,nrounds):
     """
     """
-    return sponge(N, 1600-c, d)
+    return sponge(N, stateSize-c, d, nrounds)
 
 
-def SHA3_d(M, d):
+def SHA3_d(M, d, stateSize, nrounds):
     """
     Generic method for four SHA-3 hash functions
     d : digest length
     """
-    return Keccak_c(2*d, M+"01", d)
+    return Keccak_c(2*d, M+"01", d, stateSize, nrounds)
 
 
-def RawSHAKEc(c, J, d):
+def RawSHAKEc(c, J, d, stateSize,nrounds):
     """
     """
-    return Keccak_c(2*c, J+"11", d)
+    return Keccak_c(2*c, J+"11", d, stateSize, nrounds)
 
 
-def SHAKEc(c, M, d):
+def SHAKEc(c, M, d, stateSize,nrounds):
     """
     """
-    return RawSHAKEc(c, M+"11", d)
+    return RawSHAKEc(c, M+"11", d, stateSize,nrounds)
 
 
-m = "11001"
+
+# Define state !!
+
+# r bits
+r = 40
+# c bits
+c = 160
+# no. of rounds
+nr = 2
+
+m = ""
 # m = ""
 
-d = 224
-l = SHA3_d(m, d)
+d = c//2
+
+l = SHA3_d(m, d, r+c, nr)
 print("Message : ", m)
 print("Digest:")
 
