@@ -215,8 +215,8 @@ def sponge(N, r, d, nrounds):
     # print("before absorb:", N)
     P = N + pad(r, len(N))
     n = len(P)//r
-    b = 1600
-    c = b - r
+    b = r + 2*d
+    c = 2*d
     S = '0'*b
     # print()
     # print("just before absorb:")
