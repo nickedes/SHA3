@@ -85,11 +85,34 @@ def main():
                 A = rhoInverse(A, w)
                 new_pos = statePrint(A, w, orig_state)
                 orig_state.append(new_pos)
-            print(orig_state)
-        print("Enter x, y, z :")
-        line = input()
-        _x, _y, _z = [int(j) for j in line.split(" ")]
-        A[_x][_y][_z] = 1
+            try:
+                _x, prev_y, _z = new_pos
+            except Exception as e:
+                break
+            if init_x == _x and init_z == _z and len(orig_state) % 2 == 0 and len(next_state) % 2 == 0:
+                result = 1
+                print("original state : ")
+                print(orig_state)
+                print("next state : ")
+                print(next_state)
+                print("kernel found")
+                break
+            while 1:
+                print(new_pos)
+                print("Enter y: other than " + str(prev_y))
+                _y = randint(0, 4)
+                # _y = int(input())
+                if prev_y != _y:
+                    break
+            A[_x][_y][_z] = 1
+            if i % 2 == 0:
+                next_state.append((_x, _y, _z))
+            else:
+                orig_state.append((_x, _y, _z))
+            if i == 999:
+                print("nothing found!")
+        if result == 1:
+            break
 
 
 if __name__ == '__main__':
