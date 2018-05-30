@@ -37,7 +37,11 @@ def piInverse(A, w):
     return A_
 
 
-def statePrint(A, w):
+def statePrint(A, w, statebitlist):
+    """
+        statebitlist - Is a list of tuples of x,y,z positions where 1 in state
+    """
+    alpha = ''
     for z in range(w):
         s = "z = " + str(z) + "\n"
         flag = 0
