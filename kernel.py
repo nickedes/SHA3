@@ -80,14 +80,10 @@ def main():
                 A = pi(A, w)
                 new_pos = statePrint(A, w, next_state)
                 next_state.append(new_pos)
-            print(next_state)
-        else:
-            A = piInverse(A, w)
-            A = rhoInverse(A, w)
-            new_pos = statePrint(A, w, orig_state)
-            if new_pos == '':
-                print("done")
             else:
+                A = piInverse(A, w)
+                A = rhoInverse(A, w)
+                new_pos = statePrint(A, w, orig_state)
                 orig_state.append(new_pos)
             print(orig_state)
         print("Enter x, y, z :")
