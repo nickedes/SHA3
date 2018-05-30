@@ -53,21 +53,18 @@ def statePrint(A, w, statebitlist):
                         alpha = (x, y, z)
                 s += str(A[x][y][z]) + " "
             s += "\n"
-        if flag:
-            print(s)
+        # if flag:
+        #     print(s)
     return alpha
 
 
 def main():
     w = 64
     A = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
-
     start = []
     for x in range(5):
         for y in range(5):
-            start.append((x, y))
-
-    _x, _y, _z = 3, 1, 0
+            start.append((x, y, 0))
 
     orig_state = []
     next_state = []
