@@ -66,19 +66,19 @@ def main():
         for y in range(5):
             start.append((x, y, 0))
 
-    orig_state = []
-    next_state = []
+    for rtuple in start:
+        init_x, _y, init_z = rtuple
+        result = 0
+        orig_state = []
+        next_state = []
 
-    A[_x][_y][_z] = 1
-    orig_state.append(statePrint(A, w, orig_state))
-    for i in range(5):
-        if i % 2 == 0:
-            A = rho(A, w)
-            A = pi(A, w)
-            new_pos = statePrint(A, w, next_state)
-            if new_pos == '':
-                print("done")
-            else:
+        A[init_x][_y][init_z] = 1
+        orig_state.append(statePrint(A, w, orig_state))
+        for i in range(1000):
+            if i % 2 == 0:
+                A = rho(A, w)
+                A = pi(A, w)
+                new_pos = statePrint(A, w, next_state)
                 next_state.append(new_pos)
             print(next_state)
         else:
