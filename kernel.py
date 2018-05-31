@@ -151,7 +151,17 @@ def main():
             if i == 999:
                 print("nothing found!")
         if result == 1:
-            break
+            A = rho(A, w)
+            A = pi(A, w)
+            A = rho(A, w)
+            A = pi(A, w)
+            delta3 = getOneBitPos(A, w)
+            if satisfyCon(delta3, negative_out):
+                print("kernel found")
+                print("delta 3 : ")
+                print(delta3)
+                break
+            continue
 
 
 if __name__ == '__main__':
