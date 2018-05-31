@@ -102,14 +102,15 @@ def main():
 
     for x in range(5):
         for y in range(5):
-            start.append((x, y, 0))
+            if (x, y) not in negative_init:
+                start.append((x, y, 0))
 
     for rtuple in start:
         init_x, _y, init_z = rtuple
         result = 0
         orig_state = []
         next_state = []
-
+        print(orig_state)
         A[init_x][_y][init_z] = 1
         orig_state.append(statePrint(A, w, orig_state))
         for i in range(1000):
@@ -127,16 +128,16 @@ def main():
                 _x, prev_y, _z = new_pos
             except Exception as e:
                 break
-            if init_x == _x and init_z == _z and len(orig_state) % 2 == 0 and len(next_state) % 2 == 0:
+            if init_x == _x and init_z == _z and len(orig_state) % 2 == 0 and len(next_state) % 2 == 0 and satisfyCon(orig_state, negative_init):
                 result = 1
-                print("original state : ")
+                print("original state :delta 1 ")
                 print(orig_state)
-                print("next state : ")
+                print("next state : delta 2 ")
                 print(next_state)
-                print("kernel found")
                 break
             while 1:
-                print(new_pos)
+                # print(orig_state, next_state)
+                # print(new_pos)
                 print("Enter y: other than " + str(prev_y))
                 _y = randint(0, 4)
                 # _y = int(input())
