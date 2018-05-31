@@ -1,6 +1,7 @@
 from main import *
 from random import randint
 
+
 def rhoInverse(A, w):
     """
     rho step mapping - Rotate the bits of each lane by an offset.
@@ -56,6 +57,35 @@ def statePrint(A, w, statebitlist):
         # if flag:
         #     print(s)
     return alpha
+
+
+def getOneBitPos(A, w):
+    alpha = []
+    for z in range(w):
+        for y in range(5):
+            for x in range(5):
+                if A[x][y][z] == 1:
+                    alpha.append((x, y, z))
+    return alpha
+
+
+def getxy(BitPositions):
+    alpha = []
+    for tupl in BitPositions:
+        alpha.append(tupl[:2])
+    return alpha
+
+
+def satisfyCon(statebitlist, negativeList):
+    """
+        negativeList : Is a list of x,y positions
+        statebitlist : list of tuples of x,y & z positions
+    """
+    xytuples = getxy(statebitlist)
+    for xy in xytuples:
+        if xy in negativeList:
+            return False
+    return True
 
 
 def main():
