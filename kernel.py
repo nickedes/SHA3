@@ -2,6 +2,17 @@ from main import *
 from random import randint
 
 
+def getBitposAfterOneRhoPi(x, y, w):
+    """
+    """
+    B = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
+    # as rho, pi are translation invariant
+    B[x][y][0] = 1
+    B = rho(B, w)
+    B = pi(B, w)
+    return getxy(getOneBitPos(B, w))[0]
+
+
 def rhoInverse(A, w):
     """
     rho step mapping - Rotate the bits of each lane by an offset.
