@@ -124,7 +124,7 @@ def main():
         print(orig_state)
         A[init_x][_y][init_z] = 1
         orig_state.append(statePrint(A, w, orig_state))
-        for i in range(1000):
+        for i in range(10000):
             if i % 2 == 0:
                 A = rho(A, w)
                 A = pi(A, w)
@@ -146,14 +146,31 @@ def main():
                 print("next state : delta 2 ")
                 print(next_state)
                 break
-            while 1:
+            tries = 1000
+            while tries != 0:
+                tries -= 1
                 # print(orig_state, next_state)
                 # print(new_pos)
                 print("Enter y: other than " + str(prev_y))
                 _y = randint(0, 4)
-                # _y = int(input())
+                if i % 2 == 0:
+                    # case for output state
+                    if getBitposAfterOneRhoPi(_x, _y, w) in negative_out:
+                        print(_x, _y)
+                        input()
+                        continue
+                else:
+                    # case for original state, if the new bit position is in negative list then continue
+                    if (_x, _y) in negative_init:
+                        print(_x, _y)
+                        input()
+                        continue
+                    # _y = int(input())
                 if prev_y != _y:
+                    print("found yay: " + str(_y))
                     break
+            if tries == 0 and prev_y == _y:
+                break
             A[_x][_y][_z] = 1
             if i % 2 == 0:
                 next_state.append((_x, _y, _z))
