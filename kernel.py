@@ -1,5 +1,6 @@
 from main import *
 from random import randint
+from time import sleep
 
 
 def getBitposAfterOneRhoPi(x, y, w):
@@ -109,13 +110,13 @@ def main():
     negative_init = [(2, 3), (2, 4), (3, 0), (3, 1), (3, 2),
                      (3, 3), (3, 4), (4, 0), (4, 1), (4, 2), (4, 3), (4, 4)]
 
+    fullx_negative_init = [3, 4]
     negative_out = [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 0)]
 
     for x in range(5):
         for y in range(5):
             if (x, y) not in negative_init:
                 start.append((x, y, 0))
-
     for rtuple in start:
         init_x, _y, init_z = rtuple
         result = 0
@@ -123,8 +124,9 @@ def main():
         next_state = []
         print(orig_state)
         A[init_x][_y][init_z] = 1
+        restart_state = A
         orig_state.append(statePrint(A, w, orig_state))
-        for i in range(10000):
+        for i in range(1000000):
             if i % 2 == 0:
                 A = rho(A, w)
                 A = pi(A, w)
@@ -146,6 +148,9 @@ def main():
                 print("next state : delta 2 ")
                 print(next_state)
                 break
+            if i % 2 == 1 and _x in fullx_negative_init:
+                A = restart_state
+                i += 1
             tries = 1000
             while tries != 0:
                 tries -= 1
@@ -157,15 +162,16 @@ def main():
                     # case for output state
                     if getBitposAfterOneRhoPi(_x, _y, w) in negative_out:
                         print(_x, _y)
-                        input()
+                        print("next state")
+                        # sleep(1)
                         continue
                 else:
                     # case for original state, if the new bit position is in negative list then continue
                     if (_x, _y) in negative_init:
                         print(_x, _y)
-                        input()
+                        print("orig state")
+                        # sleep(1)
                         continue
-                    # _y = int(input())
                 if prev_y != _y:
                     print("found yay: " + str(_y))
                     break
@@ -194,3 +200,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
