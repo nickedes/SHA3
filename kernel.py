@@ -128,7 +128,7 @@ def main():
         A[init_x][_y][init_z] = 1
         restart_state = A
         orig_state.append(statePrint(A, w, orig_state))
-        for i in range(1000000):
+        for i in range(100000000):
             if i % 2 == 0:
                 A = rho(A, w)
                 A = pi(A, w)
