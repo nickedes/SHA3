@@ -111,8 +111,10 @@ def main():
                      (3, 3), (3, 4), (4, 0), (4, 1), (4, 2), (4, 3), (4, 4)]
 
     fullx_negative_init = [3, 4]
-    negative_out = [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 0)]
+    # negative_out = [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 0)]
+    negative_out = [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4)]
 
+    # Todo : Add slice limit
     for x in range(5):
         for y in range(5):
             if (x, y) not in negative_init:
