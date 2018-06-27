@@ -128,7 +128,8 @@ def main():
         A[init_x][_y][init_z] = 1
         restart_state = A
         orig_state.append(statePrint(A, w, orig_state))
-        for i in range(100000000):
+        for i in range(1000000000):
+            print(i)
             if i % 2 == 0:
                 A = rho(A, w)
                 A = pi(A, w)
@@ -158,24 +159,24 @@ def main():
                 tries -= 1
                 # print(orig_state, next_state)
                 # print(new_pos)
-                print("Enter y: other than " + str(prev_y))
+                # print("Enter y: other than " + str(prev_y))
                 _y = randint(0, 4)
                 if i % 2 == 0:
                     # case for output state
                     if getBitposAfterOneRhoPi(_x, _y, w) in negative_out:
-                        print(_x, _y)
-                        print("next state")
+                        # print(_x, _y)
+                        # print("next state")
                         # sleep(1)
                         continue
                 else:
                     # case for original state, if the new bit position is in negative list then continue
                     if (_x, _y) in negative_init:
-                        print(_x, _y)
-                        print("orig state")
+                        # print(_x, _y)
+                        # print("orig state")
                         # sleep(1)
                         continue
                 if prev_y != _y:
-                    print("found yay: " + str(_y))
+                    # print("found yayy!: " + str(_y))
                     break
             if tries == 0 and prev_y == _y:
                 break
@@ -184,7 +185,7 @@ def main():
                 next_state.append((_x, _y, _z))
             else:
                 orig_state.append((_x, _y, _z))
-            if i == 999:
+            if i == 1000000000 - 1:
                 print("nothing found!")
         if result == 1:
             A = rho(A, w)
