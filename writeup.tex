@@ -10,19 +10,6 @@
 
 \section{Preimages on 2 Rounds of the 384-bit Hash function}
 
-In this section we present a preimage attack for a reduced version with two rounds of Keccak. The preimage can be found in $2^{88}$ time and $2^{87}$ memory. It is not practical, but is an improvement from the present 2 round preimage attack for Keccak-384 which takes $2^{129}$ time [1].
-
-\subsection{Main Scheme}
-The Preimage attack on 2 rounds is represented in figure 2.\newline
-
-In Fig 2, each slice represents different states. For the sake of simplicity, we will omit the $\iota$ transformation in the explanation, as it doesnt affect the procedure of the attack, but should be taken into account when implementing the attack (though not practical).
-
-\newpar
-We are given a hash value which is 6 lanes in State 4[Fig 2], which represents the output of Keccak permutation. We need to find a messafe block that produces the same hash value. In Fig2 State 1 the lanes marked with (a0, a1, a2, b0, b1, b2, c0, c1, c2, d0, d1, e0, e1) are the parts of the message that we dont fix until the end of the attack.
-The conditions are that : $a2 = a0 \oplus a1$,  $b2 = b0 \oplus b1$, $c2 = c0 \oplus c1$, $d0 = d1 = 0$, $e0 = e1$. Due to these conditions the first $\theta$ operation doesn't affect the state 1 [Fig 2.] From the initial state 1 we can then compute the known lanes in state 2 after \theta, \rho and \pi, as well as the positions of the unknown lanes.
-\newpar
-The change of state from state 1 to state 2 shows the movement of lanes in detail, the number shown in round brackets along with the variable in state 2 is due to $\rho$. Imposing the previous conditions we still have 7*64 degrees of freedom for the message, which is greater than the number of bits of the hash output i.e. 6*64, so we can expect to find atleast one solution.
-
 \begin{center}
 \begin{tikzpicture}[scale=.7]
 \draw (0,0) grid (5,5);
@@ -59,6 +46,19 @@ The change of state from state 1 to state 2 shows the movement of lanes in detai
     \node[anchor=center] at (2.5, -0.5) {Fig 1 : Keccak State};
 \end{tikzpicture}
 \end{center}
+
+In this section we present a preimage attack for a reduced version with two rounds of Keccak. The preimage can be found in $2^{88}$ time and $2^{87}$ memory. It is not practical, but is an improvement from the present 2 round preimage attack for Keccak-384 which takes $2^{129}$ time [1].
+
+\subsection{Main Scheme}
+The Preimage attack on 2 rounds is represented in figure 2.\newline
+
+In Fig 2, each slice represents different states. For the sake of simplicity, we will omit the $\iota$ transformation in the explanation, as it doesnt affect the procedure of the attack, but should be taken into account when implementing the attack (though not practical).
+
+\newpar
+We are given a hash value which is 6 lanes in State 4[Fig 2], which represents the output of Keccak permutation. We need to find a messafe block that produces the same hash value. In Fig2 State 1 the lanes marked with (a0, a1, a2, b0, b1, b2, c0, c1, c2, d0, d1, e0, e1) are the parts of the message that we dont fix until the end of the attack.
+The conditions are that : $a2 = a0 \oplus a1$,  $b2 = b0 \oplus b1$, $c2 = c0 \oplus c1$, $d0 = d1 = 0$, $e0 = e1$. Due to these conditions the first $\theta$ operation doesn't affect the state 1 [Fig 2.] From the initial state 1 we can then compute the known lanes in state 2 after $\theta, \rho$ and $\pi$, as well as the positions of the unknown lanes.
+\newpar
+The change of state from state 1 to state 2 shows the movement of lanes in detail, the number shown in round brackets along with the variable in state 2 is due to $\rho$. Imposing the previous conditions we still have 7*64 degrees of freedom for the message, which is greater than the number of bits of the hash output i.e. 6*64, so we can expect to find atleast one solution.\newline
 
 \begin{center}
 \begin{tikzpicture}[scale=1.1]
@@ -201,6 +201,80 @@ The change of state from state 1 to state 2 shows the movement of lanes in detai
     \node[anchor=center] at (4.5, -0.5) {State 4};
      \draw[thick,->] (7, 2.5) -- node [above] {$\iota^{-1}, \chi^{-1}, \pi^{-1}, \rho^{-1}$} (10,2.5);
      \node[anchor=center] at (8.5, -1) {Fig 2: Diagram of the 2-round preimage attack. Each square represents a 64 bit lane.};
+\end{tikzpicture}
+\end{center}    
+\newpage
+\newpar
+In the backward direction, we can invert from State 4, the known 6 lanes in final state with $\chi^{-1}$. The first five lanes can be directly inverted using $\chi^{-1}$, for the remaining sixth lane, we can fix the seventh lane of State 5 to \textbf{1} for inverting sixth lane. As shown in Fig 3.
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+\draw (2,0) grid (7,5);
+    \node[] at (2.5,0.5) {$h_0$};
+    \node[] at (3.5,0.5) {$h_1$};
+    \node[] at (4.5,0.5) {$h_2$};
+    \node[] at (5.5,0.5) {$h_3$};
+    \node[] at (6.5,0.5) {$h_4$};
+
+    \node[] at (2.5,1.5) {$h_5$};
+    \node[] at (3.5,1.5) { };
+    \node[] at (4.5,1.5) { };
+    \node[] at (5.5,1.5) { };
+    \node[] at (6.5,1.5) { };
+
+    \node[] at (2.5,2.5) { };
+    \node[] at (3.5,2.5) { };
+    \node[] at (4.5,2.5) { };
+    \node[] at (5.5,2.5) { };
+    \node[] at (6.5,2.5) { };
+
+    \node[] at (2.5,3.5) { };
+    \node[] at (3.5,3.5) { };
+    \node[] at (4.5,3.5) { };
+    \node[] at (5.5,3.5) { };
+    \node[] at (6.5,3.5) { };
+
+    \node[] at (2.5,4.5) { };
+    \node[] at (3.5,4.5) { };
+    \node[] at (4.5,4.5) { };
+    \node[] at (5.5,4.5) { };
+    \node[] at (6.5,4.5) { };
+
+\draw (10,0) grid (15,5);
+    \node[] at (10.5,0.5) {h0'};
+    \node[] at (11.5,0.5) {h1'};
+    \node[] at (12.5,0.5) {h2'};
+    \node[] at (13.5,0.5) {h3'};
+    \node[] at (14.5,0.5) {h4'};
+
+    \node[] at (10.5,1.5) {h5'};
+    \node[] at (11.5,1.5) {\textbf{1}};
+    \node[] at (12.5,1.5) { };
+    \node[] at (13.5,1.5) { };
+    \node[] at (14.5,1.5) { };
+
+    \node[] at (10.5,2.5) { };
+    \node[] at (11.5,2.5) { };
+    \node[] at (12.5,2.5) { };
+    \node[] at (13.5,2.5) { };
+    \node[] at (14.5,2.5) { };
+
+    \node[] at (10.5,3.5) { };
+    \node[] at (11.5,3.5) { };
+    \node[] at (12.5,3.5) { };
+    \node[] at (13.5,3.5) { };
+    \node[] at (14.5,3.5) { };
+
+    \node[] at (10.5,4.5) { };
+    \node[] at (11.5,4.5) { };
+    \node[] at (12.5,4.5) { };
+    \node[] at (13.5,4.5) { };
+    \node[] at (14.5,4.5) { };
+    
+    \node[anchor=center] at (12.5, -0.5) {State 5};
+    \node[anchor=center] at (4.5, -0.5) {State 4};
+     \draw[thick,->] (7.7, 2.5) -- node [above] {$\chi^{-1}$} (9.7,2.5);
+     \node[anchor=center] at (8.5, -1.2) {Fig 3: Inversion of $\chi^{-1}$, with the condition h5' = h5};
 \end{tikzpicture}
 \end{center}    
 
