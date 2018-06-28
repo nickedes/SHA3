@@ -91,7 +91,7 @@ class Keccak:
 
     def setLane1(self, i, j):
         self.S[i][j] = [list(GF(2))[1] for k in xrange(64)]
-
+ 
     def setLane(self, i, j, value=[list(GF(2))[0] for i in xrange(64)]):
         self.S[i][j] = value
 

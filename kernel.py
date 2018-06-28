@@ -119,92 +119,87 @@ def main():
         for y in range(5):
             if (x, y) not in negative_init:
                 start.append((x, y, 0))
-    for op in range(100):
-        for rtuple in start:
-            init_x, _y, init_z = rtuple
-            result = 0
-            orig_state = []
-            next_state = []
-            print(orig_state)
-            slices = set()
-            A[init_x][_y][init_z] = 1
-            restart_state = A
-            slices.add(init_z)
-            orig_state.append(statePrint(A, w, orig_state))
-            for i in range(10000000000):
-                if i % 2 == 0:
-                    A = rho(A, w)
-                    A = pi(A, w)
-                    new_pos = statePrint(A, w, next_state)
-                    next_state.append(new_pos)
-                else:
-                    A = piInverse(A, w)
-                    A = rhoInverse(A, w)
-                    new_pos = statePrint(A, w, orig_state)
-                    orig_state.append(new_pos)
-                    slices.add(new_pos[2])
-                    if len(slices) > 10:
-                        break
-                try:
-                    _x, prev_y, _z = new_pos
-                except Exception as e:
-                    break
-                if init_x == _x and init_z == _z and len(orig_state) % 2 == 0 and len(next_state) % 2 == 0 and satisfyCon(orig_state, negative_init):
-                    result = 1
-                    print("original state :delta 1 ")
-                    print(orig_state)
-                    print("next state : delta 2 ")
-                    print(next_state)
-                    break
-                if i % 2 == 1 and _x in fullx_negative_init:
-                    A = restart_state
-                    i += 1
-                tries = 1000
-                while tries != 0:
-                    tries -= 1
-                    # print(orig_state, next_state)
-                    # print(new_pos)
-                    print("Enter y: other than " + str(prev_y))
-                    _y = randint(0, 4)
-                    if i % 2 == 0:
-                        # case for output state
-                        if getBitposAfterOneRhoPi(_x, _y, w) in negative_out:
-                            print(_x, _y)
-                            print("next state")
-                            # sleep(1)
-                            continue
-                    else:
-                        # case for original state, if the new bit position is in negative list then continue
-                        if (_x, _y) in negative_init:
-                            print(_x, _y)
-                            print("orig state")
-                            # sleep(1)
-                            continue
-                    if prev_y != _y:
-                        print("found yay: " + str(_y))
-                        break
-                if tries == 0 and prev_y == _y:
-                    break
-                A[_x][_y][_z] = 1
-                if i % 2 == 0:
-                    next_state.append((_x, _y, _z))
-                else:
-                    orig_state.append((_x, _y, _z))
-                if i == 999:
-                    print("nothing found!")
-            if result == 1:
-                A = rho(A, w)
-                A = pi(A, w)
-                A = rho(A, w)
-                A = pi(A, w)
-                delta3 = getOneBitPos(A, w)
-                if satisfyCon(delta3, negative_out):
-                    print("kernel found")
-                    print("delta 3 : ")
-                    print(delta3)
-                    break
-                continue
 
+    for rtuple in start:
+        init_x, _y, init_z = rtuple
+        result = 0
+        orig_state = []
+        next_state = []
+        print(orig_state)
+        A[init_x][_y][init_z] = 1
+        restart_state = A
+        orig_state.append(statePrint(A, w, orig_state))
+        for i in range(1000000000):
+            print(i)
+            if i % 2 == 0:
+                A = rho(A, w)
+                A = pi(A, w)
+                new_pos = statePrint(A, w, next_state)
+                next_state.append(new_pos)
+            else:
+                A = piInverse(A, w)
+                A = rhoInverse(A, w)
+                new_pos = statePrint(A, w, orig_state)
+                orig_state.append(new_pos)
+            try:
+                _x, prev_y, _z = new_pos
+            except Exception as e:
+                break
+            if init_x == _x and init_z == _z and len(orig_state) % 2 == 0 and len(next_state) % 2 == 0 and satisfyCon(orig_state, negative_init):
+                result = 1
+                print("original state :delta 1 ")
+                print(orig_state)
+                print("next state : delta 2 ")
+                print(next_state)
+                break
+            if i % 2 == 1 and _x in fullx_negative_init:
+                A = restart_state
+                i += 1
+            tries = 1000
+            while tries != 0:
+                tries -= 1
+                # print(orig_state, next_state)
+                # print(new_pos)
+                # print("Enter y: other than " + str(prev_y))
+                _y = randint(0, 4)
+                if i % 2 == 0:
+                    # case for output state
+                    if getBitposAfterOneRhoPi(_x, _y, w) in negative_out:
+                        # print(_x, _y)
+                        # print("next state")
+                        # sleep(1)
+                        continue
+                else:
+                    # case for original state, if the new bit position is in negative list then continue
+                    if (_x, _y) in negative_init:
+                        # print(_x, _y)
+                        # print("orig state")
+                        # sleep(1)
+                        continue
+                if prev_y != _y:
+                    # print("found yayy!: " + str(_y))
+                    break
+            if tries == 0 and prev_y == _y:
+                break
+            A[_x][_y][_z] = 1
+            if i % 2 == 0:
+                next_state.append((_x, _y, _z))
+            else:
+                orig_state.append((_x, _y, _z))
+            if i == 1000000000 - 1:
+                print("nothing found!")
+        if result == 1:
+            A = rho(A, w)
+            A = pi(A, w)
+            A = rho(A, w)
+            A = pi(A, w)
+            delta3 = getOneBitPos(A, w)
+            if satisfyCon(delta3, negative_out):
+                print("kernel found")
+                print("delta 3 : ")
+                print(delta3)
+                break
+            continue
 
 if __name__ == '__main__':
     main()

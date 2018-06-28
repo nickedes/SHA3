@@ -1,0 +1,204 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\title{Preimage Attack for Reduced Round keccak}
+\date{June 2018}
+
+\begin{document}
+
+\maketitle
+
+\section{Preimages on 2 Rounds of the 384-bit Hash function}
+
+In this section we present a preimage attack for a reduced version with two rounds of Keccak. The preimage can be found in $2^{88}$ time and $2^{87}$ memory. It is not practical, but is an improvement from the present 2 round preimage attack for Keccak-384 which takes $2^{129}$ time [1].
+
+\subsection{Main Scheme}
+The Preimage attack on 2 rounds is represented in figure 2.\newline
+
+\begin{center}
+\begin{tikzpicture}[scale=.7]
+\draw (0,0) grid (5,5);
+    \node[] at (0.5,0.5) {0,0};
+    \node[] at (1.5,0.5) {0,1};
+    \node[] at (2.5,0.5) {0,2};
+    \node[] at (3.5,0.5) {0,3};
+    \node[] at (4.5,0.5) {0,4};
+
+    \node[] at (0.5,1.5) {1,0};
+    \node[] at (1.5,1.5) {1,1};
+    \node[] at (2.5,1.5) {1,2};
+    \node[] at (3.5,1.5) {1,3};
+    \node[] at (4.5,1.5) {1,4};
+
+    \node[] at (0.5,2.5) {2,0};
+    \node[] at (1.5,2.5) {2,1};
+    \node[] at (2.5,2.5) {2,2};
+    \node[] at (3.5,2.5) {2,3};
+    \node[] at (4.5,2.5) {2,4};
+
+    \node[] at (0.5,3.5) {3,0};
+    \node[] at (1.5,3.5) {3,1};
+    \node[] at (2.5,3.5) {3,2};
+    \node[] at (3.5,3.5) {3,3};
+    \node[] at (4.5,3.5) {3,4};
+
+    \node[] at (0.5,4.5) {4,0};
+    \node[] at (1.5,4.5) {4,1};
+    \node[] at (2.5,4.5) {4,2};
+    \node[] at (3.5,4.5) {4,3};
+    \node[] at (4.5,4.5) {4,4};
+    
+    \node[anchor=center] at (2.5, -0.5) {Fig 1 : Keccak State};
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+\draw (0,0) grid (5,5);
+    \node[] at (0.5,0.5) {\textbf{a0}};
+    \node[] at (1.5,0.5) {\textbf{b0}};
+    \node[] at (2.5,0.5) {\textbf{c0}};
+    \node[] at (3.5,0.5) {\textbf{d0}};
+    \node[] at (4.5,0.5) {\textbf{e0}};
+
+    \node[] at (0.5,1.5) {\textbf{a2}};
+    \node[] at (1.5,1.5) {\textbf{b2}};
+    \node[] at (2.5,1.5) {\textbf{c1}};
+    \node[] at (3.5,1.5) {\textbf{d1}};
+    \node[] at (4.5,1.5) {\textbf{e1}};
+
+    \node[] at (0.5,2.5) {\textbf{a1}};
+    \node[] at (1.5,2.5) {\textbf{b1}};
+    \node[] at (2.5,2.5) {\textbf{c2}};
+    \node[] at (3.5,2.5) {0};
+    \node[] at (4.5,2.5) {0};
+
+    \node[] at (0.5,3.5) {0};
+    \node[] at (1.5,3.5) {0};
+    \node[] at (2.5,3.5) {0};
+    \node[] at (3.5,3.5) {0};
+    \node[] at (4.5,3.5) {0};
+
+    \node[] at (0.5,4.5) {0};
+    \node[] at (1.5,4.5) {0};
+    \node[] at (2.5,4.5) {0};
+    \node[] at (3.5,4.5) {0};
+    \node[] at (4.5,4.5) {0};
+
+
+
+\draw (6,0) grid (11,5);
+    \node[] at (6.5,0.5) {$a_0$(0)};
+    \node[] at (7.5,0.5) {$b_2$(44)};
+    \node[] at (8.5,0.5) {$c_2$(43)};
+    \node[] at (9.5,0.5) {0};
+    \node[] at (10.5,0.5) {0};
+
+    \node[] at (6.5,1.5) {$d_0$(28)};
+    \node[] at (7.5,1.5) {$e_1$(20)};
+    \node[] at (8.5,1.5) {$a_1$(3)};
+    \node[] at (9.5,1.5) {0};
+    \node[] at (10.5,1.5) {0};
+
+    \node[] at (6.5,2.5) {$b_0$(1)};
+    \node[] at (7.5,2.5) {$c_1$(6)};
+    \node[] at (8.5,2.5) {0};
+    \node[] at (9.5,2.5) {0};
+    \node[] at (10.5,2.5) {0};
+
+    \node[] at (6.5,3.5) {$e_0$(27)};
+    \node[] at (7.5,3.5) {$a_2$(36)};
+    \node[] at (8.5,3.5) {$b_1$(10)};
+    \node[] at (9.5,3.5) {0};
+    \node[] at (10.5,3.5) {0};
+
+    \node[] at (6.5,4.5) {$c_0$(62)};
+    \node[] at (7.5,4.5) {$d_1$(55)};
+    \node[] at (8.5,4.5) {0};
+    \node[] at (9.5,4.5) {0};
+    \node[] at (10.5,4.5) {0};
+
+    \draw[thick,->] (5, 2.5) -- node [above] {$\theta, \rho, \pi$} (6,2.5);
+    \draw[thick,->] (9, -0.5) -- node [left] {$\chi, \iota, \theta$} (9, -2);
+\end{tikzpicture}
+\end{center}
+% \[
+% \]
+\begin{center}
+\begin{tikzpicture}[scale=1]
+\draw (2,0) grid (7,5);
+    \node[] at (2.5,0.5) {$h_0$};
+    \node[] at (3.5,0.5) {$h_1$};
+    \node[] at (4.5,0.5) {$h_2$};
+    \node[] at (5.5,0.5) {$h_3$};
+    \node[] at (6.5,0.5) {$h_4$};
+
+    \node[] at (2.5,1.5) {$h_5$};
+    \node[] at (3.5,1.5) { };
+    \node[] at (4.5,1.5) { };
+    \node[] at (5.5,1.5) { };
+    \node[] at (6.5,1.5) { };
+
+    \node[] at (2.5,2.5) { };
+    \node[] at (3.5,2.5) { };
+    \node[] at (4.5,2.5) { };
+    \node[] at (5.5,2.5) { };
+    \node[] at (6.5,2.5) { };
+
+    \node[] at (2.5,3.5) { };
+    \node[] at (3.5,3.5) { };
+    \node[] at (4.5,3.5) { };
+    \node[] at (5.5,3.5) { };
+    \node[] at (6.5,3.5) { };
+
+    \node[] at (2.5,4.5) { };
+    \node[] at (3.5,4.5) { };
+    \node[] at (4.5,4.5) { };
+    \node[] at (5.5,4.5) { };
+    \node[] at (6.5,4.5) { };
+
+\draw (10,0) grid (15,5);
+    \node[] at (10.5,0.5) {h0'};
+    \node[] at (11.5,0.5) { };
+    \node[] at (12.5,0.5) { };
+    \node[] at (13.5,0.5) {h5'};
+    \node[] at (14.5,0.5) { };
+
+    \node[] at (10.5,1.5) { };
+    \node[] at (11.5,1.5) {h1'};
+    \node[] at (12.5,1.5) { };
+    \node[] at (13.5,1.5) { };
+    \node[] at (14.5,1.5) {1};
+
+    \node[] at (10.5,2.5) { };
+    \node[] at (11.5,2.5) { };
+    \node[] at (12.5,2.5) {h2'};
+    \node[] at (13.5,2.5) { };
+    \node[] at (14.5,2.5) { };
+
+    \node[] at (10.5,3.5) { };
+    \node[] at (11.5,3.5) { };
+    \node[] at (12.5,3.5) { };
+    \node[] at (13.5,3.5) {h3'};
+    \node[] at (14.5,3.5) { };
+
+    \node[] at (10.5,4.5) { };
+    \node[] at (11.5,4.5) { };
+    \node[] at (12.5,4.5) { };
+    \node[] at (13.5,4.5) { };
+    \node[] at (14.5,4.5) {h4'};
+    
+     \draw[thick,->] (7, 2.5) -- node [above] {$\iota^{-1}, \chi^{-1}, \pi^{-1}, \rho^{-1}$} (10,2.5);
+     \node[anchor=center] at (8.5, -0.5) {Fig 2: Diagram of the 2-round preimage attack. Each square represents a 64 bit lane.};
+\end{tikzpicture}
+\end{center}    
+
+
+\section{References :}
+
+1. Jian Guo and Meicheng Liu and Ling Song, Linear Structures: Applications to Cryptanalysis of Round-Reduced Keccak.\newline
+ 
+
+\end{document}
+
+
