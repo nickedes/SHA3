@@ -205,7 +205,7 @@ The change of state from state 1 to state 2 shows the movement of lanes in detai
 \end{center}    
 \newpage
 \newpar
-In the backward direction, we can invert from State 4, the known 6 lanes in final state with $\chi^{-1}$. The first five lanes can be directly inverted using $\chi^{-1}$, for the remaining sixth lane, we can fix the seventh lane of State 5 to \textbf{1} for inverting sixth lane. As shown in Fig 3.
+In the backward direction, we can invert from State 4, the known 6 lanes in final state with $\chi^{-1}$. The first five lanes can be directly inverted using $\chi^{-1}$, for the remaining sixth lane, we can fix the seventh lane of State 5 to \textbf{1} for inverting sixth lane. As shown in Fig 3. Then, we can apply the inverse of $\pi$ and of $\rho$ and obtain the values and positions of the 6 known lanes in State 3.
 
 \begin{center}
 \begin{tikzpicture}[scale=1]
@@ -277,6 +277,11 @@ In the backward direction, we can invert from State 4, the known 6 lanes in fina
      \node[anchor=center] at (8.5, -1.2) {Fig 3: Inversion of $\chi^{-1}$, with the condition h5' = h5};
 \end{tikzpicture}
 \end{center}    
+
+\newpar
+Then, the issue is to find the values of the eleven 64-bit words (a0, a1, a2, b0, b1, b2, c0, c1, c2, e0, e1) in state 2 that make possible the transition by the operations $\chi$ and $\theta$ from the state 2, that we have obtained computing forward, to the state 3, that we have obtained computing backward. For this we start by finding the bits that verify the relations for few slices.  The idea is same as in [2]. The idea is, to consider first groups of 3 slices where we guess all the involved bits of a0,...,e1 and next we can do a sieving by just keeping the guesses ones that produce by $\chi$ and $\theta$ the values of the 7x2 = 14 known bits from State 3 in the middle and last slices of the group of three slices.This is possible as for computing the output of $\theta$ in a specific slice, we need to know this same slice and the previous one in the input state.
+
+\subsection{Finding Partial Solutions}
 
 
 \section{References :}
