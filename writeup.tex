@@ -13,7 +13,10 @@
 In this section we present a preimage attack for a reduced version with two rounds of Keccak. The preimage can be found in $2^{88}$ time and $2^{87}$ memory. It is not practical, but is an improvement from the present 2 round preimage attack for Keccak-384 which takes $2^{129}$ time [1].
 
 \subsection{Main Scheme}
-The Preimage attack on 2 rounds is represented in figure 2.\newline
+The Preimage attack on 2 rounds is represented in figure 2.\newlin
+
+In Fig 2, each slice represents different states. 
+
 
 \begin{center}
 \begin{tikzpicture}[scale=.7]
@@ -85,7 +88,7 @@ The Preimage attack on 2 rounds is represented in figure 2.\newline
     \node[] at (3.5,4.5) {0};
     \node[] at (4.5,4.5) {0};
 
-
+\node[anchor=center] at (2.5, -0.5) {State 1};
 
 \draw (6,0) grid (11,5);
     \node[] at (6.5,0.5) {$a_0$(0)};
@@ -118,8 +121,9 @@ The Preimage attack on 2 rounds is represented in figure 2.\newline
     \node[] at (9.5,4.5) {0};
     \node[] at (10.5,4.5) {0};
 
+\node[anchor=center] at (8.5, -0.5) {State 2};
     \draw[thick,->] (5, 2.5) -- node [above] {$\theta, \rho, \pi$} (6,2.5);
-    \draw[thick,->] (9, -0.5) -- node [left] {$\chi, \iota, \theta$} (9, -2);
+    \draw[thick,->] (9, -0.8) -- node [left] {$\chi, \iota, \theta$} (9, -2);
 \end{tikzpicture}
 \end{center}
 % \[
@@ -188,8 +192,10 @@ The Preimage attack on 2 rounds is represented in figure 2.\newline
     \node[] at (13.5,4.5) { };
     \node[] at (14.5,4.5) {h4'};
     
+    \node[anchor=center] at (10.5, -0.5) {State 3};
+    \node[anchor=center] at (4.5, -0.5) {State 4};
      \draw[thick,->] (7, 2.5) -- node [above] {$\iota^{-1}, \chi^{-1}, \pi^{-1}, \rho^{-1}$} (10,2.5);
-     \node[anchor=center] at (8.5, -0.5) {Fig 2: Diagram of the 2-round preimage attack. Each square represents a 64 bit lane.};
+     \node[anchor=center] at (8.5, -1) {Fig 2: Diagram of the 2-round preimage attack. Each square represents a 64 bit lane.};
 \end{tikzpicture}
 \end{center}    
 
