@@ -305,7 +305,9 @@ Partial solutions for 16 slices : For finding solutions for 16 slices we first f
 Next, we obtain solutions for the remaining 4 slices, we have 44 variables and none of them are repeated. Also we have to satisfy last 3 slices out of the 4. This gives $2^{44 - 7*3} = 2^{23}$ solutions.
 Now, we can merge the group of 12 slices and 4 slices to obtain partial solutions for 16 slices. Among the 12 and 4 slices groups there are 4 repetitions(from e0, e1) and additionally we obtain values of 7 bits of the first slice of the 4 slice group which gives us $2^{50 + 23 - 4 -7} = 2^{62}$ solutions.
 
-Now, we have to merge the solutions for 48 slices and 16 slices. They have in common 35 ( from a0, a1, a2), 41 (from b0, b1, b2), 40 (from c0, c1 c2) and 14 (from e0, e1). Additionally we obtain values of 7 bits of the first slice of the 48 and 16 slice groups which gives us $2^{82 + 62 - (35+ 41 + 40 + 14) - 2*7} = 2^{0} = 1$ solution.
+Now, we have to merge the solutions for 48 slices and 16 slices. They have in common 35 ( from a0, a1, a2), 41 (from b0, b1, b2), 40 (from c0, c1 c2) and 14 (from e0, e1). Additionally we obtain values of 7 bits of the first slice of the 48 and 16 slice groups which gives us $2^{82 + 62 - (35+ 41 + 40 + 14) - 2*7} = 2^{0} = 1$ solution. This step has time complexity $ = 2^{82}$. 
+
+Total time complexity of the attack is given by $2^{33} + 2^{34} + 2^{52} + 2^{87} + 2^{63} + 2^{82} = 2^{88}$ and memory $2^{87}$. 
 
 This confirms that there exists a set of values for the variables such that the preimage can be obtained from the hash value for keccak-384.
 
