@@ -120,17 +120,17 @@ def main():
             if (x, y) not in negative_init:
                 start.append((x, y, 0))
     for op in range(100):
+        print(op)
         for rtuple in start:
             init_x, _y, init_z = rtuple
             result = 0
             orig_state = []
             next_state = []
-            print(orig_state)
+            # print(orig_state)
             A[init_x][_y][init_z] = 1
             restart_state = A
             orig_state.append(statePrint(A, w, orig_state))
-            for i in range(1000000000):
-                print(i)
+            for i in range(1000):
                 if i % 2 == 0:
                     A = rho(A, w)
                     A = pi(A, w)
@@ -198,6 +198,7 @@ def main():
                     print("kernel found")
                     print("delta 3 : ")
                     print(delta3)
+                    input()
                     break
                 continue
 
