@@ -274,15 +274,36 @@ In the backward direction, we can invert from State 4, the known 6 lanes in fina
     \node[anchor=center] at (12.5, -0.5) {State 5};
     \node[anchor=center] at (4.5, -0.5) {State 4};
      \draw[thick,->] (7.7, 2.5) -- node [above] {$\chi^{-1}$} (9.7,2.5);
-     \node[anchor=center] at (8.5, -1.2) {Fig 3: Inversion of $\chi^{-1}$, with the condition h5' = h5};
+     \node[anchor=center] at (8.5, -1.2) {Fig 3: Inversion of $\chi^{-1}$, with the condition h5 = h5'};
 \end{tikzpicture}
 \end{center}    
+
+Note : Due to $\chi$, h5 = h5' $\oplus$ ( $\bar 1$ $\cdot$ h6') $\to$ h5 = h5' .
 
 \newpar
 Then, the issue is to find the values of the eleven 64-bit words (a0, a1, a2, b0, b1, b2, c0, c1, c2, e0, e1) in state 2 that make possible the transition by the operations $\chi$ and $\theta$ from the state 2, that we have obtained computing forward, to the state 3, that we have obtained computing backward. For this we start by finding the bits that verify the relations for few slices.  The idea is same as in [2]. The idea is, to consider first groups of 3 slices where we guess all the involved bits of a0,...,e1 and next we can do a sieving by just keeping the guesses ones that produce by $\chi$ and $\theta$ the values of the 7x2 = 14 known bits from State 3 in the middle and last slices of the group of three slices.This is possible as for computing the output of $\theta$ in a specific slice, we need to know this same slice and the previous one in the input state.
 
 \subsection{Finding Partial Solutions}
 
+\newpar
+Partial solutions for 3 slices : We start by finding partial solutions for groups of three slices. In three slices there are 3*11 bit-variables from a0,..e1. If we consider the conditions then also there are no repetitions, so we have o guess in total 33 variables. For each guess we check if the 14 bits already fixed computing backwards on the two last slices collide, which happens with probability $2^{-14}$. So for each group of three slices that we find partial solutions for, we get $2^{33 - 14} = 2^{19}$ solutions. This will be repeated for 16 consecutive groups of 3 slices, leaving 16 out. This has time and memory complexity of $16 * 2^{19} = 2^{23}$.
+
+\newpar
+Partial solutions for 6 slices : For 6 slcies we merge two consecutive groups of three slices. As per conditions there is no repetition. So we have $2^{19*2}$ possibilities. When we merge two groups, we obtain values of 7 bits of the first slice of the second group. So we get total $2^{19*2 - 7 } = 2^{31}$ solutions. There are 8 groups of 6 slices. So this step has time and memory complexity of $8*2^{31} = 2^{34}$.
+
+\newpar
+Partial solutions for 12 slices : Similarly, we merge here each two consecutive groups of 6 slices. In this case the number of repeated bits in merge is 5 (from e0,e1), so total number of solutions that we obtain is $2^{31*2 - 5 - 7 } = 2^{50}$. There are 4 groups of 12 slices, so it has time and memory complexity of $4*2^{50} = 2^{52}$.
+
+\newpar
+Partial solutions for 24 slices : Similarly, we merge here each two consecutive groups of 24 slices. In this case the number of repeated bits in merge is 7 (from e0,e1), so total number of solutions that we obtain is $2^{50*2 - 7 - 7 } = 2^{86}$. There are 2 groups of 24 slices, so it has time and memory complexity of $2*2^{86} = 2^{87}$.
+
+\newpar
+Partial solutions for 48 slices : Finally here, we merge here two groups of 24 slices. In this case the number of repeated bits in merge is 29 (from a0, a1, a2), 23 (from b0, b1, b2), 24 (from c0, c1, c2) and 7 (from e0,e1), so total number of solutions that we obtain is $2^{86*2 - (29 + 23 + 24 + 7) - 7 } = 2^{82}$. There are 2 groups of 24 slices, so it has time and memory complexity of $2^{82}$.
+
+\newpar
+Partial solutions for 16 slices : For finding solutions for 16 slices we first find solutions for the 12 rightmost slices the same way as before, and obtaining $2^{50}$ partial solutions. 
+Next, we obtain solutions for the remaining 4 slices, we have 44 variables and none of them are repeated. Also we have to satisfy last 3 slices out of the 4. This gives $2^{44 - 7*3} = 2^{23}$ solutions.
+Now, we can merge the group of 12 slices and 4 slices to obtain partial solutions for 16 slices. Among the 12 and 4 slices groups there are 4 repetitions(from e0, e1) and additionally we obtain values of 7 bits of the first slice of the 4 slice group 
 
 \section{References :}
 
