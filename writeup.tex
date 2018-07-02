@@ -1,7 +1,8 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
-\title{Preimage Attack for Reduced Round keccak}
+\title{Preimage Attack for Reduced Round Keccak}
+\author{17111056}
 \date{June 2018}
 
 \begin{document}
@@ -52,10 +53,10 @@ In this section we present a preimage attack for a reduced version with two roun
 \subsection{Main Scheme}
 The Preimage attack on 2 rounds is represented in figure 2.\newline
 
-In Fig 2, each slice represents different states. For the sake of simplicity, we will omit the $\iota$ transformation in the explanation, as it doesnt affect the procedure of the attack, but should be taken into account when implementing the attack (though not practical).
+In Fig 2, each slice represents different states. For the sake of simplicity, we will omit the $\iota$ transformation in the explanation, as it doesn't affect the procedure of the attack, but should be taken into account when implementing the attack (though not practical).
 
 \newpar
-We are given a hash value which is 6 lanes in State 4[Fig 2], which represents the output of Keccak permutation. We need to find a messafe block that produces the same hash value. In Fig2 State 1 the lanes marked with (a0, a1, a2, b0, b1, b2, c0, c1, c2, d0, d1, e0, e1) are the parts of the message that we dont fix until the end of the attack.
+We are given a hash value which is 6 lanes in State 4[Fig 2], which represents the output of Keccak permutation. We need to find a message block that produces the same hash value. In Fig2 State 1 the lanes marked with (a0, a1, a2, b0, b1, b2, c0, c1, c2, d0, d1, e0, e1) are the parts of the message that we don't fix until the end of the attack.
 The conditions are that : $a2 = a0 \oplus a1$,  $b2 = b0 \oplus b1$, $c2 = c0 \oplus c1$, $d0 = d1 = 0$, $e0 = e1$. Due to these conditions the first $\theta$ operation doesn't affect the state 1 [Fig 2.] From the initial state 1 we can then compute the known lanes in state 2 after $\theta, \rho$ and $\pi$, as well as the positions of the unknown lanes.
 \newpar
 The change of state from state 1 to state 2 shows the movement of lanes in detail, the number shown in round brackets along with the variable in state 2 is due to $\rho$. Imposing the previous conditions we still have 7*64 degrees of freedom for the message, which is greater than the number of bits of the hash output i.e. 6*64, so we can expect to find atleast one solution.\newline
