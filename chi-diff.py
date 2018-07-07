@@ -1,7 +1,7 @@
 from random import randrange as r
 
 
-def pi(x,y,z):
+def pi(x,y,z=0):
     """
         Apply Pi on lane at x,y
     """
@@ -88,6 +88,39 @@ def trail(w):
                     a02 = (x2, y2, z2)
                     a03 = (x2, y0, z2)
                     print(a00, a01, a02, a03)
+
+def kernel_vortex(w):
+    """
+        Section 2.4.5 Pg 27.
+    """
+    # no. of points, will vary if result not found
+    e2 = 4*4
+    # need to generate e2 no. of points
+    points = []
+    for x in range(5):
+        for y in range(5):
+            points.append((x, y))
+    c = 0
+    for (x0, y0) in points:
+        for (x1, y1) in points:
+            for (x2, y2) in points:
+                for (x3, y3) in points:
+                    for (x4, y4) in points:
+                        for (x5, y5) in points:
+                            # from I, II and III
+                            if x0 == x1 and x2 == x3 and x4 == x5\
+                            and y1 == y2 and y3 == y4 and y5 == y0:
+                                # z0 == z1 and z2 == z3 and z4 == z5:
+                                # from IV
+                                if (rho(x1, y1, w) + rho(x3, y3, w) + rho(x5, y5, w) - rho(x4, y4, w) - rho(x2, y2, w) - rho(x0, y0, w)) % w == 0:
+                                    if pi(x1 , y1)[0] == pi(x2, y2)[0] and pi(x3 , y3)[0] == pi(x4, y4)[0] and pi(x5, y5)[0] == pi(x0, y0)[0]:
+                                        c += 1
+                                        # print("found!")
+    print(c)
+
+
+
+
 
 
 if __name__ == "__main__":
