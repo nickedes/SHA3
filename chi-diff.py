@@ -1,6 +1,24 @@
 from random import randrange as r
 
 
+def pi(x,y,z):
+    """
+        Apply Pi on lane at x,y
+    """
+    X = (0*x + 1*y) % 5
+    Y = (2*x + 3*y) % 5
+    return (X, Y, z)
+
+
+def applyrho(x,y,z, w):
+    """
+        Apply rho mapping
+    """
+    rho_c = rho(x, y, w)
+    Z = (z + rho_c) % w
+    return (x, y, Z)
+
+
 def chi(A):
     """
     Chi step mapping - XOR each bit with Non linear operation of two other bits in the same row
