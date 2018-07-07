@@ -1,3 +1,6 @@
+from random import randrange as r
+
+
 def chi(A):
     """
     Chi step mapping - XOR each bit with Non linear operation of two other bits in the same row
@@ -50,8 +53,7 @@ def rho(x, y, w):
     return rho_cons[x][y] % w
 
 
-def trail():
-    w = 64
+def trail(w):
     points = []
     for x in range(5):
         for y in range(5):
