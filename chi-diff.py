@@ -58,15 +58,18 @@ def trail(w):
     for x in range(5):
         for y in range(5):
             points.append((x, y))
-        for (x0, y0) in points:
-            for (x2, y2) in points:
-                if (x0, y0) != (x2, y2):
-                    a00 = (x0, y0)#, z0) 
-                    a01 = (x0, y2)#, z0)
-                    a02 = (x2, y2)#, z2)
-                    a03 = (x2, y0)#, z2)
-                    if (rho(x0, y0, w) - rho(x0, y2, w) + rho(x2, y2, w) - rho(x2, y0, w)) % w == 0:
-                        print(x0, y0, x2, y2)
+    for (x0, y0) in points:
+        for (x2, y2) in points:
+            if x0 != x2 and y0 != y2:
+                if (rho(x0, y0, w) - rho(x0, y2, w) + rho(x2, y2, w) - rho(x2, y0, w)) % w == 0:
+                    # choose z0 freely
+                    z0 = r(0, 5)
+                    z2 = (z0 + rho(x0, y2, w) - rho(x2, y2, w)) % w
+                    a00 = (x0, y0, z0)
+                    a01 = (x0, y2, z0)
+                    a02 = (x2, y2, z2)
+                    a03 = (x2, y0, z2)
+                    print(a00, a01, a02, a03)
 
 
 if __name__ == "__main__":
