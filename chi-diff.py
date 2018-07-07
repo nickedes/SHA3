@@ -74,4 +74,10 @@ def trail(w):
 
 if __name__ == "__main__":
     # main()
-    trail()
+    # define w
+    print("For w = 16 :")
+    w = 16
+    trail(w)
+    print("For w = 64 :")
+    w = 64
+    trail(w)
