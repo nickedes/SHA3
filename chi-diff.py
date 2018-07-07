@@ -48,3 +48,25 @@ def rho(x, y, w):
     """
     rho_cons = [[0, 36, 3, 105, 210], [1, 300, 10, 45, 66], [190, 6, 171, 253, 15], [28, 55, 153, 21, 120], [91, 276, 231, 136, 78]]
     return rho_cons[x][y] % w
+
+
+def trail():
+    w = 64
+    points = []
+    for x in range(5):
+        for y in range(5):
+            points.append((x, y))
+        for (x0, y0) in points:
+            for (x2, y2) in points:
+                if (x0, y0) != (x2, y2):
+                    a00 = (x0, y0)#, z0) 
+                    a01 = (x0, y2)#, z0)
+                    a02 = (x2, y2)#, z2)
+                    a03 = (x2, y0)#, z2)
+                    if (rho(x0, y0, w) - rho(x0, y2, w) + rho(x2, y2, w) - rho(x2, y0, w)) % w == 0:
+                        print(x0, y0, x2, y2)
+
+
+if __name__ == "__main__":
+    # main()
+    trail()
