@@ -8,8 +8,8 @@ def allunique(a0, a1, a2, a3, a4, a5):
     """
     vortex = list((a0, a1, a2, a3, a4, a5))
     if len(vortex) == len( set(vortex) ):
-        return true
-    return false
+        return True
+    return False
 
 
 def pi(x,y,z=0):
@@ -147,12 +147,10 @@ def kernel_vortex(w):
                                             continue
                                         c += 1
                                         print(a00, a01, a02, a03, a04, a05)
+                                        trail.append( [a00, a01, a02, a03, a04, a05] )
                                         # return
     print("No. of trails, Character of Vortex : ",c, Cv)
-
-
-
-
+    print(trail)
 
 
 if __name__ == "__main__":
