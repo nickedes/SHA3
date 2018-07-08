@@ -104,7 +104,8 @@ def kernel_vortex(w):
             points.append((x, y))
     c = 0
     # character of the vortex
-    cv = -1
+    Cv = -1
+    trail = []
     for (x0, y0) in points:
         for (x1, y1) in points:
             for (x2, y2) in points:
@@ -112,18 +113,31 @@ def kernel_vortex(w):
                     for (x4, y4) in points:
                         for (x5, y5) in points:
                             # from I, II and III
-                            if x0 == x1 and x2 == x3 and x4 == x5\
-                            and y1 == y2 and y3 == y4 and y5 == y0:
-                                # z0 == z1 and z2 == z3 and z4 == z5:
+                            if x0 == x1 and x2 == x3 and x4 == x5 and y1 == y2 and y3 == y4 and y5 == y0:
+                                # z0 == z1 and z2 == z3 and z4 == z5
                                 # from IV
                                 dv = rho(x1, y1, w) + rho(x3, y3, w) + rho(x5, y5, w) - rho(x4, y4, w) - rho(x2, y2, w) - rho(x0, y0, w)
                                 if dv % w == 0:
-                                    if dv > 0:
-                                        cv = max(cv, log2(dv))
                                     if pi(x1 , y1)[0] == pi(x2, y2)[0] and pi(x3 , y3)[0] == pi(x4, y4)[0] and pi(x5, y5)[0] == pi(x0, y0)[0]:
+                                        # choose z0 freely
+                                        z0 = r(0, 5)
+                                        z2 = (z0 + rho(x1, y1, w) - rho(x2, y2, w)) % w
+                                        z4 = (z2 + rho(x1, y1, w) - rho(x2, y2, w)) % w
+                                        # verification step
+                                        if z0 != ( (z4 + rho(x5, y5, w) - rho(x0, y0, w)) % w ):
+                                            continue
+                                        if dv > 0:
+                                            Cv = max(Cv, log2(dv))
+                                        a00 = (x0, y0, z0)
+                                        a01 = (x1, y1, z0)
+                                        a02 = (x2, y2, z2)
+                                        a03 = (x3, y3, z2)
+                                        a04 = (x4, y4, z4)
+                                        a05 = (x5, y5, z4)
                                         c += 1
-                                        # print("found!")
-    print(c, cv)
+                                        print(a00, a01, a02, a03, a04, a05)
+                                        # return
+    print("No. of trails, Character of Vortex : ",c, Cv)
 
 
 
