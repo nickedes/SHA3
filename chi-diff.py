@@ -114,7 +114,7 @@ def kernel_vortex(w):
     c = 0
     # character of the vortex
     Cv = -1
-    trail = []
+    trails = []
     for (x0, y0) in points:
         for (x1, y1) in points:
             for (x2, y2) in points:
@@ -133,8 +133,8 @@ def kernel_vortex(w):
                                         z2 = (z0 + rho(x1, y1, w) - rho(x2, y2, w)) % w
                                         z4 = (z2 + rho(x1, y1, w) - rho(x2, y2, w)) % w
                                         # verification step
-                                        if z0 != ( (z4 + rho(x5, y5, w) - rho(x0, y0, w)) % w ):
-                                            continue
+                                        # if z0 != ( (z4 + rho(x5, y5, w) - rho(x0, y0, w)) % w ):
+                                        #     continue
                                         if dv > 0:
                                             Cv = max(Cv, log2(dv))
                                         a00 = (x0, y0, z0)
@@ -146,11 +146,11 @@ def kernel_vortex(w):
                                         if not allunique(a00, a01, a02, a03, a04, a05):
                                             continue
                                         c += 1
-                                        print(a00, a01, a02, a03, a04, a05)
-                                        trail.append( [a00, a01, a02, a03, a04, a05] )
-                                        # return
+                                        # print(a00, a01, a02, a03, a04, a05)
+                                        trails.append( [a00, a01, a02, a03, a04, a05] )
+                                        return trails
     print("No. of trails, Character of Vortex : ",c, Cv)
-    print(trail)
+    return trails
 
 
 if __name__ == "__main__":
