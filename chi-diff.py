@@ -3,6 +3,15 @@ from math import log2
 import sys
 
 
+def uniqueCheck(a0, a1, a2, a3, a4, a5):
+    """
+    """
+    vortex = list((a0, a1, a2, a3, a4, a5))
+    if len(vortex) == len( set(vortex) ):
+        return true
+    return false
+
+
 def pi(x,y,z=0):
     """
         Apply Pi on lane at x,y
@@ -134,6 +143,8 @@ def kernel_vortex(w):
                                         a03 = (x3, y3, z2)
                                         a04 = (x4, y4, z4)
                                         a05 = (x5, y5, z4)
+                                        if not uniqueCheck(a00, a01, a02, a03, a04, a05):
+                                            continue
                                         c += 1
                                         print(a00, a01, a02, a03, a04, a05)
                                         # return
