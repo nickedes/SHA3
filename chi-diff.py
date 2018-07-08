@@ -1,4 +1,6 @@
 from random import randrange as r
+from math import log2
+import sys
 
 
 def pi(x,y,z=0):
@@ -101,6 +103,8 @@ def kernel_vortex(w):
         for y in range(5):
             points.append((x, y))
     c = 0
+    # character of the vortex
+    cv = -1
     for (x0, y0) in points:
         for (x1, y1) in points:
             for (x2, y2) in points:
@@ -112,11 +116,14 @@ def kernel_vortex(w):
                             and y1 == y2 and y3 == y4 and y5 == y0:
                                 # z0 == z1 and z2 == z3 and z4 == z5:
                                 # from IV
-                                if (rho(x1, y1, w) + rho(x3, y3, w) + rho(x5, y5, w) - rho(x4, y4, w) - rho(x2, y2, w) - rho(x0, y0, w)) % w == 0:
+                                dv = rho(x1, y1, w) + rho(x3, y3, w) + rho(x5, y5, w) - rho(x4, y4, w) - rho(x2, y2, w) - rho(x0, y0, w)
+                                if dv % w == 0:
+                                    if dv > 0:
+                                        cv = max(cv, log2(dv))
                                     if pi(x1 , y1)[0] == pi(x2, y2)[0] and pi(x3 , y3)[0] == pi(x4, y4)[0] and pi(x5, y5)[0] == pi(x0, y0)[0]:
                                         c += 1
                                         # print("found!")
-    print(c)
+    print(c, cv)
 
 
 
