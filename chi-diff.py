@@ -165,4 +165,11 @@ if __name__ == "__main__":
     w = 64
     print("For w = :", w)
     trail(w)
-    kernel_vortex(w)
+    trails = kernel_vortex(w)
+    x = trails[0]
+    print("a0 : ", x)
+    a1 = []
+    for tup in x:
+        t = applyrho( tup[0], tup[1], tup[2], w )
+        a1.append( pi( t[0], t[1], t[2] ) )
+    print("a1 : ", a1)
