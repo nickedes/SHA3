@@ -1,3 +1,5 @@
+from chi_diff import *
+
 
 def active6(w):
     """
@@ -49,7 +51,7 @@ def active6(w):
                                                 c += 1
                                                 # print(a00, a01, a02, a03, a04, a05)
                                                 trails.append( [a00, a01, a02, a03, a04, a05] )
-    print("No. of trails, Character of Vortex : ",c, Cv)
+    print("No. of trails = ", c, ", Character of Vortex : ", Cv)
     return trails
 
 def kernel_vortex(e, w):
