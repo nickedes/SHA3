@@ -171,10 +171,11 @@ if __name__ == "__main__":
     trail(w)
     trails = kernel_vortex(w)
     if len(trails) > 0:
-        x = trails[0]
-        print("a0 : ", x)
-        a1 = []
-        for tup in x:
-            t = applyrho( tup[0], tup[1], tup[2], w )
-            a1.append( pi( t[0], t[1], t[2] ) )
-        print("a1 : ", a1)
+        for x in trails:
+            print("a0 : ", x)
+            a1 = []
+            for tup in x:
+                t = applyrho( tup[0], tup[1], tup[2], w )
+                a1.append( pi( t[0], t[1], t[2] ) )
+            print("a1 : ", a1)
+            print("====================================================================================")
