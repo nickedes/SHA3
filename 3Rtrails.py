@@ -1,4 +1,5 @@
 from chi_diff import *
+from main import round_iota
 
 
 def active6(w):
@@ -54,6 +55,7 @@ def active6(w):
     print("No. of trails = ", c, ", Character of Vortex : ", Cv)
     return trails
 
+
 def kernel_vortex(e, w):
     """
         Section 2.4.5 Pg 27.
@@ -81,4 +83,9 @@ if __name__ == "__main__":
                 t = applyrho( tup[0], tup[1], tup[2], w )
                 a1.append( pi( t[0], t[1], t[2] ) )
             print("a1 : ", a1)
+            a1State = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
+            for bit in a1:
+                x,y,z = bit
+                a1State[x][y][z] = 1
+            a2 = round_iota(a1State, w)
             print("====================================================================================")

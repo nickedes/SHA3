@@ -173,6 +173,13 @@ def round(A, i, w):
     return iota(chi(pi(rho(theta(A, w), w), w), w), i, w)
 
 
+# round without iota
+def round_iota(A, w):
+    """
+    """
+    return chi(pi(rho(theta(A, w), w), w), w)
+
+
 def keccak_p(S, nr):
     """
     """
