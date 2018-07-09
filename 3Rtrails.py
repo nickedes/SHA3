@@ -104,28 +104,28 @@ def active8(w):
                                         if dv % w == 0:
                                             if pi(x1 , y1)[0] == pi(x2, y2)[0] and pi(x3 , y3)[0] == pi(x4, y4)[0] and pi(x5, y5)[0] == pi(x6, y6)[0] and pi(x7, y7)[0] == pi(x0, y0)[0]:
                                                 # choose z0 freely
-                                                z0 = r(0, 5)
-                                                z2 = (z0 + rho(x1, y1, w) - rho(x2, y2, w)) % w
-                                                z4 = (z2 + rho(x3, y3, w) - rho(x4, y4, w)) % w
-                                                z6 = (z4 + rho(x5, y5, w) - rho(x6, y6, w)) % w
-                                                # verification step
-                                                if z0 != ( (z6 + rho(x7, y7, w) - rho(x0, y0, w)) % w ):
-                                                    continue
-                                                if dv > 0:
-                                                    Cv = max(Cv, log2(dv))
-                                                a00 = (x0, y0, z0)
-                                                a01 = (x1, y1, z0)
-                                                a02 = (x2, y2, z2)
-                                                a03 = (x3, y3, z2)
-                                                a04 = (x4, y4, z4)
-                                                a05 = (x5, y5, z4)
-                                                a06 = (x6, y6, z6)
-                                                a07 = (x7, y7, z6)
-                                                if not allunique2(a00, a01, a02, a03, a04, a05, a06, a07):
-                                                    continue
-                                                c += 1
-                                                # print(a00, a01, a02, a03, a04, a05)
-                                                trails.append( [a00, a01, a02, a03, a04, a05, a06, a07] )
+                                                for z0 in range(0, 5):
+                                                    z2 = (z0 + rho(x1, y1, w) - rho(x2, y2, w)) % w
+                                                    z4 = (z2 + rho(x3, y3, w) - rho(x4, y4, w)) % w
+                                                    z6 = (z4 + rho(x5, y5, w) - rho(x6, y6, w)) % w
+                                                    # verification step
+                                                    if z0 != (z6 + rho(x7, y7, w) - rho(x0, y0, w)) % w:
+                                                        continue
+                                                    if dv > 0:
+                                                        Cv = max(Cv, log2(dv))
+                                                    a00 = (x0, y0, z0)
+                                                    a01 = (x1, y1, z0)
+                                                    a02 = (x2, y2, z2)
+                                                    a03 = (x3, y3, z2)
+                                                    a04 = (x4, y4, z4)
+                                                    a05 = (x5, y5, z4)
+                                                    a06 = (x6, y6, z6)
+                                                    a07 = (x7, y7, z6)
+                                                    if not allunique2(a00, a01, a02, a03, a04, a05, a06, a07):
+                                                        continue
+                                                    c += 1
+                                                    # print(a00, a01, a02, a03, a04, a05)
+                                                    trails.append( [a00, a01, a02, a03, a04, a05, a06, a07] )
     print("No. of trails = ", c, ", Character of Vortex : ", Cv)
     return trails
 
