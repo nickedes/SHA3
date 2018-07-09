@@ -81,10 +81,16 @@ def active8(w):
     trails = []
     for (x0, y0) in points:
         for (x1, y1) in points:
+            if x0 != x1:
+                continue
             for (x2, y2) in points:
                 for (x3, y3) in points:
+                    if x2 != x3:
+                        continue
                     for (x4, y4) in points:
                         for (x5, y5) in points:
+                            if x4 != x5:
+                                continue
                             for (x6, y6) in points:
                                 for (x7, y7) in points:
                                     # from I, II and III
@@ -133,7 +139,8 @@ def kernel_vortex(e, w):
     if e == 6:
         return active6(w)
     elif e == 8:
-        pass
+        return active8(w)
+
     
 
 if __name__ == "__main__":
