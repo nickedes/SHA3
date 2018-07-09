@@ -147,7 +147,7 @@ if __name__ == "__main__":
     # define w
     w = 64
     # no. of points, will vary if result not found
-    e = 6
+    e = 8
     print("For w = :", w)
     trails = kernel_vortex(e, w)
     if len(trails) > 0:
