@@ -1,5 +1,17 @@
 from chi_diff import *
-from main import round_iota
+from main import round_iota, round_iotaChi
+from kernel import satisfyCon, getOneBitPos
+
+
+def createState(trail, w = 64):
+    """
+        Create a State from differential trail
+    """
+    A = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
+    for bit in trail:
+        x,y,z = bit
+        A[x][y][z] = 1
+    return A
 
 
 def allunique2(a0, a1, a2, a3, a4, a5, a6, a7):
