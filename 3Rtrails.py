@@ -60,7 +60,7 @@ def active6(w):
                                             z2 = (z0 + rho(x1, y1, w) - rho(x2, y2, w)) % w
                                             z4 = (z2 + rho(x3, y3, w) - rho(x4, y4, w)) % w
                                             # verification step
-                                            if z0 != ((z4 + rho(x5, y5, w) - rho(x0, y0, w)) % w):
+                                            if z0 != (z4 + rho(x5, y5, w) - rho(x0, y0, w)) % w:
                                                 continue
                                             if dv > 0:
                                                 Cv = max(Cv, log2(dv))
