@@ -142,6 +142,38 @@ def active8(w):
     return trails
 
 
+def verify_trails(trails, w = 64):
+    """
+    """
+    # differential path requirements
+    # input diff cant have these lanes
+    negative_init = [(3,2), (4,2), (0,3), (1,3), (2,3), (3,3), (4,3), (0,4) , (1,4), (2,4), (3,4), (4,4)]
+
+    negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0), (0,1)]
+    i = 0
+    for trail in trails:
+        i+=1
+        for tupl in trail:
+            if tupl in negative_init:
+                print("Neg : ",i)
+                break
+        a0 = createState(trail, w)
+        print("a0 : ", trail)
+        # 1st round
+        a1 = round_iotaChi(a0, w)
+        print("a1 : ", getOneBitPos(a1, w))
+
+        # 2nd round
+        a2 = round_iotaChi(a1, w)
+        delta3 = getOneBitPos(a2, w)
+        print("a2 : ", delta3)
+        if satisfyCon(delta3, negative_out):
+            print("found")
+            input()
+        else:
+            print(i)
+
+
 def kernel_vortex(e, w):
     """
         Section 2.4.5 Pg 27.
