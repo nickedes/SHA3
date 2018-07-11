@@ -7,7 +7,7 @@ def createState(trail, w = 64):
     """
         Create a State from differential trail
     """
-    A = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
+    A = [[[0 for k in range(w)] for j in range(5)] for i in range(5)]
     for bit in trail:
         x,y,z = bit
         A[x][y][z] = 1
@@ -149,13 +149,13 @@ def verify_trails(trails, w = 64):
     # input diff cant have these lanes
     negative_init = [(3,2), (4,2), (0,3), (1,3), (2,3), (3,3), (4,3), (0,4), (1,4), (2,4), (3,4), (4,4)]
 
-    # negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0), (0,1)]
-    negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0)]
+    negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0), (0,1)]
+    # negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0)]
 
     # for keccak 256
-    negative_init = [(2,3), (3,3), (4,3), (0,4), (1,4), (2,4), (3,4), (4,4)]
+    # negative_init = [(2,3), (3,3), (4,3), (0,4), (1,4), (2,4), (3,4), (4,4)]
 
-    negative_out = [(0,0), (1,0), (2,0), (3,0)]
+    # negative_out = [(0,0), (1,0), (2,0), (3,0)]
     i = 0
     for trail in trails:
         i+=1

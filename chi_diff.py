@@ -28,7 +28,7 @@ def pi(x,y,z=0, w = 64):
     return getOneBitPos(A, w)[0]
 
 
-def applyrho(x,y,z, w):
+def applyrho(x,y,z, w = 64):
     """
         Apply rho mapping
     """
