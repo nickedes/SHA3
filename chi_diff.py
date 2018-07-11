@@ -1,6 +1,8 @@
 from random import randrange as r
 from math import log2
 import sys
+from kernel import getOneBitPos
+import main
 
 
 def allunique(a0, a1, a2, a3, a4, a5):

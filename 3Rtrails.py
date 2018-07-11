@@ -1,5 +1,5 @@
 from chi_diff import *
-from main import round_iota, round_iotaChi
+from main import round_iota, round_iotaChi, round_iotaChiTheta
 from kernel import satisfyCon, getOneBitPos
 
 
@@ -54,7 +54,7 @@ def active6(w):
                                 dv = rho(x0, y0, w) + rho(x2, y2, w) + rho(x4, y4, w) - (rho(x1, y1, w) + rho(x3, y3, w) + rho(x5, y5, w))
                                 dv = abs(dv)
                                 if dv % w == 0:
-                                    if pi(x1 , y1)[0] == pi(x2, y2)[0] and pi(x3 , y3)[0] == pi(x4, y4)[0] and pi(x5, y5)[0] == pi(x0, y0)[0]:
+                                    if pi(x1, y1, 0, w)[0] == pi(x2, y2, 0, w)[0] and pi(x3, y3, 0, w)[0] == pi(x4, y4, 0, w)[0] and pi(x5, y5, 0, w)[0] == pi(x0, y0, 0, w)[0]:
                                         for z0 in range(0, 5):
                                             # choose z0 freely
                                             z2 = (z0 + rho(x1, y1, w) - rho(x2, y2, w)) % w
@@ -114,7 +114,7 @@ def active8(w):
                                         # dv = rho(x0, y0, w) + rho(x2, y2, w) + rho(x4, y4, w) - (rho(x1, y1, w) + rho(x3, y3, w) + rho(x5, y5, w))
                                         dv = abs(dv)
                                         if dv % w == 0:
-                                            if pi(x1 , y1)[0] == pi(x2, y2)[0] and pi(x3 , y3)[0] == pi(x4, y4)[0] and pi(x5, y5)[0] == pi(x6, y6)[0] and pi(x7, y7)[0] == pi(x0, y0)[0]:
+                                            if pi(x1 , y1,0, w)[0] == pi(x2, y2,0, w)[0] and pi(x3 , y3,0, w)[0] == pi(x4, y4,0, w)[0] and pi(x5, y5,0, w)[0] == pi(x6, y6,0, w)[0] and pi(x7, y7,0, w)[0] == pi(x0, y0,0, w)[0]:
                                                 # choose z0 freely
                                                 for z0 in range(0, 5):
                                                     z2 = (z0 + rho(x1, y1, w) - rho(x2, y2, w)) % w
@@ -145,28 +145,38 @@ def active8(w):
 def verify_trails(trails, w = 64):
     """
     """
-    # differential path requirements
+    # differential path requirements for keccak-384
     # input diff cant have these lanes
-    negative_init = [(3,2), (4,2), (0,3), (1,3), (2,3), (3,3), (4,3), (0,4) , (1,4), (2,4), (3,4), (4,4)]
+    negative_init = [(3,2), (4,2), (0,3), (1,3), (2,3), (3,3), (4,3), (0,4), (1,4), (2,4), (3,4), (4,4)]
 
-    negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0), (0,1)]
+    # negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0), (0,1)]
+    negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0)]
+
+    # for keccak 256
+    negative_init = [(2,3), (3,3), (4,3), (0,4), (1,4), (2,4), (3,4), (4,4)]
+
+    negative_out = [(0,0), (1,0), (2,0), (3,0)]
     i = 0
     for trail in trails:
         i+=1
-        for tupl in trail:
-            if tupl in negative_init:
-                print("Neg : ",i)
-                break
+        if not satisfyCon(trail, negative_init):
+            # print("Neg : ",trail)
+            continue
+
         a0 = createState(trail, w)
         print("a0 : ", trail)
+        
         # 1st round
-        a1 = round_iotaChi(a0, w)
+        a1 = round_iotaChiTheta(a0, w)
         print("a1 : ", getOneBitPos(a1, w))
+        # break
 
         # 2nd round
-        a2 = round_iotaChi(a1, w)
+        a2 = round_iotaChiTheta(a1, w)
         delta3 = getOneBitPos(a2, w)
         print("a2 : ", delta3)
+        
+        # input()
         if satisfyCon(delta3, negative_out):
             print("found")
             input()
@@ -191,7 +201,7 @@ if __name__ == "__main__":
     # define w
     w = 64
     # no. of points, will vary if result not found
-    e = 6
+    e = 8
     print("For w = :", w)
     trails = kernel_vortex(e, w)
     verify_trails(trails, w)
