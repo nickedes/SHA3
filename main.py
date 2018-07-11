@@ -174,6 +174,13 @@ def round(A, i, w):
 
 
 # round without iota,chi
+def round_iotaChiTheta(A, w):
+    """
+    """
+    return pi(rho(A, w), w)
+
+
+# round without iota,chi
 def round_iotaChi(A, w):
     """
     """

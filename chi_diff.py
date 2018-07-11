@@ -14,13 +14,18 @@ def allunique(a0, a1, a2, a3, a4, a5):
     return False
 
 
-def pi(x,y,z=0):
+def pi(x,y,z=0, w = 64):
     """
         Apply Pi on lane at x,y
     """
     X = (0*x + 1*y) % 5
     Y = (2*x + 3*y) % 5
     return (X, Y, z)
+    A = [[[0 for k in range(w)] for j in range(5)] for i in range(5)]
+    A[x][y][z] = 1
+    A = main.pi(A, w)
+    # as, below returns a list of tuples
+    return getOneBitPos(A, w)[0]
 
 
 def applyrho(x,y,z, w):
@@ -115,6 +120,6 @@ if __name__ == "__main__":
             a1 = []
             for tup in x:
                 t = applyrho( tup[0], tup[1], tup[2], w )
-                a1.append( pi( t[0], t[1], t[2] ) )
+                a1.append( pi( t[0], t[1], t[2], w ) )
             print("a1 : ", a1)
             print("====================================================================================")
