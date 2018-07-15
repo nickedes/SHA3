@@ -201,22 +201,22 @@ if __name__ == "__main__":
     # define w
     w = 64
     # no. of points, will vary if result not found
-    e = 8
+    e = 6
     print("For w = :", w)
     trails = kernel_vortex(e, w)
-    # verify_trails(trails, w)
-    if len(trails) > 0:
-        for x in trails:
-            print("a0 : ", x)
-            a1 = []
-            for tup in x:
-                t = applyrho( tup[0], tup[1], tup[2], w )
-                a1.append( pi( t[0], t[1], t[2] ) )
-            print("a1 : ", a1)
-            a1State = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
-            for bit in a1:
-                x,y,z = bit
-                a1State[x][y][z] = 1
-            a2 = round_iotaChi(a1State, w)
-            print("a2 : ",getOneBitPos(a2, w))
-            print("====================================================================================")
+    verify_trails(trails, w)
+    # if len(trails) > 0:
+    #     for x in trails:
+    #         print("a0 : ", x)
+    #         a1 = []
+    #         for tup in x:
+    #             t = applyrho( tup[0], tup[1], tup[2], w )
+    #             a1.append( pi( t[0], t[1], t[2] ) )
+    #         print("a1 : ", a1)
+    #         a1State = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
+    #         for bit in a1:
+    #             x,y,z = bit
+    #             a1State[x][y][z] = 1
+    #         a2 = round_iotaChi(a1State, w)
+    #         print("a2 : ",getOneBitPos(a2, w))
+    #         print("====================================================================================")
