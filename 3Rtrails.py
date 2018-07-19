@@ -147,15 +147,15 @@ def verify_trails(trails, w = 64):
     """
     # differential path requirements for keccak-384
     # input diff cant have these lanes
-    negative_init = [(3,2), (4,2), (0,3), (1,3), (2,3), (3,3), (4,3), (0,4), (1,4), (2,4), (3,4), (4,4)]
+    # negative_init = [(3,2), (4,2), (0,3), (1,3), (2,3), (3,3), (4,3), (0,4), (1,4), (2,4), (3,4), (4,4)]
 
-    negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0), (0,1)]
+    # negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0), (0,1)]
     # negative_out = [(0,0), (1,0), (2,0), (3,0), (4,0)]
 
     # for keccak 256
-    # negative_init = [(2,3), (3,3), (4,3), (0,4), (1,4), (2,4), (3,4), (4,4)]
+    negative_init = [(2,3), (3,3), (4,3), (0,4), (1,4), (2,4), (3,4), (4,4)]
 
-    # negative_out = [(0,0), (1,0), (2,0), (3,0)]
+    negative_out = [(0,0), (1,0), (2,0), (3,0)]
     i = 0
     for trail in trails:
         i+=1
@@ -164,11 +164,11 @@ def verify_trails(trails, w = 64):
             continue
 
         a0 = createState(trail, w)
-        print("a0 : ", trail)
+        # print("a0 : ", trail)
         
         # 1st round
         a1 = round_iotaChiTheta(a0, w)
-        print("a1 : ", getOneBitPos(a1, w))
+        # print("a1 : ", getOneBitPos(a1, w))
         # break
 
         # 2nd round
@@ -181,6 +181,7 @@ def verify_trails(trails, w = 64):
             print("found")
             input()
         else:
+            # print("T : ",trail)
             print(i)
 
 
