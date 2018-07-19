@@ -167,12 +167,12 @@ def verify_trails(trails, w = 64):
         # print("a0 : ", trail)
         
         # 1st round
-        a1 = round_iotaChiTheta(a0, w)
+        a1 = round_iotaChi(a0, w)
         # print("a1 : ", getOneBitPos(a1, w))
         # break
 
         # 2nd round
-        a2 = round_iotaChiTheta(a1, w)
+        a2 = round_iotaChi(a1, w)
         delta3 = getOneBitPos(a2, w)
         print("a2 : ", delta3)
         
