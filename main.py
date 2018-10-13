@@ -288,21 +288,22 @@ def SHAKEc(c, M, d, stateSize,nrounds):
 
 
 # Define state !!
-
-# r bits
-r = 40
+state_size = 800
+# r + c = state_size
 # c bits
-c = 160
+c = 384
+# r bits
+r = state_size - c
 # no. of rounds
 nr = 2
-
+d = c//2
+# message
 m = ""
 # m = ""
 
-d = c//2
 
 l = SHA3_d(m, d, r+c, nr)
-# print("Message : ", m)
-# print("Digest:")
+print("Message : ", m)
+print("Digest:")
 
-# printformat(l)
+printformat(l)
