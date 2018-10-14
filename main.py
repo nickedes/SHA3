@@ -3,6 +3,7 @@ from math import log2
 
 def printformat(S):
     """
+        Input is binary digest
     """
     out = ""
     for i in range(len(S)//8):
