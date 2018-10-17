@@ -114,6 +114,102 @@ def piInverse(A, w):
     return A_
 
 
+def applyChi(slicei):
+    """
+    Apply row operation on a slice
+    """
+    A = slicei
+    A_ = [[0 for y in range(5)] for x in range(5)]
+    for x in range(5):
+        for y in range(5):
+            A_[x][y] = A[x][y] ^ ((A[(x+1) % 5][y] ^ 1) * A[(x+2) % 5][y])
+    return A_
+
+
+def applytheta(slice1, slice2):
+    """
+        Apply theta for 2 slices
+    """
+    C = [[0 for z in range(2)] for x in range(5)]
+    for x in range(5):
+        for z in range(2):
+            if z == 0:
+                A = slice1
+            else
+                A = slice2
+            C[x][z] = A[x][0] ^ A[x][1] ^ A[x][2] ^ A[x][3] ^ A[x][4]
+
+    D = [[0 for z in range(2)] for x in range(5)]
+
+    for x in range(5):
+        z = 1
+        D[x][z] = C[(x-1) % 5][z] ^ C[(x+1) % 5][(z-1) % 2]
+
+    A_ = [[[0 for z in range(2)] for y in range(5)] for x in range(5)]
+
+    for x in range(5):
+        for y in range(5):
+            z = 1
+            A = slice1
+            A_[x][y][z] = A[x][y] ^ D[x][z]
+    return A_
+
+def check( slice0, slice1, A, i):
+    """
+    """
+    slice0 = applyChi(slice0)
+    slice1 = applyChi(slice1)
+
+    state = applytheta(slice0, slice1)
+
+
+
+def slices3(A, i):
+    """
+    """
+    for a00 in range(2):
+        for a01 in range(2):
+                for a10 in range(2):
+                    for a11 in range(2):
+                            for a20 in range(2):
+                                for a21 in range(2):
+                                        for b00 in range(2):
+                                            for b01 in range(2):
+                                                    for b10 in range(2):
+                                                        for b11 in range(2):
+                                                                for b20 in range(2):
+                                                                    for b21 in range(2):
+                                                                            for c00 in range(2):
+                                                                                for c01 in range(2):
+                                                                                        for c10 in range(2):
+                                                                                            for c11 in range(2):
+                                                                                                    for c20 in range(2):
+                                                                                                        for c21 in range(2):
+                                                                                                                for e00 in range(2):
+                                                                                                                    for e01 in range(2):
+                                                                                                                            for e10 in range(2):
+                                                                                                                                for e11 in range(2):
+                                                                                                                                    # Check these 22 variables first
+                                                                                                                                    slice0 = [ [a00, b20, c20, 0, 0], [0, e10, a10, 0, 0], [b00, c10, 0, 0, 0], [e00, a20, b10, 0, 0], [c00, 0, 0, 0, 0]]
+                                                                                                                                    slice1 = [ [a01, b21, c21, 0, 0], [0, e11, a11, 0, 0], [b01, c11, 0, 0, 0], [e01, a21, b11, 0, 0], [c01, 0, 0, 0, 0]]
+
+                                                                                                                                    result = check( slice0, slice1, A, i + 1)
+
+                                                                                                                                    if result:
+                                                                                                                                        for a02 in range(2):
+                                                                                                                                            for a12 in range(2):
+                                                                                                                                                for a22 in range(2):
+                                                                                                                                                    for b02 in range(2):
+                                                                                                                                                        for b12 in range(2):
+                                                                                                                                                            for b22 in range(2):
+                                                                                                                                                                for c02 in range(2):
+                                                                                                                                                                    for c12 in range(2):
+                                                                                                                                                                        for c22 in range(2):
+                                                                                                                                                                                for e02 in range(2):
+                                                                                                                                                                                    for e12 in range(2):
+
+
+
 if __name__ == '__main__':
     # size of state
     state_size = 800
