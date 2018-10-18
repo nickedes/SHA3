@@ -1,4 +1,5 @@
 from main import *
+import itertools
 
 
 def getreversePrintformat(digest):
@@ -135,7 +136,7 @@ def applytheta(slice1, slice2):
         for z in range(2):
             if z == 0:
                 A = slice1
-            else
+            else:
                 A = slice2
             C[x][z] = A[x][0] ^ A[x][1] ^ A[x][2] ^ A[x][3] ^ A[x][4]
 
@@ -145,13 +146,14 @@ def applytheta(slice1, slice2):
         z = 1
         D[x][z] = C[(x-1) % 5][z] ^ C[(x+1) % 5][(z-1) % 2]
 
-    A_ = [[[0 for z in range(2)] for y in range(5)] for x in range(5)]
+    A_ = [[0 for y in range(5)] for x in range(5)]
 
     for x in range(5):
         for y in range(5):
             z = 1
             A = slice1
-            A_[x][y][z] = A[x][y] ^ D[x][z]
+            A_[x][y] = A[x][y] ^ D[x][z]
+
     return A_
 
 def check( slice0, slice1, A, i):
@@ -231,4 +233,18 @@ if __name__ == '__main__':
     A = rhoInverse(A, w)
 
     # Now A is State 3, Fig 9
-    print(A)
+    # print(A)
+    # 8 groups of 3 slices
+    slices3groups = []
+    for i in range(0, 24, 3):
+        slices3groups.append( slices3(A, i) )
+    
+    slices6groups = []
+    for i in range(0, 24, 6):
+        slice3_0 = slices3groups[i//3]
+        slice3_1 = slices3groups[i//3 + 1]
+        slices6groups.append( merge3slices(A, i, slice3_0, slice3_1) )
+
+    # deallocate memory from slices3groups
+    del slices3groups # or
+    slices3groups = None
