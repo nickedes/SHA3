@@ -162,54 +162,54 @@ def check( slice0, slice1, A, i):
     slice0 = applyChi(slice0)
     slice1 = applyChi(slice1)
 
-    state = applytheta(slice0, slice1)
+    slicei = applytheta(slice0, slice1)
 
+    if slicei[0][0] == A[0][0][i] and slicei[1][1] == A[1][1][i] and slicei[2][2] == A[2][2][i] and slicei[3][3] == A[3][3][i] and slicei[4][4] == A[4][4][i] and slicei[3][0] == A[3][0][i] and slicei[4][1] == A[4][1][i]:
+        return True
+    return False
 
 
 def slices3(A, i):
     """
     """
-    for a00 in range(2):
-        for a01 in range(2):
-                for a10 in range(2):
-                    for a11 in range(2):
-                            for a20 in range(2):
-                                for a21 in range(2):
-                                        for b00 in range(2):
-                                            for b01 in range(2):
-                                                    for b10 in range(2):
-                                                        for b11 in range(2):
-                                                                for b20 in range(2):
-                                                                    for b21 in range(2):
-                                                                            for c00 in range(2):
-                                                                                for c01 in range(2):
-                                                                                        for c10 in range(2):
-                                                                                            for c11 in range(2):
-                                                                                                    for c20 in range(2):
-                                                                                                        for c21 in range(2):
-                                                                                                                for e00 in range(2):
-                                                                                                                    for e01 in range(2):
-                                                                                                                            for e10 in range(2):
-                                                                                                                                for e11 in range(2):
-                                                                                                                                    # Check these 22 variables first
-                                                                                                                                    slice0 = [ [a00, b20, c20, 0, 0], [0, e10, a10, 0, 0], [b00, c10, 0, 0, 0], [e00, a20, b10, 0, 0], [c00, 0, 0, 0, 0]]
-                                                                                                                                    slice1 = [ [a01, b21, c21, 0, 0], [0, e11, a11, 0, 0], [b01, c11, 0, 0, 0], [e01, a21, b11, 0, 0], [c01, 0, 0, 0, 0]]
+    values = []
+    for a00, a01, a10, a11, a20, a21, b00, b01, b10, b11, b20, b21 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
+        for c00, c01, c10, c11, c20, c21, e00, e01, e10, e11 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
+            # Check these 22 variables first
+            slice0 = [ [a00, b20, c20, 0, 0], [0, e10, a10, 0, 0], [b00, c10, 0, 0, 0], [e00, a20, b10, 0, 0], [c00, 0, 0, 0, 0]]
+            slice1 = [ [a01, b21, c21, 0, 0], [0, e11, a11, 0, 0], [b01, c11, 0, 0, 0], [e01, a21, b11, 0, 0], [c01, 0, 0, 0, 0]]
 
-                                                                                                                                    result = check( slice0, slice1, A, i + 1)
+            result = check( slice0, slice1, A, i + 1)
 
-                                                                                                                                    if result:
-                                                                                                                                        for a02 in range(2):
-                                                                                                                                            for a12 in range(2):
-                                                                                                                                                for a22 in range(2):
-                                                                                                                                                    for b02 in range(2):
-                                                                                                                                                        for b12 in range(2):
-                                                                                                                                                            for b22 in range(2):
-                                                                                                                                                                for c02 in range(2):
-                                                                                                                                                                    for c12 in range(2):
-                                                                                                                                                                        for c22 in range(2):
-                                                                                                                                                                                for e02 in range(2):
-                                                                                                                                                                                    for e12 in range(2):
+            if result:
+                for a02,a12,a22,b02,b12,b22,c02,c12,c22,e02,e12 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
+                    slice1 = [ [a01, b21, c21, 0, 0], [0, e11, a11, 0, 0], [b01, c11, 0, 0, 0], [e01, a21, b11, 0, 0], [c01, 0, 0, 0, 0]]
+                    slice2 = [ [a02, b22, c22, 0, 0], [0, e12, a12, 0, 0], [b02, c12, 0, 0, 0], [e02, a22, b12, 0, 0], [c02, 0, 0, 0, 0]]
 
+                    result2 = check( slice1, slice2, A, i + 2)
+                    if result2:
+                        values.append([a00, a01, a02, a10, a11, a12, a20, a21, a22, b00, b01, b02, b10, b11, b12, b20, b21, b22, c00, c01, c02, c10, c11, c12, c20, c21, c22, e00, e01, e02, e10, e11, e12])
+    return values
+
+
+def merge3slices(A, i, slice3_0, slice3_1):
+    """
+    """
+    values = []
+    for slice3_0i in slice3_0:
+        for slice3_1i in slice3_1:
+            [a00, a01, a02, a10, a11, a12, a20, a21, a22, b00, b01, b02, b10, b11, b12, b20, b21, b22, c00, c01, c02, c10, c11, c12, c20, c21, c22, e00, e01, e02, e10, e11, e12] = slice3_0i
+            [a03, a04, a05, a13, a14, a15, a23, a24, a25, b03, b04, b05, b13, b14, b15, b23, b24, b25, c03, c04, c05, c13, c14, c15, c23, c24, c25, e03, e04, e05, e13, e14, e15] = slice3_1i
+
+            if (a04 + a11) % 2 == a20 and (a05 + a12) % 2 == a21 :
+                slice2 = [ [a02, b22, c22, 0, 0], [0, e12, a12, 0, 0], [b02, c12, 0, 0, 0], [e02, a22, b12, 0, 0], [c02, 0, 0, 0, 0]]
+                slice3 = [ [a03, b23, c23, 0, 0], [0, e13, a13, 0, 0], [b03, c13, 0, 0, 0], [e03, a23, b13, 0, 0], [c03, 0, 0, 0, 0]]
+
+                result = check( slice2, slice3, A, i + 3)
+                # if output slice bits satisfied
+                if result:
+                    values.append([a00, a01, a02, a03, a04, a05, a10, a11, a12, a13, a14, a15, a20, a21, a22, a23, a24, a25, b00, b01, b02, b03, b04, b05, b10, b11, b12, b13, b14, b15, b20, b21, b22, b23, b24, b25, c00, c01, c02, c03, c04, c05, c10, c11, c12, c13, c14, c15, c20, c21, c22, c23, c24, c25, e00, e01, e02, e03, e04, e05, e10, e11, e12, e13, e14, e15])
+    return values
 
 
 if __name__ == '__main__':
