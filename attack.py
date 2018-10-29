@@ -255,8 +255,9 @@ def merge3slices(A, ind, slice3_0, slice3_1):
             i+=1
         while j < m:
             if phi3_0 ( slice3_0[i] ) == phi3_1 ( slice3_1[j] ):
-                [a0_0, a0_1, a0_2, a1_3, a1_4, a1_5, a2_4, a2_5, a2_6, b0_1, b0_2, b0_3, b1_10, b1_11, b1_12, b2_12, b2_13, b2_14, c0_14, c0_15, c0_0, c1_6, c1_7, c1_8, c2_11, c2_12, c2_13, e0_11, e0_12, e0_13, e1_4, e1_5, e1_6] = slice3_0i
-                [a0_3, a0_4, a0_5, a1_6, a1_7, a1_8, a2_7, a2_8, a2_9, b0_4, b0_5, b0_6, b1_13, b1_14, b1_15, b2_15, b2_0, b2_1, c0_1, c0_2, c0_3, c1_9, c1_10, c1_11, c2_14, c2_15, c2_0, e0_14, e0_15, e0_0, e1_7, e1_8, e1_9] = slice3_1i
+                [a0_0, a0_1, a0_2, a1_3, a1_4, a1_5, a2_4, a2_5, a2_6, b0_1, b0_2, b0_3, b1_10, b1_11, b1_12, b2_12, b2_13, b2_14, c0_14, c0_15, c0_0, c1_6, c1_7, c1_8, c2_11, c2_12, c2_13, e0_11, e0_12, e0_13, e1_4, e1_5, e1_6] = slice3_0[i]
+                [a0_3, a0_4, a0_5, a1_6, a1_7, a1_8, a2_7, a2_8, a2_9, b0_4, b0_5, b0_6, b1_13, b1_14, b1_15, b2_15, b2_0, b2_1, c0_1, c0_2, c0_3, c1_9, c1_10, c1_11, c2_14, c2_15, c2_0, e0_14, e0_15, e0_0, e1_7, e1_8, e1_9] = slice3_1[j]
+
                 slice2 = [ [a0_2, b2_14, c2_13, 0, 0], [0, e1_6, a1_5, 0, 0], [b0_3, c1_8, 0, 0, 0], [e0_13, a2_6, b1_12, 0, 0], [c0_0, 0, 0, 0, 0]]
                 slice3 = [ [a0_3, b2_15, c2_14, 0, 0], [0, e1_7, a1_6, 0, 0], [b0_4, c1_9, 0, 0, 0], [e0_14, a2_7, b1_13, 0, 0], [c0_1, 0, 0, 0, 0]]
 
@@ -313,8 +314,8 @@ def merge6slices(A, ind, slice6_0, slice6_1):
             i+=1
         while j < m:
             if phi6_0 ( slice6_0[i] ) == phi6_1 ( slice6_1[j] ):
-                [a0_0, a0_1, a0_2, a0_3, a0_4, a0_5, a1_3, a1_4, a1_5, a1_6, a1_7, a1_8, a2_4, a2_5, a2_6, a2_7, a2_8, a2_9, b0_1, b0_2, b0_3, b0_4, b0_5, b0_6, b1_10, b1_11, b1_12, b1_13, b1_14, b1_15, b2_12, b2_13, b2_14, b2_15, b2_0, b2_1, c0_14, c0_15, c0_0, c0_1, c0_2, c0_3, c1_6, c1_7, c1_8, c1_9, c1_10, c1_11, c2_11, c2_12, c2_13, c2_14, c2_15, c2_0, e0_11, e0_12, e0_13, e0_14, e0_15, e0_0, e1_4, e1_5, e1_6, e1_7, e1_8, e1_9] = slice6_0i
-                [a0_6, a0_7, a0_8, a0_9, a0_10, a0_11, a1_9, a1_10, a1_11, a1_12, a1_13, a1_14, a2_10, a2_11, a2_12, a2_13, a2_14, a2_15, b0_7, b0_8, b0_9, b0_10, b0_11, b0_12, b1_0, b1_1, b1_2, b1_3, b1_4, b1_5, b2_2, b2_3, b2_4, b2_5, b2_6, b2_7, c0_4, c0_5, c0_6, c0_7, c0_8, c0_9, c1_12, c1_13, c1_14, c1_15, c1_0, c1_1, c2_1, c2_2, c2_3, c2_4, c2_5, c2_6, e0_1, e0_2, e0_3, e0_4, e0_5, e0_6, e1_10, e1_11, e1_12, e1_13, e1_14, e1_15] = slice6_1i
+                [a0_0, a0_1, a0_2, a0_3, a0_4, a0_5, a1_3, a1_4, a1_5, a1_6, a1_7, a1_8, a2_4, a2_5, a2_6, a2_7, a2_8, a2_9, b0_1, b0_2, b0_3, b0_4, b0_5, b0_6, b1_10, b1_11, b1_12, b1_13, b1_14, b1_15, b2_12, b2_13, b2_14, b2_15, b2_0, b2_1, c0_14, c0_15, c0_0, c0_1, c0_2, c0_3, c1_6, c1_7, c1_8, c1_9, c1_10, c1_11, c2_11, c2_12, c2_13, c2_14, c2_15, c2_0, e0_11, e0_12, e0_13, e0_14, e0_15, e0_0, e1_4, e1_5, e1_6, e1_7, e1_8, e1_9] = slice6_0[i]
+                [a0_6, a0_7, a0_8, a0_9, a0_10, a0_11, a1_9, a1_10, a1_11, a1_12, a1_13, a1_14, a2_10, a2_11, a2_12, a2_13, a2_14, a2_15, b0_7, b0_8, b0_9, b0_10, b0_11, b0_12, b1_0, b1_1, b1_2, b1_3, b1_4, b1_5, b2_2, b2_3, b2_4, b2_5, b2_6, b2_7, c0_4, c0_5, c0_6, c0_7, c0_8, c0_9, c1_12, c1_13, c1_14, c1_15, c1_0, c1_1, c2_1, c2_2, c2_3, c2_4, c2_5, c2_6, e0_1, e0_2, e0_3, e0_4, e0_5, e0_6, e1_10, e1_11, e1_12, e1_13, e1_14, e1_15] = slice6_1[j]
                 
                 slice5 = [ [a0_5, b2_1, c2_0, 0, 0], [0, e1_9, a1_8, 0, 0], [b0_6, c1_11, 0, 0, 0], [e0_0, a2_9, b1_15, 0, 0], [c0_3, 0, 0, 0, 0]]
                 slice6 = [ [a0_6, b2_2, c2_1, 0, 0], [0, e1_8, a1_9, 0, 0], [b0_7, c1_12, 0, 0, 0], [e0_1, a2_10, b1_0, 0, 0], [c0_4, 0, 0, 0, 0]]
@@ -451,10 +452,10 @@ def mergefinal(A, slices15groups, slice1rem):
     """
     values = []
     # sort1st by phi31 function
-    slice15 = sorted(slices15groups, key=lambda x : phi15(x) )
+    slice15group = sorted(slices15groups, key=lambda x : phi15(x) )
     slice1 = sorted(slice1rem, key=lambda x : phi1(x) )
 
-    n = len(slice15)
+    n = len(slice15group)
     m = len(slice1)
 
     values = []
@@ -463,7 +464,7 @@ def mergefinal(A, slices15groups, slice1rem):
     i = 0
     j = 0
     while i < n:
-        a = phi15( slice15[i] )
+        a = phi15( slice15group[i] )
         b = phi1( slice1[ prev_j ] )
         if a == b:
             j = prev_j
@@ -473,7 +474,7 @@ def mergefinal(A, slices15groups, slice1rem):
         elif a < b:
             i+=1
         while j < m:
-            if phi15(slice15[i]) == phi1( slice1[j] ):
+            if phi15(slice15group[i]) == phi1( slice1[j] ):
                 [
                     a0_0, a0_1, a0_2, a0_3, a0_4, a0_5, a0_6, a0_7, a0_8, a0_9, a0_10, a0_11, a0_12, a0_13, a0_14, 
                     a1_3, a1_4, a1_5, a1_6, a1_7, a1_8, a1_9, a1_10, a1_11, a1_12, a1_13, a1_14, a1_15, a1_0, a1_1, 
@@ -486,7 +487,7 @@ def mergefinal(A, slices15groups, slice1rem):
                     c2_11, c2_12, c2_13, c2_14, c2_15, c2_0, c2_1, c2_2, c2_3, c2_4, c2_5, c2_6, c2_7, c2_8, c2_9, 
                     e0_11, e0_12, e0_13, e0_14, e0_15, e0_0, e0_1, e0_2, e0_3, e0_4, e0_5, e0_6, e0_7, e0_8, e0_9, 
                     e1_4, e1_5, e1_6, e1_7, e1_8, e1_9, e1_10, e1_11, e1_12, e1_13, e1_14, e1_15, e1_0, e1_1, e1_2
-                ] = slice15[i]
+                ] = slice15group[i]
 
                 [ a0_15, a1_2, a2_3, b0_0, b1_9, b2_11, c0_13, c1_5, c2_10, e0_10, e1_3 ] = slice1[j]
 
@@ -532,7 +533,10 @@ if __name__ == '__main__':
     bdigest = getreversePrintformat(digest)
 
     # Got State 4, Fig 9
+    print("===========================================================================================================")
     A = digestToState(bdigest, w)
+    print("===============================================STATE 4 CREATED================================================")
+    print("===========================================================================================================")
 
     # Step 1 : Iota inverse (we initially has 2 rounds, so round index for last round was 23)
     rc = 1
@@ -541,15 +545,19 @@ if __name__ == '__main__':
     A = piInverse(A, w)
     A = rhoInverse(A, w)
 
+    print("===========================================================================================================")
+    print("===============================================STATE 3 CREATED================================================")
     # Now A is State 3, Fig 9
     # print(A)
     # 8 groups of 3 slices
     slices3groups = []
     for i in range(0, 12, 3):
+        print("=============================================== 3 SLICE GROUP %d ================================================", i)
         slices3groups.append( slices3(A, i) )
     
     slices6groups = []
     for i in range(0, 12, 6):
+        print("=============================================== 6 SLICE GROUP %d ================================================", i)
         slice3_0 = slices3groups[i//3]
         slice3_1 = slices3groups[i//3 + 1]
         slices6groups.append( merge3slices(A, i, slice3_0, slice3_1) )
@@ -560,6 +568,7 @@ if __name__ == '__main__':
 
     slices12groups = []
     for i in range(0, 12, 12):
+        print("=============================================== 12 SLICE GROUP %d ================================================", i)
         slice6_0 = slices6groups[i//6]
         slice6_1 = slices6groups[i//6 + 1]
         slices12groups.append( merge6slices(A, i, slice6_0, slice6_1) )
@@ -567,9 +576,14 @@ if __name__ == '__main__':
 
     slices3groups2 = []
     slices3groups2.append( slices3(A, 12) )
+    print("=============================================== LAST 3 SLICE GROUP ================================================")
 
     slices15groups = merge12_3groups(A, 12, slices12groups, slices3groups2)
+    print("=============================================== merge of 12, 3 SLICE GROUPs ================================================")
     slice1rem = get1slice()
+    print("=============================================== LAST 1 SLICE ================================================")
+    print("=============================================== LAST merge To be done ================================================")
+    print("wait.............")
     solutions = mergefinal(A, 0, slices15groups, slice1rem)
 
     print( solutions )
