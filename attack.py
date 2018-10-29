@@ -552,12 +552,12 @@ if __name__ == '__main__':
     # 8 groups of 3 slices
     slices3groups = []
     for i in range(0, 12, 3):
-        print("=============================================== 3 SLICE GROUP %d ================================================", i)
+        print("=============================================== 3 SLICE GROUP ================================================", i)
         slices3groups.append( slices3(A, i) )
     
     slices6groups = []
     for i in range(0, 12, 6):
-        print("=============================================== 6 SLICE GROUP %d ================================================", i)
+        print("=============================================== 6 SLICE GROUP ================================================", i)
         slice3_0 = slices3groups[i//3]
         slice3_1 = slices3groups[i//3 + 1]
         slices6groups.append( merge3slices(A, i, slice3_0, slice3_1) )
@@ -568,7 +568,7 @@ if __name__ == '__main__':
 
     slices12groups = []
     for i in range(0, 12, 12):
-        print("=============================================== 12 SLICE GROUP %d ================================================", i)
+        print("=============================================== 12 SLICE GROUP ================================================", i)
         slice6_0 = slices6groups[i//6]
         slice6_1 = slices6groups[i//6 + 1]
         slices12groups.append( merge6slices(A, i, slice6_0, slice6_1) )
