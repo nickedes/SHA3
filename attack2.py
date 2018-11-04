@@ -1,5 +1,6 @@
 from main import *
 import itertools
+import multiprocessing as mp
 
 
 def getreversePrintformat(digest):
@@ -175,7 +176,7 @@ def check( slice0, slice1, A, i):
     return False
 
 
-def slices3(A, i):
+def slices3(A, i, output):
     """
     """
     values = []
@@ -195,7 +196,7 @@ def slices3(A, i):
                     result2 = check( slice1, slice2, A, i + 2)
                     if result2:
                         values.append([a00, a01, a02, a10, a11, a12, a20, a21, a22, b00, b01, b02, b10, b11, b12, b20, b21, b22, c00, c01, c02, c10, c11, c12, c20, c21, c22, e00, e01, e02, e10, e11, e12])
-    return values
+    output.put((i,values))
 
 
 def slices2(A, i):
@@ -229,7 +230,7 @@ def phi3_1(slice3_1i):
     return a0_4 + 2*a0_5
 
 
-def merge3slices(A, ind, slice3_0, slice3_1):
+def merge3slices(A, ind, slice3_0, slice3_1, output):
     """
     """
     values = []
@@ -269,7 +270,7 @@ def merge3slices(A, ind, slice3_0, slice3_1):
             else:
                 break
         i+=1
-    return values
+    output.put((ind,values))
 
 
 def phi6_0(slice6_0i):
@@ -286,7 +287,7 @@ def phi6_1(slice6_1i):
     return a0_6 + 2*(a0_7) + 4*(a0_8) + 8*((a1_9 + a0_9)%2) + 16*(b0_12) + 32*(b1_1) + 64*((b1_2 + b2_2)%2) + 128*((b1_3 + b2_3)%2) + 256*((b1_4 + b2_4)%2) + 512*((b1_5 + b2_5)%2) + 1024*((c0_6 + c2_6)%2) + 2048*(c1_14) + (2**12)*(c1_15) + (2**13)*(c1_0) + (2**14)*((c1_1 + c2_1)%2) + (2**15)*e0_4 + (2**16)*e0_5 + (2**17)*e1_11 + (2**18)*e1_12 + (2**19)*e1_13 + (2**20)*e1_14 + (2**21)*e1_15 + (2**22)*e0_6
 
 
-def merge6slices(A, ind, slice6_0, slice6_1):
+def merge6slices(A, ind, slice6_0, slice6_1, output):
     """
     """
     values = []
@@ -330,7 +331,7 @@ def merge6slices(A, ind, slice6_0, slice6_1):
             else:
                 break
         i+=1
-    return values
+    output.put((ind,values))
 
 
 def phi12(slice12):
@@ -410,14 +411,14 @@ def merge12_3groups(A, ind, slices12groups, slices3groups2):
     return values
 
 
-def get1slice():
+def get1slice(i,output):
     """
         Get last slice
     """
     values = []
     for a0_15, a1_2, a2_3, b0_0, b1_9, b2_11, c0_13, c1_5, c2_10, e0_10, e1_3 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
         values.append( [ a0_15, a1_2, a2_3, b0_0, b1_9, b2_11, c0_13, c1_5, c2_10, e0_10, e1_3 ] )
-    return values
+    output.put((i,values))
 
 
 def phi15(slice15):
@@ -551,38 +552,73 @@ if __name__ == '__main__':
     # print(A)
     # 8 groups of 3 slices
     slices3groups = [ [] , [] , [], [] ]
-    for i in range(0, 12, 3):
-        print("=============================================== 3 SLICE GROUP ================================================", i)
-        # slices3groups.append( slices3(A, i) )
-        slices3groups[i//3] = slices3(A, i)
+    slices3groupsQ = mp.Manager().Queue()
+    # for i in range(0, 12, 3):
+    #     print("=============================================== 3 SLICE GROUP ================================================", i)
+    #     # slices3groups.append( slices3(A, i) )
+    #     slices3groups[i//3] = slices3(A, i)
+    processes = [mp.Process(target=slices3,args=(A,i,slices3groupsQ)) for i in range(0, 12, 3)]
+    for p in processes:
+        p.start()
+    for p in processes:
+        p.join()
+    results = [slices3groupsQ.get() for p in processes]
+    results.sort(key=lambda k: k[0])
+    slices3groups = [a[1] for a in results]
     
     slices6groups = [ [], [] ]
-    for i in range(0, 12, 6):
-        print("=============================================== 6 SLICE GROUP ================================================", i)
-        slice3_0 = slices3groups[i//3]
-        slice3_1 = slices3groups[i//3 + 1]
-        # slices6groups.append( merge3slices(A, i, slice3_0, slice3_1) )
-        slices6groups[i//6]  = merge3slices(A, i, slice3_0, slice3_1)
+    slices6groupsQ = mp.Manager().Queue()
+    # for i in range(0, 12, 6):
+    #     print("=============================================== 6 SLICE GROUP ================================================", i)
+    #     slice3_0 = slices3groups[i//3]
+    #     slice3_1 = slices3groups[i//3 + 1]
+    #     # slices6groups.append( merge3slices(A, i, slice3_0, slice3_1) )
+    #     slices6groups[i//6]  = merge3slices(A, i, slice3_0, slice3_1)
+    processes = [mp.Process(target=merge3slices,args=(A,i,slices3groups[i//3],slices3groups[i//3 + 1],slices6groupsQ)) for i in range(0, 12, 6)]
+    for p in processes:
+        p.start()
+    for p in processes:
+        p.join()
+    results = [slices6groupsQ.get() for p in processes]
+    results.sort(key=lambda k: k[0])
+    slices6groups = [a[1] for a in results]
 
     # deallocate memory from slices3groups
     # del slices3groups # or
     slices3groups = None
 
+    outputsQ = mp.Manager().Queue()
+
     slices12groups = []
-    for i in range(0, 12, 12):
-        print("=============================================== 12 SLICE GROUP ================================================", i)
-        slice6_0 = slices6groups[i//6]
-        slice6_1 = slices6groups[i//6 + 1]
-        slices12groups.append( merge6slices(A, i, slice6_0, slice6_1) )
-    slices6groups = None
+    # for i in range(0, 12, 12):
+    #     print("=============================================== 12 SLICE GROUP ================================================", i)
+    #     slice6_0 = slices6groups[i//6]
+    #     slice6_1 = slices6groups[i//6 + 1]
+    #     slices12groups.append( merge6slices(A, i, slice6_0, slice6_1) )
+    # slices6groups = None
 
     slices3groups2 = []
-    slices3groups2.append( slices3(A, 12) )
-    print("=============================================== LAST 3 SLICE GROUP ================================================")
+    # slices3groups2.append( slices3(A, 12) )
+    # print("=============================================== LAST 3 SLICE GROUP ================================================")
+
+    
+    # print("=============================================== merge of 12, 3 SLICE GROUPs ================================================")
+    # slice1rem = get1slice()    
+
+    processes = [mp.Process(target=merge6slices,args=(A,0,slices6groups[0],slices6groups[1],outputsQ)),mp.Process(target=slices3,args=(A,12,outputsQ)),mp.Process(target=get1slice,args=(13,outputsQ))]
+    for p in processes:
+        p.start()
+    for p in processes:
+        p.join()
+    results = [outputsQ.get() for p in processes]
+    results.sort(key=lambda k: k[0])
+
+    slices12groups.append(results[0][1])
+    slices3groups2.append(results[1][1])
+    slice1rem = results[2][1]
 
     slices15groups = merge12_3groups(A, 12, slices12groups, slices3groups2)
-    print("=============================================== merge of 12, 3 SLICE GROUPs ================================================")
-    slice1rem = get1slice()
+
     print("=============================================== LAST 1 SLICE ================================================")
     print("=============================================== LAST merge To be done ================================================")
     print("wait.............")
