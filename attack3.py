@@ -234,6 +234,7 @@ def slices3(A, i, output):
     n = len(values1)
     m = len(values2)
 
+
     prev_i = 0
     prev_j = 0
 
@@ -242,31 +243,46 @@ def slices3(A, i, output):
     
     i = 0
     j = 0
-    while i + 1 < n:
-        if values1[i][0][6] < values1[i + 1][0][6]:
-            next_i = i + 1
-            break
 
-    while j + 1 < m:
-        if values2[j][0][5] < values2[j + 1][0][5]:
-            next_j = j + 1
-            break
-
-    if values1[prev_i][0][6] == values2[prev_j][0][5]:
-        i = prev_i
+    flag = 1
+    
+    while flag == 1:
+        i =  prev_i
         j = prev_j
-        while i < next_i:
-            while j < next_j:
+        while i + 1 < n:
+            if values1[i][0][6] < values1[i + 1][0][6]:
+                next_i = i + 1
+                break
 
-                parity = [ values1[i][0][0], values1[i][0][1], values1[i][0][2], values1[i][0][3] , values1[i][0][4], values1[i][0][5] ]
-                # phi2
-                parity.append( values2[j][0][6] )
+        while j + 1 < m:
+            if values2[j][0][5] < values2[j + 1][0][5]:
+                next_j = j + 1
+                break
 
-                values.append( [  parity, [ ]  ] )
-                j++
-            i++
+        if values1[prev_i][0][6] == values2[prev_j][0][5]:
+            i = prev_i
+            j = prev_j
+            while i < next_i:
+                while j < next_j:
 
+                    parity = [ values1[i][0][0], values1[i][0][1], values1[i][0][2], values1[i][0][3] , values1[i][0][4], values1[i][0][5] ]
+                    # phi2
+                    parity.append( values2[j][0][6] )
 
+                    values.append( [  parity, values1[0][1], values2[0][1] ] )
+                    j++
+                i++
+            prev_i = next_i
+            prev_j = next_j
+        elif values1[prev_i][0][6] > values2[prev_j][0][5]:
+            prev_j = next_j
+        else
+            prev_i = next_i
+
+        if prev_i < n and prev_j < m:
+            flag = 1
+        else
+            flag = 0
     output.put((i,values))
 
 
