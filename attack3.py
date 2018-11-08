@@ -286,6 +286,73 @@ def slices3(A, i, output):
     output.put((i,values))
 
 
+def slices6(A, i, values1, values2, output):
+    """
+    """
+    values2 = sorted(values2, key=lambda x : x[0][5] )
+
+    solution3 = []
+    for val in values2:
+        [c0, c1, c2, c3, c4, phi3, phi5] = val[0]
+        for a1, a2, a3, a4, a6, a7, a8, a9 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)): 
+            a5 = c1 ^ a6 ^ a7 ^ a8
+            a0 = c0 ^ a1 ^ a2 ^ a3 ^ a4
+            if c4 == ((a1 + 1)%2)*a5 ^ ((a2 + 1)%2)*a6 ^ ((a3 + 1)%2)*a7 ^ ((a4 + 1)%2)*a8:
+                # add iota
+                v = c0 ^ a0 ^ a1 ^ a2 ^ a3 ^ a4 ^ ((a5 + 1)%2)*a9
+                if a7 == 1:
+                    if a8 == 1:
+                        if v == 0:
+                            # accept sol
+                            a10, a11 = 0, 0
+                            if c2 == a9 ^ a10 ^ a11:
+                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                            a10, a11 = 0, 1
+                            if c2 == a9 ^ a10 ^ a11:
+                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                            a10, a11 = 1, 0
+                            if c2 == a9 ^ a10 ^ a11:
+                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                            a10, a11 = 1, 1
+                            if c2 == a9 ^ a10 ^ a11:
+                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                    else:
+                        a11 = v
+                        a10 = 0
+                        if c2 == a9 ^ a10 ^ a11:
+                            slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                        a10 = 1
+                        if c2 == a9 ^ a10 ^ a11:
+                            slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                else:
+                    if a8 == 1:
+                        a10 = v
+                        a11 = 0
+                        if c2 == a9 ^ a10 ^ a11:
+                            slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                        a11 = 1
+                        if c2 == a9 ^ a10 ^ a11:
+                            slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                    else:
+                        # i.e. a10 + a11 = v && a10 + a11 = c2 + a9
+                        if v == c2 ^ a9:
+                            if v == 0:
+                                a10 = 0
+                                a11 = 0
+                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                                a10 = 1
+                                a11 = 1
+                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                            else:
+                                a10 = 0
+                                a11 = 1
+                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+                                a10 = 1
+                                a11 = 0
+                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
+
+
+
 def slices2(A, i):
     """
     """
