@@ -289,84 +289,145 @@ def slices3(A, i, output):
 def slices6(A, i, values1, values2, output):
     """
     """
-    values2 = sorted(values2, key=lambda x : x[0][5] )
-
+    d0 = 0
+    d1 = 0
+    list3 = {}
     solution3 = []
+    for phi3 in range(0, 32):
+        c0 = phi3 % 2
+        t = phi3
+        t = t//2
+        c1 = t % 2
+        t = t//2
+        c2 = t % 2
+        t = t//2
+        c3 = t % 2
+        t = t//2
+        c4 = t % 2
+        for a1, a2, a3, a4, a5, a6, a7, a9, a10 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)): 
+            a0 = c3 ^ a1 ^ a2 ^ a3 ^ d0
+            a8 = c2 ^ a9 ^ a10
+            # add iota
+            if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
+                slice3 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+                parity = paritychecker( A, i + 3, slice3)
+                if len(partiy) > 0:
+                    phi2 = parity[5]
+                    if phi3 not in list3:
+                        list3[phi3] = [ [phi2, slice3] ]
+                    else:
+                        list3[phi3].append([phi2, slice3])
     for val in values2:
-        [c0, c1, c2, c3, c4, phi3, phi5] = val[0]
-        phi2 = 0
-        for a1, a2, a3, a4, a6, a7, a8, a9 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)): 
-            a5 = c1 ^ a6 ^ a7 ^ a8
-            a0 = c0 ^ a1 ^ a2 ^ a3 ^ a4
-            if c4 == ((a1 + 1)%2)*a5 ^ ((a2 + 1)%2)*a6 ^ ((a3 + 1)%2)*a7 ^ ((a4 + 1)%2)*a8:
-                # add iota
-                v = c0 ^ a0 ^ a1 ^ a2 ^ a3 ^ a4 ^ ((a5 + 1)%2)*a9
-                if a7 == 1:
-                    if a8 == 1:
-                        if v == 0:
-                            # accept sol
-                            a10, a11 = 0, 0
-                            if c2 == a9 ^ a10 ^ a11:
-                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                                solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                            a10, a11 = 0, 1
-                            if c2 == a9 ^ a10 ^ a11:
-                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                                solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                            a10, a11 = 1, 0
-                            if c2 == a9 ^ a10 ^ a11:
-                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                                solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                            a10, a11 = 1, 1
-                            if c2 == a9 ^ a10 ^ a11:
-                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                                solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                    else:
-                        a11 = v
-                        a10 = 0
-                        if c2 == a9 ^ a10 ^ a11:
-                            slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                            solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                        a10 = 1
-                        if c2 == a9 ^ a10 ^ a11:
-                            slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                            solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                else:
-                    if a8 == 1:
-                        a10 = v
-                        a11 = 0
-                        if c2 == a9 ^ a10 ^ a11:
-                            slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                            solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                        a11 = 1
-                        if c2 == a9 ^ a10 ^ a11:
-                            slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                            solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                    else:
-                        # i.e. a10 + a11 = v && a10 + a11 = c2 + a9
-                        if v == c2 ^ a9:
-                            if v == 0:
-                                a10 = 0
-                                a11 = 0
-                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                                solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                                a10 = 1
-                                a11 = 1
-                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                                solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                            else:
-                                a10 = 0
-                                a11 = 1
-                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                                solution3.append([phi2, phi5, slice3, val[1], val[2]])
-                                a10 = 1
-                                a11 = 0
-                                slice3 = [[a4, a8, a11, 0, 0], [a3, a7, a10, 0, 0], [a2, a6, 0, 0, 0], [a1, a5, a9, 0, 0], [a0, 0, 0, 0, 0]]
-                                solution3.append([phi2, phi5, slice3, val[1], val[2]])
+        phi3 = val[0][5]
+        phi5 = val[0][6]
+        phi3list = list3[phi3]
+        slice4 = val[1]
+        slice5 = val[2]
+        for x in phi3list:
+            slice3 = x[1]
+            phi2 = x[0] + (2**5)*(slice4[0]) + (2**6)*slice5[0]
+            solution3.append([phi2, slice3, slice4, slice5, phi5])
     values2 = None
     solution3 = sorted(solution3, key =lambda x : x[0])
+
+    list0 = {}
+    solution0 = []
+    d0 = 0
+    d1 = 0
+    for phi0 in range(0, 32):
+        c0 = phi0 % 2
+        t = phi0
+        t = t//2
+        c1 = t % 2
+        t = t//2
+        c2 = t % 2
+        t = t//2
+        c3 = t % 2
+        t = t//2
+        c4 = t % 2
+        for a1, a2, a3, a4, a5, a6, a7, a9, a10 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)): 
+            a0 = c3 ^ a1 ^ a2 ^ a3 ^ d0
+            a8 = c2 ^ a9 ^ a10
+            # add iota
+            iota = 0
+            if i == 0:
+                iota = 1
+            if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
+                slice0 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+                parity = paritychecker( A, i, slice0)
+                if len(partiy) > 0:
+                    phi15 = parity[5]
+                    if phi0 not in list0:
+                        list0[phi0] = [ [phi15, slice0] ]
+                    else:
+                        list0[phi0].append([phi15, slice0])
+
+    for val in values1:
+        phi0 = val[0][5]
+        phi2 = val[0][6]
+        phi0list = list0[phi0]
+        slice1 = val[1]
+        slice2 = val[2]
+        for x in phi0list:
+            slice0 = x[1]
+            phi2 = phi2 + (2**5)*(slice0[2] ^ slice1[1]) + (2**6)*(slice1[2] ^ slice2[1])
+            solution0.append([phi15, slice0, slice1, slice2, phi2])
+    values1 = None
+    solution0 = sorted(solution0, key =lambda x : x[4])
+
     # Todo : Merging
+    values = []
+
+    n = len(solution0)
+    m = len(solution3)
+
+
+    prev_i = 0
+    prev_j = 0
+
+    next_i = n
+    next_j = m
     
+    i = 0
+    j = 0
+
+    flag = 1
+    
+    while flag == 1:
+        i =  prev_i
+        j = prev_j
+        while i + 1 < n:
+            if solution0[i][4] < solution0[i + 1][4]:
+                next_i = i + 1
+                break
+
+        while j + 1 < m:
+            if solution3[j][0] < solution3[j + 1][0]:
+                next_j = j + 1
+                break
+
+        if solution0[prev_i][4] == solution3[prev_j][0]:
+            i = prev_i
+            j = prev_j
+            while i < next_i:
+                while j < next_j:
+                    [phi15, slice0, slice1, slice2, phi2] = solution0[i]
+                    [phi2_ , slice3, slice4, slice5, phi5] = solution3[j]
+                    values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, phi5 ] )
+                    j++
+                i++
+            prev_i = next_i
+            prev_j = next_j
+        elif solution0[prev_i][4] > solution3[prev_j][0]:
+            prev_j = next_j
+        else
+            prev_i = next_i
+
+        if prev_i < n and prev_j < m:
+            flag = 1
+        else
+            flag = 0
+    output.put((i,values))
 
 
 def slices2(A, i):
