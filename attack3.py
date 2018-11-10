@@ -205,21 +205,21 @@ def paritychecker( A, i, slicei):
 
 
 
-def slices3(A, i, output):
+def slices3(A, ind, output):
     """
     """
     # values for slice2
     values2 = []
     for a0_2, a1_5, a2_6, b0_3, b1_12, b2_14, c0_0, c1_8, c2_13, e0_13, e1_6 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
     	slice2 = [ [a0_2, b2_14, c2_13, 0, 0], [0, e1_6, a1_5, 0, 0], [b0_3, c1_8, 0, 0, 0], [e0_13, a2_6, b1_12, 0, 0], [c0_0, 0, 0, 0, 0]]
-    	parity = paritychecker(A, i + 2, slice2)
+    	parity = paritychecker(A, ind + 2, slice2)
         if len(parity) == 7:
             values2.append([ parity, [a0_2, a1_5, a2_6, b0_3, b1_12, b2_14, c0_0, c1_8, c2_13, e0_13, e1_6] ])
 
     values1 = []
     for a0_1, a1_4, a2_5, b0_2, b1_11, b2_13, c0_15, c1_7, c2_12, e0_12, e1_5 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
         slice1 = [ [a0_1, b2_13, c2_12, 0, 0], [0, e1_5, a1_4, 0, 0], [b0_2, c1_7, 0, 0, 0], [e0_12, a2_5, b1_11, 0, 0], [c0_15, 0, 0, 0, 0]]
-        parity = paritychecker(A, i + 1, slice1)
+        parity = paritychecker(A, ind + 1, slice1)
         if len(parity) == 7:
             values1.append([ parity, [a0_1, a1_4, a2_5, b0_2, b1_11, b2_13, c0_15, c1_7, c2_12, e0_12, e1_5] ])
 
@@ -283,10 +283,10 @@ def slices3(A, i, output):
             flag = 1
         else
             flag = 0
-    output.put((i,values))
+    output.put((ind,values))
 
 
-def slices6(A, i, values1, values2, output):
+def slices6(A, ind, values1, values2, output):
     """
     """
     d0 = 0
@@ -310,7 +310,7 @@ def slices6(A, i, values1, values2, output):
             # add iota
             if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
                 slice3 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
-                parity = paritychecker( A, i + 3, slice3)
+                parity = paritychecker( A, ind + 3, slice3)
                 if len(partiy) > 0:
                     phi2 = parity[5]
                     if phi3 not in list3:
@@ -354,7 +354,7 @@ def slices6(A, i, values1, values2, output):
                 iota = 1
             if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
                 slice0 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
-                parity = paritychecker( A, i, slice0)
+                parity = paritychecker( A, ind, slice0)
                 if len(partiy) > 0:
                     phi15 = parity[5]
                     if phi0 not in list0:
@@ -427,10 +427,10 @@ def slices6(A, i, values1, values2, output):
             flag = 1
         else
             flag = 0
-    output.put((i,values))
+    output.put((ind,values))
 
 
-def slices12(A, i, values1, values2, output):
+def slices12(A, ind, values1, values2, output):
     """
     """
     # modify phi5
@@ -500,7 +500,7 @@ def slices12(A, i, values1, values2, output):
             flag = 1
         else
             flag = 0
-    output.put((i,values))
+    output.put((ind,values))
 
 
 def slices2(A, i):
