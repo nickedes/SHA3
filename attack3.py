@@ -491,7 +491,121 @@ def slices12(A, ind, values1, values2, output):
                 i++
             prev_i = next_i
             prev_j = next_j
-        elif values1[prev_i][4] > values2[prev_j][0]:
+        elif values1[prev_i][7] > values2[prev_j][0]:
+            prev_j = next_j
+        else
+            prev_i = next_i
+
+        if prev_i < n and prev_j < m:
+            flag = 1
+        else
+            flag = 0
+    output.put((ind,values))
+
+
+def slices15(A, ind, values1, values2, output):
+    """
+        values1 - 0 to 11 slices
+        values2 - 12 to 14
+    """
+    d0 = 0
+    d1 = 0
+    list3 = {}
+    solution3 = []
+    for phi3 in range(0, 32):
+        c0 = phi3 % 2
+        t = phi3
+        t = t//2
+        c1 = t % 2
+        t = t//2
+        c2 = t % 2
+        t = t//2
+        c3 = t % 2
+        t = t//2
+        c4 = t % 2
+        for a1, a2, a3, a4, a5, a6, a7, a9, a10 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)): 
+            a0 = c3 ^ a1 ^ a2 ^ a3 ^ d0
+            a8 = c2 ^ a9 ^ a10
+            # add iota
+            if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
+                slice12 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+                parity = paritychecker( A, ind + 12, slice12)
+                if len(partiy) > 0:
+                    phi11 = parity[5]
+                    if phi3 not in list3:
+                        list3[phi3] = [ [phi11, slice12] ]
+                    else:
+                        list3[phi3].append([phi11, slice12])
+    for val in values2:
+        phi12 = val[0][5]
+        phi14 = val[0][6]
+        phi3list = list3[phi12]
+        slice13 = val[1]
+        slice14 = val[2]
+        for x in phi3list:
+            slice12 = x[1]
+            phi11 = x[0] + (2**5)*slice12[0] + (2**6)*slice13[0] + (2**7)*slice14[0] + (2**8)*(slice12[2] ^ slice13[1]) + (2**9)*(slice13[2] ^ slice14[2]) + (2**10)*(slice12[4]) + (2**11)*(slice13[4])
+                    + (2**12)*(slice14[4] ^ slice12[5]) + (2**13)*slice14[5] + (2**14)*slice12[3] + (2**15)*slice12[4] + (2**16)*slice12[5] + (2**17)*slice12[8] + (2**18)*slice13[8]
+                    + (2**19)*(slice14[8]) + (2**20)*slice13[6] + (2**21)*slice14[6] + (2**22)*slice12[7] + (2**23)*slice13[7] + (2**24)*slice14[7] + (2**25)*slice12[9] + (2**26)*slice13[9]
+                    + (2**27)*(slice14[9]) + (2**28)*slice12[10] + (2**29)*slice13[10] + (2**30)*slice14[10]
+            solution3.append([phi11, slice12, slice13, slice14, phi14])
+    values2 = None
+    values2 = sorted(solution3, key =lambda x : x[0])
+    solution3 = None
+
+    for i in range(len(values1)):
+        [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, phi11 ] = values1[i]
+        phi11 = phi11 + (2**5)*(slice9[1] ^ slice8[2]) + (2**6)*(slcie10[1] ^ slice9[2]) + (2**7)*(slice11[1] ^ slice10[2]) + (2**8)*(slice0[0]) + (2**9)*slice1[0] + (2**10)*(slice5[3] ^ slice10[5])
+                + (2**11)*(slice6[3] ^ slice11[5]) + (2**12)*slcie7[3] + (2**13)*(slice0[4] ^ slice9[0]) + (2**14)*(slice3[4] ^ slice1[5]) + (2**15)*(slice4[4] ^ slice2[5])
+                + (2**16)*(slice5[4] ^ slice3[5]) + (2**17)*(slice9[6] ^ slice1[7]) + (2**18)*(slice10[6] ^ slice2[7]) + (2**19)*(slice11[6] ^ slice3[7]) + (2**20)*(slice0[8] ^ slice5[7])
+                + (2**21)*(slice1[8] ^ slice6[7]) + (2**22)*(slice7[8] ^ slice4[6]) + (2**23)*(slice8[8] ^ slice5[6]) + (2**24)*(slice9[8] ^ slice6[6]) + (2**25)*(slice3[10]) + (2**26)*(slice4[10]) 
+                + (2**27)*slice5[10] + (2**28)*slice5[9] + (2**29)*slice6[9] + (2**30)*(slice7[9])
+        values1[i][13] = phi11
+
+    values1 = sorted(values1, key = lambda x : x[13])
+    values = []
+
+    n = len(values1)
+    m = len(values2)
+
+
+    prev_i = 0
+    prev_j = 0
+
+    next_i = n
+    next_j = m
+    
+    i = 0
+    j = 0
+
+    flag = 1
+    
+    while flag == 1:
+        i =  prev_i
+        j = prev_j
+        while i + 1 < n:
+            if values1[i][13] < values1[i + 1][13]:
+                next_i = i + 1
+                break
+
+        while j + 1 < m:
+            if values2[j][0] < values2[j + 1][0]:
+                next_j = j + 1
+                break
+
+        if values1[prev_i][13] == values2[prev_j][0]:
+            i = prev_i
+            j = prev_j
+            while i < next_i:
+                while j < next_j:
+                    [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, phi11 ] = values1[i]
+                    [ phi11_, slice12, slice13, slice14, phi14 ] = values2[j]
+                    values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, phi14 ] )
+                    j++
+                i++
+            prev_i = next_i
+            prev_j = next_j
+        elif values1[prev_i][13] > values2[prev_j][0]:
             prev_j = next_j
         else
             prev_i = next_i
