@@ -617,6 +617,83 @@ def slices15(A, ind, values1, values2, output):
     output.put((ind,values))
 
 
+def slices16(A, ind, values1, output):
+    """
+    """
+    # values for slice2
+    values2 = []
+    for a0_2, a1_5, a2_6, b0_3, b1_12, b2_14, c0_0, c1_8, c2_13, e0_13, e1_6 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
+        slice2 = [ [a0_2, b2_14, c2_13, 0, 0], [0, e1_6, a1_5, 0, 0], [b0_3, c1_8, 0, 0, 0], [e0_13, a2_6, b1_12, 0, 0], [c0_0, 0, 0, 0, 0]]
+        parity = paritychecker(A, ind + 15, slice2)
+        if len(parity) == 7:
+            phi14 = parity[5]
+            phi15 = parity[6]
+            phi14 = phi14 + (2**5)*a0_2 + (2**6)*a1_5 + (2**7)*a2_6 + (2**8)*b0_3 + (2**9)*b1_12 + (2**10)*b2_14 + (2**11)*c0_0 + (2**12)*c1_8 + (2**13)*c2_13 + (2**14)*e0_13 + (2**15)*e1_6
+            values2.append([ phi14, phi15, [a0_2, a1_5, a2_6, b0_3, b1_12, b2_14, c0_0, c1_8, c2_13, e0_13, e1_6] ])
+    for i in range(len(values1)):
+        [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, phi14 ] = values1[i]
+        phi14 = phi14 + (2**5)*(slice12[1] ^ slice11[2]) + (2**6)*(slice2[0] ^ slice14[2]) + (2**7)*(slcie0[1] ^ slice3[0]) + (2**8)*(slice6[4] ^ slice4[5]) + (2**9)*(slice8[3] ^ slice13[5]) + (2**10)*(slice10[3] ^ slice1[4]) + (2**11)*(slice7[7] ^ slice2[8]) + (2**12)*(slice7[7] ^ slice10[8]) + (2**13)*(slice12[6] ^ slice4[7]) + (2**14)*(slice6[10]) + (2**15)*(slice8[9])
+        values1[i][16] = phi14
+            
+    # sort on phi14
+    values1 = sorted(values1, key = lambda x : x[16])
+        
+    values2 = sorted(values2, key = lambda x : x[0])
+    values = []
+
+    n = len(values1)
+    m = len(values2)
+
+
+    prev_i = 0
+    prev_j = 0
+
+    next_i = n
+    next_j = m
+    
+    i = 0
+    j = 0
+
+    flag = 1
+    
+    while flag == 1:
+        i =  prev_i
+        j = prev_j
+        while i + 1 < n:
+            if values1[i][16] < values1[i + 1][16]:
+                next_i = i + 1
+                break
+
+        while j + 1 < m:
+            if values2[j][0] < values2[j + 1][0]:
+                next_j = j + 1
+                break
+
+        if values1[prev_i][16] == values2[prev_j][0]:
+            i = prev_i
+            j = prev_j
+            while i < next_i:
+                while j < next_j:
+                    [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, phi14 ] = values1[i]
+                    [ phi14_, phi15_, slice15 ] = values2[j]
+                    if phi14 == phi14_ and phi15 == phi15_:
+                        values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, phi14 ] )
+                    j++
+                i++
+            prev_i = next_i
+            prev_j = next_j
+        elif values1[prev_i][16] > values2[prev_j][0]:
+            prev_j = next_j
+        else
+            prev_i = next_i
+
+        if prev_i < n and prev_j < m:
+            flag = 1
+        else
+            flag = 0
+    output.put((ind,values))
+
+
 def slices2(A, i):
     """
     """
