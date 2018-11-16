@@ -184,9 +184,9 @@ def paritychecker( A, i, slicei):
     if i == 0:
         slicei[0][0] = slicei[0][0] ^ 1
     # parity
-    C = [0 for x in range(5)]
+    c = [0 for x in range(5)]
     for x in range(5):
-        C[x] = slicei[x][0] ^ slicei[x][1] ^ slicei[x][2] ^ slicei[x][3] ^ slicei[x][4]
+        c[x] = slicei[x][0] ^ slicei[x][1] ^ slicei[x][2] ^ slicei[x][3] ^ slicei[x][4]
     # prev slice parity
     d = [ 0, 0, 0, 0, 0, 0, 0]
     d[0] = A[0][0][i] ^ slicei[0][0] ^ c[1]
