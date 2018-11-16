@@ -211,8 +211,8 @@ def slices3(A, ind, output):
     # values for slice2
     values2 = []
     for a0_2, a1_5, a2_6, b0_3, b1_12, b2_14, c0_0, c1_8, c2_13, e0_13, e1_6 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
-    	slice2 = [ [a0_2, b2_14, c2_13, 0, 0], [0, e1_6, a1_5, 0, 0], [b0_3, c1_8, 0, 0, 0], [e0_13, a2_6, b1_12, 0, 0], [c0_0, 0, 0, 0, 0]]
-    	parity = paritychecker(A, ind + 2, slice2)
+        slice2 = [ [a0_2, b2_14, c2_13, 0, 0], [0, e1_6, a1_5, 0, 0], [b0_3, c1_8, 0, 0, 0], [e0_13, a2_6, b1_12, 0, 0], [c0_0, 0, 0, 0, 0]]
+        parity = paritychecker(A, ind + 2, slice2)
         if len(parity) == 7:
             values2.append([ parity, [a0_2, a1_5, a2_6, b0_3, b1_12, b2_14, c0_0, c1_8, c2_13, e0_13, e1_6] ])
 
@@ -270,18 +270,18 @@ def slices3(A, ind, output):
                     parity.append( values2[j][0][6] )
 
                     values.append( [  parity, values1[0][1], values2[0][1] ] )
-                    j++
-                i++
+                    j+=1
+                i+=1
             prev_i = next_i
             prev_j = next_j
         elif values1[prev_i][0][6] > values2[prev_j][0][5]:
             prev_j = next_j
-        else
+        else:
             prev_i = next_i
 
         if prev_i < n and prev_j < m:
             flag = 1
-        else
+        else:
             flag = 0
     output.put((ind,values))
 
@@ -414,18 +414,18 @@ def slices6(A, ind, values1, values2, output):
                     [phi15, slice0, slice1, slice2, phi2] = solution0[i]
                     [phi2_ , slice3, slice4, slice5, phi5] = solution3[j]
                     values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, phi5 ] )
-                    j++
-                i++
+                    j+=1
+                i+=1
             prev_i = next_i
             prev_j = next_j
         elif solution0[prev_i][4] > solution3[prev_j][0]:
             prev_j = next_j
-        else
+        else:
             prev_i = next_i
 
         if prev_i < n and prev_j < m:
             flag = 1
-        else
+        else:
             flag = 0
     output.put((ind,values))
 
@@ -487,18 +487,18 @@ def slices12(A, ind, values1, values2, output):
                     [ phi15, slice0, slice1, slice2, phi2, slice3, slice4, slice5, phi5 ] = values1[i]
                     [ phi5_, slice6, slice7, slice8, slice9, slice10, slice11, phi11 ] = values2[j]
                     values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, phi11 ] )
-                    j++
-                i++
+                    j+=1
+                i+=1
             prev_i = next_i
             prev_j = next_j
         elif values1[prev_i][7] > values2[prev_j][0]:
             prev_j = next_j
-        else
+        else:
             prev_i = next_i
 
         if prev_i < n and prev_j < m:
             flag = 1
-        else
+        else:
             flag = 0
     output.put((ind,values))
 
@@ -601,18 +601,18 @@ def slices15(A, ind, values1, values2, output):
                     [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, phi11 ] = values1[i]
                     [ phi11_, slice12, slice13, slice14, phi14 ] = values2[j]
                     values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, phi14 ] )
-                    j++
-                i++
+                    j+=1
+                i+=1
             prev_i = next_i
             prev_j = next_j
         elif values1[prev_i][13] > values2[prev_j][0]:
             prev_j = next_j
-        else
+        else:
             prev_i = next_i
 
         if prev_i < n and prev_j < m:
             flag = 1
-        else
+        else:
             flag = 0
     output.put((ind,values))
 
@@ -678,18 +678,18 @@ def slices16(A, ind, values1, output):
                     [ phi14_, phi15_, slice15 ] = values2[j]
                     if phi14 == phi14_ and phi15 == phi15_:
                         values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, phi14 ] )
-                    j++
-                i++
+                    j+=1
+                i+=1
             prev_i = next_i
             prev_j = next_j
         elif values1[prev_i][16] > values2[prev_j][0]:
             prev_j = next_j
-        else
+        else:
             prev_i = next_i
 
         if prev_i < n and prev_j < m:
             flag = 1
-        else
+        else:
             flag = 0
     output.put((ind,values))
 
@@ -1069,7 +1069,7 @@ if __name__ == '__main__':
     #     # slices6groups.append( merge3slices(A, i, slice3_0, slice3_1) )
     #     slices6groups[i//6]  = merge3slices(A, i, slice3_0, slice3_1)
     print("=============================================== 6 SLICE GROUP ================================================")
-    processes = [mp.Process(target=merge3slices,args=(A,i,slices3groups[i//3],slices3groups[i//3 + 1],slices6groupsQ)) for i in range(0, 12, 6)]
+    processes = [mp.Process(target=slices6,args=(A,i,slices3groups[i//3],slices3groups[i//3 + 1],slices6groupsQ)) for i in range(0, 12, 6)]
     for p in processes:
         p.start()
     for p in processes:
@@ -1100,7 +1100,7 @@ if __name__ == '__main__':
     # print("=============================================== merge of 12, 3 SLICE GROUPs ================================================")
     # slice1rem = get1slice()    
 
-    processes = [mp.Process(target=merge6slices,args=(A,0,slices6groups[0],slices6groups[1],outputsQ)),mp.Process(target=slices3,args=(A,12,outputsQ)),mp.Process(target=get1slice,args=(13,outputsQ))]
+    processes = [mp.Process(target=slices12,args=(A,0,slices6groups[0],slices6groups[1],outputsQ)),mp.Process(target=slices3,args=(A,12,outputsQ))]
     for p in processes:
         p.start()
     for p in processes:
@@ -1110,13 +1110,12 @@ if __name__ == '__main__':
 
     slices12groups.append(results[0][1])
     slices3groups2.append(results[1][1])
-    slice1rem = results[2][1]
-
-    slices15groups = merge12_3groups(A, 12, slices12groups, slices3groups2)
+    
+    slices15groups = slices15(A, 12, slices12groups, slices3groups2)
 
     print("=============================================== LAST 1 SLICE ================================================")
     print("=============================================== LAST merge To be done ================================================")
     print("wait.............")
-    solutions = mergefinal(A, 0, slices15groups, slice1rem)
+    solutions = slices16(A, 0, slices15groups)
 
     print( solutions )
