@@ -436,15 +436,11 @@ def slices12(A, ind, values1, values2, output):
     # modify phi5
     for i in range(len(values1)):
         [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, phi5 ] = values1[i]
-        phi5 = phi5 + (2**5)*(slice3[1] ^ slice2[2]) + (2**6)*(slice4[1] ^ slice3[2]) + (2**7)*(slice5[1] ^ slice4[2]) + (2**8)*(slice5[2]) + (2**9)*(slice2[4] + slice0[5]) +
-                (2**10)*(slice0[3] ^ slice5[5]) + (2**11)*(slice1[3]) + (2**12)*(slice2[3]) + (2**13)*(slice3[3]) + (2**14)*(slice4[3]) + (2**15)*(slice0[6] ^ slice3[8]) + 
-                (2**16)*(slice1[6] ^ slice4[8]) + (2**17)*(slice2[6] ^ slice5[8]) + (2**18)*(slice3[6]) + (2**19)*(slice0[7]) + (2**20)*(slice0[10]) + (2**21)*(slice1[10]) + (2**22)*(slice2[10])
+        phi5 = phi5 + (2**5)*(slice3[1] ^ slice2[2]) + (2**6)*(slice4[1] ^ slice3[2]) + (2**7)*(slice5[1] ^ slice4[2]) + (2**8)*(slice5[2]) + (2**9)*(slice2[4] + slice0[5]) + (2**10)*(slice0[3] ^ slice5[5]) + (2**11)*(slice1[3]) + (2**12)*(slice2[3]) + (2**13)*(slice3[3]) + (2**14)*(slice4[3]) + (2**15)*(slice0[6] ^ slice3[8]) + (2**16)*(slice1[6] ^ slice4[8]) + (2**17)*(slice2[6] ^ slice5[8]) + (2**18)*(slice3[6]) + (2**19)*(slice0[7]) + (2**20)*(slice0[10]) + (2**21)*(slice1[10]) + (2**22)*(slice2[10])
         values1[i][7] = phi5
     for i in range(len(values2)):
         [ phi5, slice6, slice7, slice8, slice9, slice10, slice11, phi11 ] = values2[i]
-        phi5 = phi5 + (2**5)*(slice6[0]) + (2**6)*(slice7[0]) + (2**7)*(slice8[0]) + (2**8)*(slice9[0]^slice6[1]) + (2**9)*(slice11[3]) +
-                (2**10)*(slice7[4]) + (2**11)*(slice8[4] ^ slice6[5]) + (2**12)*(slice9[4] ^ slice7[5]) + (2**13)*(slice10[4] ^ slice8[5]) + (2**14)*(slice11[4] ^ slice9[5]) + (2**15)*(slice8[7]) + 
-                (2**16)*(slice9[7]) + (2**17)*(slice10[7]) + (2**18)*(slice10[7] ^ slice6[8]) + (2**19)*(slice8[6] ^ slice11[8]) + (2**20)*(slice9[9]) + (2**21)*(slice10[9]) + (2**22)*(slice11[9])
+        phi5 = phi5 + (2**5)*(slice6[0]) + (2**6)*(slice7[0]) + (2**7)*(slice8[0]) + (2**8)*(slice9[0]^slice6[1]) + (2**9)*(slice11[3]) + (2**10)*(slice7[4]) + (2**11)*(slice8[4] ^ slice6[5]) + (2**12)*(slice9[4] ^ slice7[5]) + (2**13)*(slice10[4] ^ slice8[5]) + (2**14)*(slice11[4] ^ slice9[5]) + (2**15)*(slice8[7]) +          (2**16)*(slice9[7]) + (2**17)*(slice10[7]) + (2**18)*(slice10[7] ^ slice6[8]) + (2**19)*(slice8[6] ^ slice11[8]) + (2**20)*(slice9[9]) + (2**21)*(slice10[9]) + (2**22)*(slice11[9])
         values2[i][0] = phi5
     values1 = sorted(values1, key = lambda x : x[7])
     values2 = sorted(values2, key = lambda x : x[0])
@@ -544,9 +540,9 @@ def slices15(A, ind, values1, values2, output):
         slice14 = val[2]
         for x in phi3list:
             slice12 = x[1]
-            phi11 = x[0] + (2**5)*slice12[0] + (2**6)*slice13[0] + (2**7)*slice14[0] + (2**8)*(slice12[2] ^ slice13[1]) + (2**9)*(slice13[2] ^ slice14[2]) + (2**10)*(slice12[4]) + (2**11)*(slice13[4])
-                    + (2**12)*(slice14[4] ^ slice12[5]) + (2**13)*slice14[5] + (2**14)*slice12[3] + (2**15)*slice12[4] + (2**16)*slice12[5] + (2**17)*slice12[8] + (2**18)*slice13[8]
-                    + (2**19)*(slice14[8]) + (2**20)*slice13[6] + (2**21)*slice14[6] + (2**22)*slice12[7] + (2**23)*slice13[7] + (2**24)*slice14[7] + (2**25)*slice12[9] + (2**26)*slice13[9]
+            phi11 = x[0] + (2**5)*slice12[0] + (2**6)*slice13[0] + (2**7)*slice14[0] + (2**8)*(slice12[2] ^ slice13[1]) + (2**9)*(slice13[2] ^ slice14[2]) + (2**10)*(slice12[4]) + (2**11)*(slice13[4])\
+                    + (2**12)*(slice14[4] ^ slice12[5]) + (2**13)*slice14[5] + (2**14)*slice12[3] + (2**15)*slice12[4] + (2**16)*slice12[5] + (2**17)*slice12[8] + (2**18)*slice13[8]\
+                    + (2**19)*(slice14[8]) + (2**20)*slice13[6] + (2**21)*slice14[6] + (2**22)*slice12[7] + (2**23)*slice13[7] + (2**24)*slice14[7] + (2**25)*slice12[9] + (2**26)*slice13[9]\
                     + (2**27)*(slice14[9]) + (2**28)*slice12[10] + (2**29)*slice13[10] + (2**30)*slice14[10]
             solution3.append([phi11, slice12, slice13, slice14, phi14])
     values2 = None
@@ -555,10 +551,10 @@ def slices15(A, ind, values1, values2, output):
 
     for i in range(len(values1)):
         [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, phi11 ] = values1[i]
-        phi11 = phi11 + (2**5)*(slice9[1] ^ slice8[2]) + (2**6)*(slcie10[1] ^ slice9[2]) + (2**7)*(slice11[1] ^ slice10[2]) + (2**8)*(slice0[0]) + (2**9)*slice1[0] + (2**10)*(slice5[3] ^ slice10[5])
-                + (2**11)*(slice6[3] ^ slice11[5]) + (2**12)*slcie7[3] + (2**13)*(slice0[4] ^ slice9[0]) + (2**14)*(slice3[4] ^ slice1[5]) + (2**15)*(slice4[4] ^ slice2[5])
-                + (2**16)*(slice5[4] ^ slice3[5]) + (2**17)*(slice9[6] ^ slice1[7]) + (2**18)*(slice10[6] ^ slice2[7]) + (2**19)*(slice11[6] ^ slice3[7]) + (2**20)*(slice0[8] ^ slice5[7])
-                + (2**21)*(slice1[8] ^ slice6[7]) + (2**22)*(slice7[8] ^ slice4[6]) + (2**23)*(slice8[8] ^ slice5[6]) + (2**24)*(slice9[8] ^ slice6[6]) + (2**25)*(slice3[10]) + (2**26)*(slice4[10]) 
+        phi11 = phi11 + (2**5)*(slice9[1] ^ slice8[2]) + (2**6)*(slcie10[1] ^ slice9[2]) + (2**7)*(slice11[1] ^ slice10[2]) + (2**8)*(slice0[0]) + (2**9)*slice1[0] + (2**10)*(slice5[3] ^ slice10[5])\
+                + (2**11)*(slice6[3] ^ slice11[5]) + (2**12)*slcie7[3] + (2**13)*(slice0[4] ^ slice9[0]) + (2**14)*(slice3[4] ^ slice1[5]) + (2**15)*(slice4[4] ^ slice2[5])\
+                + (2**16)*(slice5[4] ^ slice3[5]) + (2**17)*(slice9[6] ^ slice1[7]) + (2**18)*(slice10[6] ^ slice2[7]) + (2**19)*(slice11[6] ^ slice3[7]) + (2**20)*(slice0[8] ^ slice5[7])\
+                + (2**21)*(slice1[8] ^ slice6[7]) + (2**22)*(slice7[8] ^ slice4[6]) + (2**23)*(slice8[8] ^ slice5[6]) + (2**24)*(slice9[8] ^ slice6[6]) + (2**25)*(slice3[10]) + (2**26)*(slice4[10])\
                 + (2**27)*slice5[10] + (2**28)*slice5[9] + (2**29)*slice6[9] + (2**30)*(slice7[9])
         values1[i][13] = phi11
 
