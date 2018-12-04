@@ -43,10 +43,10 @@ def iotainverse(A, i, w):
     }
 
     # 64 bit repr for rc
-    RC_bin = "{:032b}".format(int(RCi[i], 16))
-    RC = [int(x) for x in RC_bin][::-1]
+    RC_bin = "{:016b}".format(int(RCi[i], 16))
+    RC = [int(x) for x in RC_bin]
     for z in range(w):
-        A_[0][0][z] = A_[0][0][z] ^ RC[z]
+        A_[0][0][z] = A[0][0][z] ^ RC[z]
 
     # print("After iota")
     # printformat(getString(A_, w))
@@ -69,9 +69,9 @@ def ChiInverse(A, w):
     # Step 1 :
     # lanes are fixed, we need to invert each row of the 1st 5 lanes
     for i in range(w):
-        row = [ A[0][0][i], A[1][0][i], A[2][0][i], A[3][0][i], A[4][0][i] ]
+        row = [ A[0][0][i], A[0][1][i], A[0][2][i], A[0][3][i], A[0][4][i] ]
         rowinv = ChiInverseForROW(row)
-        A[0][0][i], A[1][0][i], A[2][0][i], A[3][0][i], A[4][0][i] = rowinv
+        A[0][0][i], A[0][1][i], A[0][2][i], A[0][3][i], A[0][4][i] = rowinv
     # Step 2 :
     # A[0][1] remains same and A[1][1] becomes 1
 
@@ -93,7 +93,7 @@ def rhoInverse(A, w):
     for t in range(24):
         for z in range(w):
             A_[x][y][z] = A[x][y][(z + ((t+1)*(t+2))//2) % w]
-        x, y = y, (2*x + 3*y) % 5
+        y, x = x, (2*y + 3*x) % 5
 
     # print("After rho")
     # printformat(getString(A_, w))
@@ -109,7 +109,7 @@ def piInverse(A, w):
     for x in range(5):
         for y in range(5):
             for z in range(w):
-                A_[x][y][z] = A[y % 5][(2*x + 3*y) % 5][z]
+                A_[y][x][z] = A[x % 5][(2*y + 3*x) % 5][z]
     # print("After pi")
     # printformat(getString(A_, w))
     # input()
