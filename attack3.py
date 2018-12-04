@@ -382,7 +382,7 @@ def slices6(A, ind, values1, values2):
 
     n = len(solution0)
     m = len(solution3)
-
+    
 
     prev_i = 0
     prev_j = 0
