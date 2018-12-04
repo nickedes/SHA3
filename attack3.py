@@ -124,78 +124,46 @@ def applyChi(slicei):
     A_ = [[0 for y in range(5)] for x in range(5)]
     for x in range(5):
         for y in range(5):
-            A_[x][y] = A[x][y] ^ ((A[(x+1) % 5][y] ^ 1) * A[(x+2) % 5][y])
+            A_[y][x] = A[y][x] ^ ((A[y][(x+1) % 5] ^ 1) * A[y][(x+2) % 5])
     return A_
 
 
-def applytheta(slice1, slice2):
-    """
-        Apply theta for 2 slices
-    """
-    C = [[0 for z in range(2)] for x in range(5)]
-    for x in range(5):
-        for z in range(2):
-            if z == 0:
-                A = slice1
-            else:
-                A = slice2
-            C[x][z] = A[x][0] ^ A[x][1] ^ A[x][2] ^ A[x][3] ^ A[x][4]
+def getslicebits(slicei):
+    [[a3, a7, a10, _, _], [d0, a6, a9, _, _], [a2, a5, _, _, _], [a1, a4, a8, _, _], [a0, d1, _, _, _]] = slicei
+    slicein = [a3, a9, a4, a2, a8, a7, a0, a5, a10, a1, a6]
+    return slicein
 
-    D = [[0 for z in range(2)] for x in range(5)]
 
-    for x in range(5):
-        z = 1
-        D[x][z] = C[(x-1) % 5][z] ^ C[(x+1) % 5][(z-1) % 2]
 
-    A_ = [[0 for y in range(5)] for x in range(5)]
 
-    for x in range(5):
-        for y in range(5):
-            z = 1
-            A = slice1
-            A_[x][y] = A[x][y] ^ D[x][z]
 
-    return A_
-
-def check( slice0, slice1, A, i):
-    """
-    """
-    slice0 = applyChi(slice0)
-    slice1 = applyChi(slice1)
-
-    slicei = applytheta(slice0, slice1)
-
-    if i == 1:
-        slice0[0][0] = slice0[0][0] ^ 1
-
-    if i == 0:
-        slice1[0][0] = slice1[0][0] ^ 1
-
-    if slicei[0][0] == A[0][0][i] and slicei[1][1] == A[1][1][i] and slicei[2][2] == A[2][2][i] and slicei[3][3] == A[3][3][i] and slicei[4][4] == A[4][4][i] and slicei[3][0] == A[3][0][i] and slicei[4][1] == A[4][1][i]:
-        return True
-    return False
 
 
 def paritychecker( A, i, slicei):
     """
         Checks and find the parity for previous slice based on the ith slice
     """
+    #print("new call",i)
+
     slicei = applyChi(slicei)
-    if i == 0:
+    #iota step mapping for first round
+    if i == 15:
         slicei[0][0] = slicei[0][0] ^ 1
     # parity
+    #print(slicei[0][0],slicei[0][1],slicei[0][2],slicei[0][3],slicei[0][4])
     c = [0 for x in range(5)]
     for x in range(5):
-        c[x] = slicei[x][0] ^ slicei[x][1] ^ slicei[x][2] ^ slicei[x][3] ^ slicei[x][4]
+        c[x] = (slicei[0][x] + slicei[1][x] + slicei[2][x] + slicei[3][x] + slicei[4][x])%2
+    #print("column parity",c)    
     # prev slice parity
     d = [ 0, 0, 0, 0, 0, 0, 0]
-    d[0] = A[0][0][i] ^ slicei[0][0] ^ c[1]
-    d[1] = A[1][1][i] ^ slicei[1][1] ^ c[2]
-    d[2] = A[2][2][i] ^ slicei[2][2] ^ c[3]
-    d[3] = A[3][3][i] ^ slicei[3][3] ^ c[4]
-    d[4] = A[4][4][i] ^ slicei[4][4] ^ c[0]
-    
-    if d[3] == A[3][0][i] ^ slicei[3][0] ^ c[4] and d[4] == A[4][1][i] ^ slicei[4][1] ^ c[0]:
+    d[1] = A[0][0][i] ^ slicei[0][0] ^ c[4]
+    d[2] = A[1][1][i] ^ slicei[1][1] ^ c[0]
+    d[3] = A[2][2][i] ^ slicei[2][2] ^ c[1]
+    d[4] = A[3][3][i] ^ slicei[3][3] ^ c[2]
+    d[0] = A[4][4][i] ^ slicei[4][4] ^ c[3]
+    #print("previous column parity",d)
+    if d[4] == A[0][3][i] ^ slicei[0][3] ^ c[2] and d[0] == A[1][4][i] ^ slicei[1][4] ^ c[3]:
         phi1 = d[0] + 2*d[1] + 4*d[2] + 8*d[3] + 16*d[4]
         phi2 = c[0] + 2*c[1] + 4*c[2] + 8*c[3] + 16*c[4]
         d[5] = phi1
@@ -205,23 +173,33 @@ def paritychecker( A, i, slicei):
 
 
 
-def slices3(A, ind, output):
+def slices3(A, ind):
     """
     """
     # values for slice2
     values2 = []
     for a0_2, a1_5, a2_6, b0_3, b1_12, b2_14, c0_0, c1_8, c2_13, e0_13, e1_6 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
         slice2 = [ [a0_2, b2_14, c2_13, 0, 0], [0, e1_6, a1_5, 0, 0], [b0_3, c1_8, 0, 0, 0], [e0_13, a2_6, b1_12, 0, 0], [c0_0, 0, 0, 0, 0]]
-        parity = paritychecker(A, ind + 2, slice2)
+        i= ind+2
+        parity = paritychecker(A, i, slice2)
         if len(parity) == 7:
             values2.append([ parity, [a0_2, a1_5, a2_6, b0_3, b1_12, b2_14, c0_0, c1_8, c2_13, e0_13, e1_6] ])
+
 
     values1 = []
     for a0_1, a1_4, a2_5, b0_2, b1_11, b2_13, c0_15, c1_7, c2_12, e0_12, e1_5 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
         slice1 = [ [a0_1, b2_13, c2_12, 0, 0], [0, e1_5, a1_4, 0, 0], [b0_2, c1_7, 0, 0, 0], [e0_12, a2_5, b1_11, 0, 0], [c0_15, 0, 0, 0, 0]]
-        parity = paritychecker(A, ind + 1, slice1)
+        i=ind+1
+        #print("check",i,ind)
+        parity = paritychecker(A, i, slice1)
+        #print(parity)
         if len(parity) == 7:
-            values1.append([ parity, [a0_1, a1_4, a2_5, b0_2, b1_11, b2_13, c0_15, c1_7, c2_12, e0_12, e1_5] ])
+            values1.append([parity, [a0_1, a1_4, a2_5, b0_2, b1_11, b2_13, c0_15, c1_7, c2_12, e0_12, e1_5] ])
+            #print("values 1")
+            #print(slice1)
+            #print(applyChi(slice1))
+            #print(parity[5])
+            #print(parity[6])
 
     #  phi1 of slice1 in parity pos 6
     values1 = sorted(values1, key=lambda x : x[0][6] )
@@ -243,37 +221,45 @@ def slices3(A, ind, output):
     
     i = 0
     j = 0
-
+    #print(n)
+    #print(m)
     flag = 1
-    
+    print("=============================================== Merging ================================================")
+
+    kk=0
     while flag == 1:
-        i =  prev_i
+        i = prev_i
         j = prev_j
         while i + 1 < n:
             if values1[i][0][6] < values1[i + 1][0][6]:
-                next_i = i + 1
                 break
-
+            i= i + 1
+        next_i = i +1    
         while j + 1 < m:
             if values2[j][0][5] < values2[j + 1][0][5]:
-                next_j = j + 1
                 break
-
+            j= j + 1
+        next_j = j + 1    
+          
         if values1[prev_i][0][6] == values2[prev_j][0][5]:
             i = prev_i
             j = prev_j
             while i < next_i:
                 while j < next_j:
-
+                    kk=kk+1    
                     parity = [ values1[i][0][0], values1[i][0][1], values1[i][0][2], values1[i][0][3] , values1[i][0][4], values1[i][0][5] ]
-                    # phi2
                     parity.append( values2[j][0][6] )
-
-                    values.append( [  parity, values1[0][1], values2[0][1] ] )
+                    values.append( [  parity, values1[i][1], values2[j][1] ])
                     j+=1
                 i+=1
+                j = prev_j
             prev_i = next_i
             prev_j = next_j
+            #print("equal")
+            #print(prev_i)
+            #print(next_i)
+            #print(prev_j)
+            #print(next_j)
         elif values1[prev_i][0][6] > values2[prev_j][0][5]:
             prev_j = next_j
         else:
@@ -283,19 +269,27 @@ def slices3(A, ind, output):
             flag = 1
         else:
             flag = 0
-    output.put((ind,values))
+        #print("prev i and prev j")    
+        #print(prev_i)
+        #print(prev_j)
+        #print(next_i)
+        #print(next_j)        
+    print("=============================================== Merging Done================================================")
+    print("slice 3 solution",kk)
+    print(values[0])
+    return values
 
 
-def slices6(A, ind, values1, values2, output):
-    """
-    """
-    d0 = 0
-    d1 = 0
+def slices6(A, ind, values1, values2):
+
     list3 = {}
     solution3 = []
+    d0 = 0
+    d1 = 0
+    phi3 = 0
     for phi3 in range(0, 32):
-        c0 = phi3 % 2
         t = phi3
+        c0 = t % 2
         t = t//2
         c1 = t % 2
         t = t//2
@@ -307,16 +301,19 @@ def slices6(A, ind, values1, values2, output):
         for a1, a2, a3, a4, a5, a6, a7, a9, a10 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)): 
             a0 = c3 ^ a1 ^ a2 ^ a3 ^ d0
             a8 = c2 ^ a9 ^ a10
-            # add iota
-            if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
+            # iota step will not affect slice 3 and slice 9
+            iota = 0
+            if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
                 slice3 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
-                parity = paritychecker( A, ind + 3, slice3)
-                if len(partiy) > 0:
+                parity = paritychecker( A, ind+3, slice3)
+                if len(parity) > 0:
                     phi2 = parity[5]
+                    slice3in = getslicebits(slice3)
                     if phi3 not in list3:
-                        list3[phi3] = [ [phi2, slice3] ]
+                        list3[phi3] = [ [phi2, slice3in] ]
                     else:
-                        list3[phi3].append([phi2, slice3])
+                        list3[phi3].append([phi2, slice3in])
+                    
     for val in values2:
         phi3 = val[0][5]
         phi5 = val[0][6]
@@ -325,15 +322,19 @@ def slices6(A, ind, values1, values2, output):
         slice5 = val[2]
         for x in phi3list:
             slice3 = x[1]
-            phi2 = x[0] + (2**5)*(slice4[0]) + (2**6)*slice5[0]
-            solution3.append([phi2, slice3, slice4, slice5, phi5])
+            phi2 = x[0] + (32)*(slice4[0]) + (64)*(slice5[0])
+            solution3.append([phi2, slice3, slice4, slice5, phi5])        
+
     values2 = None
     solution3 = sorted(solution3, key =lambda x : x[0])
+
+
 
     list0 = {}
     solution0 = []
     d0 = 0
     d1 = 0
+    chk = 0
     for phi0 in range(0, 32):
         c0 = phi0 % 2
         t = phi0
