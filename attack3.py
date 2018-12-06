@@ -704,7 +704,7 @@ def slices16(A, ind, values1):
                     [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, phi14 ] = values1[i]
                     [ phi14_, phi15_, slice15 ] = values2[j]
                     if values1[i][0]== values2[j][1]:
-                        values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, phi14 ] )
+                        values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, slice15, phi14 ] )
                         kk=kk+1
                     j+=1
                 i+=1
