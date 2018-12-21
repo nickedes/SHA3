@@ -1,6 +1,5 @@
 from main import *
 import itertools
-import multiprocessing as mp
 
 
 def getreversePrintformat(digest):

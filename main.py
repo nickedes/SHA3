@@ -289,14 +289,14 @@ def SHAKEc(c, M, d, stateSize,nrounds):
 
 
 # Define state !!
-state_size = 800
+state_size = 1600
 # r + c = state_size
 # c bits
-c = 384
+c = 224*2
 # r bits
 r = state_size - c
 # no. of rounds
-nr = 2
+nr = 24
 d = c//2
 # message
 m = ""
