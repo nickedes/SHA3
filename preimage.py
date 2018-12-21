@@ -67,14 +67,14 @@ def iotainverse(A, i, w):
 
 
 def ChiInverseForROW(row):
-    """
-        Row dependent operation
-        Input : A row of state
-    """
-    rowinv = [0, 0, 0, 0, 0]
-    for i in range(len(row)):
-        rowinv[i] = row[i] ^ ((row[ (i + 1) % 5 ] ^ 1) * ( row[ (i + 2) % 5 ] ^ (( row[ (i + 3) % 5 ] ^ 1 ) * row[ (i + 4) % 5 ]) ) )
-    return rowinv
+	"""
+		Row dependent operation
+		Input : A row of state
+	"""
+	rowinv = [0, 0, 0, 0, 0]
+	for i in range(len(row)):
+		rowinv[i] = row[i] ^ ((row[ (i + 1) % 5 ] ^ 1) * ( row[ (i + 2) % 5 ] ^ (( row[ (i + 3) % 5 ] ^ 1 ) * row[ (i + 4) % 5 ]) ) )
+	return rowinv
 
 
 def ChiInverse(A, w):
