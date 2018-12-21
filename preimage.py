@@ -269,5 +269,18 @@ if __name__ == '__main__':
 	hexdigest = "100000000000000000000000"
 
 	bitdigest = getreversePrintformat(hexdigest)
+	# state 4 of attack
+	A = digestToState(bitdigest, w)
+	rc = 19
+	A = iotainverse(A, rc, w)
+	A = ChiInverse(A, w)
+	A = piInverse(A, w)
+	A = rhoInverse(A, w)
+	
+	# Now A is State 3, Fig 9
+	# 4 groups of 3 slices
+	slices3groups = [ [] , [] , [], [] ]
 
-
+	for i in range(0, 12, 3):
+		slices3groups[i//3] = slices3(A, i)
+		print(len(slices3groups[i//3]))
