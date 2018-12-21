@@ -117,6 +117,137 @@ def piInverse(A, w):
     return A_
 
 
+def paritychecker( A, i, slicei):
+    """
+        Checks and find the parity for previous slice based on the ith slice
+    """
+	
+	slicei = applyChi(slicei)
+    #iota step mapping for first round
+    if i == 0:
+        slicei[0][0] = slicei[0][0] ^ 1
+
+    # parity
+    c = [0 for x in range(5)]
+    for x in range(5):
+        c[x] = (slicei[x][0] + slicei[x][1] + slicei[x][2] + slicei[x][3] + slicei[x][4])%2
+
+    # prev slice parity
+    d = [ 0, 0, 0, 0, 0, 0, 0]
+    d[1] = A[0][0][i] ^ slicei[0][0] ^ c[4]
+    d[2] = A[1][1][i] ^ slicei[1][1] ^ c[0]
+    d[3] = A[2][2][i] ^ slicei[2][2] ^ c[1]
+    d[4] = A[3][3][i] ^ slicei[3][3] ^ c[2]
+    d[0] = A[4][4][i] ^ slicei[4][4] ^ c[3]
+
+    if d[4] == A[3][0][i] ^ slicei[3][0] ^ c[2] and d[0] == A[4][1][i] ^ slicei[4][1] ^ c[3]:
+        phi1 = d[0] + 2*d[1] + 4*d[2] + 8*d[3] + 16*d[4]
+        phi2 = c[0] + 2*c[1] + 4*c[2] + 8*c[3] + 16*c[4]
+        d[5] = phi1
+        d[6] = phi2
+        return d
+    return []
+
+
+
+def slices3(A, ind):
+    """
+    """
+    # values for slice2
+    values2 = []
+    for a0_2, a1_5, a2_6, b0_3, b1_12, b2_14, c0_0, c1_8, c2_13, e0_13, e1_6 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
+        slice2 = [ [a0_2, b2_14, c2_13, 0, 0], [0, e1_6, a1_5, 0, 0], [b0_3, c1_8, 0, 0, 0], [e0_13, a2_6, b1_12, 0, 0], [c0_0, 0, 0, 0, 0]]
+        i = ind + 2
+
+        parity = paritychecker(A, i, slice2)
+        if len(parity) == 7:
+            values2.append([ parity, [a0_2, a1_5, a2_6, b0_3, b1_12, b2_14, c0_0, c1_8, c2_13, e0_13, e1_6] ])
+
+
+    values1 = []
+    for a0_1, a1_4, a2_5, b0_2, b1_11, b2_13, c0_15, c1_7, c2_12, e0_12, e1_5 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
+        slice1 = [ [a0_1, b2_13, c2_12, 0, 0], [0, e1_5, a1_4, 0, 0], [b0_2, c1_7, 0, 0, 0], [e0_12, a2_5, b1_11, 0, 0], [c0_15, 0, 0, 0, 0]]
+        i = ind + 1
+
+        parity = paritychecker(A, i, slice1)
+        if len(parity) == 7:
+            values1.append([parity, [a0_1, a1_4, a2_5, b0_2, b1_11, b2_13, c0_15, c1_7, c2_12, e0_12, e1_5] ])
+    #  phi1 of slice1 in parity pos 6
+    values1 = sorted(values1, key=lambda x : x[0][6] )
+
+    #  phi1 of slice2 in parity pos 5
+    values2 = sorted(values2, key=lambda x : x[0][5] )
+
+    values = []
+
+    n = len(values1)
+    m = len(values2)
+
+
+    prev_i = 0
+    prev_j = 0
+
+    next_i = n
+    next_j = m
+
+    i = 0
+    j = 0
+
+    flag = 1
+    print("=============================================== Merging ================================================")
+
+    kk=0
+    while flag == 1:
+        i = prev_i
+        j = prev_j
+        while i + 1 < n:
+            if values1[i][0][6] < values1[i + 1][0][6]:
+                break
+            i= i + 1
+        next_i = i + 1
+        while j + 1 < m:
+            if values2[j][0][5] < values2[j + 1][0][5]:
+                break
+            j= j + 1
+        next_j = j + 1
+
+        if values1[prev_i][0][6] == values2[prev_j][0][5]:
+            i = prev_i
+            j = prev_j
+            while i < next_i:
+                while j < next_j:
+                    kk = kk + 1
+                    parity = [ values1[i][0][0], values1[i][0][1], values1[i][0][2], values1[i][0][3] , values1[i][0][4], values1[i][0][5] ]
+                    parity.append( values2[j][0][6] )
+                    values.append( [  parity, values1[i][1], values2[j][1] ])
+                    j+=1
+                i+=1
+                j = prev_j
+            prev_i = next_i
+            prev_j = next_j
+            #print("equal")
+            #print(prev_i)
+            #print(next_i)
+            #print(prev_j)
+            #print(next_j)
+        elif values1[prev_i][0][6] > values2[prev_j][0][5]:
+            prev_j = next_j
+        else:
+            prev_i = next_i
+
+        if prev_i < n and prev_j < m:
+            flag = 1
+        else:
+            flag = 0
+        #print("prev i and prev j")
+        #print(prev_i)
+        #print(prev_j)
+        #print(next_i)
+        #print(next_j)
+    print("=============================================== Merging Done================================================")
+    print("slice 3 solution",kk)
+    return values
+
 
 if __name__ == '__main__':
 
