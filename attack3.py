@@ -810,21 +810,3 @@ if __name__ == '__main__':
     if l==0:
         print("NO Solution Exist")        
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

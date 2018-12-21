@@ -302,9 +302,8 @@ d = c//2
 m = ""
 # m = ""
 
+# l = SHA3_d(m, d, r+c, nr)
+# print("Message : ", m)
+# print("Digest:")
 
-l = SHA3_d(m, d, r+c, nr)
-print("Message : ", m)
-print("Digest:")
-
-printformat(l)
+# printformat(l)
