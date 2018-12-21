@@ -277,6 +277,158 @@ def slices3(A, ind):
 	return values
 
 
+def slices6(A, ind, values1, values2):
+	list3 = {}
+	solution3 = []
+	d0 = 0
+	d1 = 0
+	phi3 = 0
+	for phi3 in range(0, 32):
+		t = phi3
+		c0 = t % 2
+		t = t//2
+		c1 = t % 2
+		t = t//2
+		c2 = t % 2
+		t = t//2
+		c3 = t % 2
+		t = t//2
+		c4 = t % 2
+		for a1, a2, a3, a4, a5, a6, a7, a9, a10 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)):
+			a0 = c3 ^ a1 ^ a2 ^ a3 ^ d0
+			a8 = c2 ^ a9 ^ a10
+			# iota step will not affect slice 3 and slice 9
+			iota = 0
+			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
+				slice3 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+				parity = paritychecker( A, ind+3, slice3)
+				if len(parity) > 0:
+					phi2 = parity[5]
+					slice3in = getslicebits(slice3)
+					if phi3 not in list3:
+						list3[phi3] = [ [phi2, slice3in] ]
+					else:
+						list3[phi3].append([phi2, slice3in])
+					
+	for val in values2:
+		phi3 = val[0][5]
+		phi5 = val[0][6]
+		phi3list = list3[phi3]
+		slice4 = val[1]
+		slice5 = val[2]
+		for x in phi3list:
+			slice3 = x[1]
+			phi2 = x[0] + (32)*(slice4[0]) + (64)*(slice5[0])
+			solution3.append([phi2, slice3, slice4, slice5, phi5])
+
+	values2 = None
+	solution3 = sorted(solution3, key =lambda x : x[0])
+
+	list0 = {}
+	solution0 = []
+	d0 = 0
+	d1 = 0
+	chk = 0
+	for phi0 in range(0, 32):
+		c0 = phi0 % 2
+		t = phi0
+		t = t//2
+		c1 = t % 2
+		t = t//2
+		c2 = t % 2
+		t = t//2
+		c3 = t % 2
+		t = t//2
+		c4 = t % 2
+		for a1, a2, a3, a4, a5, a6, a7, a9, a10 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)): 
+			a0 = c3 ^ a1 ^ a2 ^ a3 ^ d0
+			a8 = c2 ^ a9 ^ a10
+			# add iota only for slice 0, not effect on slice 6
+			iota = 0
+			if ind == 15:
+				iota = 1
+			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
+				slice0 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+				parity = paritychecker( A, ind, slice0)
+				if len(parity) > 0:
+					phi15 = parity[5]
+					slice0in = getslicebits(slice0)
+					if phi0 not in list0:
+						list0[phi0] = [ [phi15, slice0in] ]
+					else:
+						list0[phi0].append([phi15, slice0in])
+	for val in values1:
+		phi0 = val[0][5]
+		phi2 = val[0][6]
+		phi0list = list0[phi0]
+		slice1 = val[1]
+		slice2 = val[2]
+		for x in phi0list:
+			slice0 = x[1]
+			phi15 = x[0]
+			phi2 = val[0][6] + (32)*((slice0[2]+slice1[1])%2) + (64)*((slice1[2]+ slice2[1])%2)
+			solution0.append([phi15, slice0, slice1, slice2, phi2])
+	values1 = None
+	solution0 = sorted(solution0, key =lambda x : x[4])
+
+	values = []
+
+	n = len(solution0)
+	m = len(solution3)
+	
+
+	prev_i = 0
+	prev_j = 0
+
+	next_i = n
+	next_j = m
+	
+	i = 0
+	j = 0
+
+	flag = 1
+	kk=0
+	while flag == 1:
+		i =  prev_i
+		j = prev_j
+		while i + 1 < n:
+			if solution0[i][4] < solution0[i + 1][4]:
+				break
+			i = i + 1
+		next_i = i + 1
+		while j + 1 < m:
+			if solution3[j][0] < solution3[j + 1][0]:
+				break
+			j = j + 1
+		next_j = j + 1
+
+		if solution0[prev_i][4] == solution3[prev_j][0]:
+			i = prev_i
+			j = prev_j
+			while i < next_i:
+				while j < next_j:
+					[phi15, slice0, slice1, slice2, phi2] = solution0[i]
+					[phi2_ , slice3, slice4, slice5, phi5] = solution3[j]
+					values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, phi5 ] )
+					kk=kk+1
+					j+=1
+				i+=1
+				j=prev_j
+			prev_i = next_i
+			prev_j = next_j
+		elif solution0[prev_i][4] > solution3[prev_j][0]:
+			prev_j = next_j
+		else:
+			prev_i = next_i
+
+		if prev_i < n and prev_j < m:
+			flag = 1
+		else:
+			flag = 0
+	print("slice 6 solutions ",kk)
+	return values
+
+
 if __name__ == '__main__':
 
 	state_size = 400
