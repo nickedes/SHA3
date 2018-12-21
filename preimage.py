@@ -14,6 +14,110 @@ def getreversePrintformat(digest):
     return out
 
 
+def digestToState(bdigest, w):
+    """
+        From digest(binary) construct the state, with rest of lanes being 0 except the lanes with digest
+    """
+    filledlanes = len(bdigest) // w
+
+    totalLanes = 25
+    A = [ 
+			[ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ], 
+			[ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+			[ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+			[ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ],
+			[ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
+		]
+
+    H = [ bdigest[i : i + w] for i in range(0, len(bdigest) - 15, w) ]
+	
+    A[0][0] = H[0]
+    A[1][0] = H[1]
+    A[2][0] = H[2]
+    A[3][0] = H[3]
+    A[4][0] = H[4]
+    A[0][1] = H[5]
+    return A
+
+
+def iotainverse(A, i, w):
+    """
+        Same as iota, send the correct round index i
+    """
+    A_ = [[[A[x][y][z] for z in range(w)] for y in range(5)] for x in range(5)]
+
+    RCi = {
+        0: "0000000000000001", 12: "000000008000808B", 1: "0000000000008082", 13: "800000000000008B",
+        2: "800000000000808A", 14: "8000000000008089", 3: "8000000080008000", 15: "8000000000008003",
+        4: "000000000000808B", 16: "8000000000008002", 5: "0000000080000001", 17: "8000000000000080",
+        6: "8000000080008081", 18: "000000000000800A", 7: "8000000000008009", 19: "800000008000000A",
+        8: "000000000000008A", 20: "8000000080008081", 9: "0000000000000088", 21: "8000000000008080",
+        10: "0000000080008009", 22: "0000000080000001", 11: "000000008000000A", 23: "8000000080008008"
+    }
+
+    RC_bin = "{:016b}".format(int(RCi[i], 16))
+    RC = [int(x) for x in RC_bin][::-1]
+    for z in range(w):
+        A_[0][0][z] = A[0][0][z] ^ RC[z]
+
+    # print("After iota")
+    # printformat(getString(A_, w))
+    # input()
+    return A_
+
+
+def ChiInverse(A, w):
+    # Step 1 :
+    # lanes are fixed, we need to invert each row of the 1st 5 lanes
+    for i in range(w):
+        row = [ A[0][0][i], A[1][0][i], A[2][0][i], A[3][0][i], A[4][0][i] ]
+        rowinv = ChiInverseForROW(row)
+        A[0][0][i], A[1][0][i], A[2][0][i], A[3][0][i], A[4][0][i] = rowinv
+    # Step 2 :
+    # A[0][1] remains same and A[1][1] becomes 1
+
+    for i in range(w):
+        A[1][1][i] = 1
+    return A
+
+
+def rhoInverse(A, w):
+    """
+    rho step mapping - Rotate the bits of each lane by an offset.
+    """
+    # init for A_ ?
+
+    A_ = [[[A[x][y][z] for z in range(w)] for y in range(5)] for x in range(5)]
+    for z in range(w):
+        A_[0][0][z] = A[0][0][z]
+    x, y = 1, 0
+    for t in range(24):
+        for z in range(w):
+            A_[x][y][z] = A[x][y][(z + ((t+1)*(t+2))//2) % w]
+        x, y = y, (2*x + 3*y) % 5
+
+    # print("After rho")
+    # printformat(getString(A_, w))
+    # input()
+    return A_
+
+
+def piInverse(A, w):
+    """
+    pi step mapping - Rearrange the positions of the lanes
+    """
+    A_ = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
+    for x in range(5):
+        for y in range(5):
+            for z in range(w):
+                A_[x][y][z] = A[y % 5][(2*x + 3*y) % 5][z]
+    # print("After pi")
+    # printformat(getString(A_, w))
+    # input()
+    return A_
+
+
+
 if __name__ == '__main__':
 
 	state_size = 400
