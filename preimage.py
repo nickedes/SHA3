@@ -452,5 +452,14 @@ if __name__ == '__main__':
 	slices3groups = [ [] , [] , [], [] ]
 
 	for i in range(0, 12, 3):
+		print("=============================================== 3 SLICE GROUP ================================================", i)
 		slices3groups[i//3] = slices3(A, i)
 		print(len(slices3groups[i//3]))
+
+	slices6groups = [ [], [] ]
+	for i in range(0, 12, 6):
+		print("=============================================== 6 SLICE GROUP ================================================", i)
+		slice3_0 = slices3groups[i//3]
+		slice3_1 = slices3groups[i//3 + 1]
+		# slices6groups.append( merge3slices(A, i, slice3_0, slice3_1) )
+		slices6groups[i//6]  = slices6(A, i, slice3_0, slice3_1)
