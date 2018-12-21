@@ -128,6 +128,18 @@ def piInverse(A, w):
 	return A_
 
 
+def applyChi(slicei):
+    """
+    Apply row operation on a slice
+    """
+    A = slicei
+    A_ = [[0 for y in range(5)] for x in range(5)]
+    for x in range(5):
+        for y in range(5):
+            A_[x][y] = A[x][y] ^ ((A[(x+1) % 5][y] ^ 1) * A[(x+2) % 5][y])
+    return A_
+
+
 def paritychecker( A, i, slicei):
 	"""
 		Checks and find the parity for previous slice based on the ith slice
