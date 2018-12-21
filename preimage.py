@@ -129,21 +129,21 @@ def piInverse(A, w):
 
 
 def applyChi(slicei):
-    """
-    Apply row operation on a slice
-    """
-    A = slicei
-    A_ = [[0 for y in range(5)] for x in range(5)]
-    for x in range(5):
-        for y in range(5):
-            A_[x][y] = A[x][y] ^ ((A[(x+1) % 5][y] ^ 1) * A[(x+2) % 5][y])
-    return A_
+	"""
+	Apply row operation on a slice
+	"""
+	A = slicei
+	A_ = [[0 for y in range(5)] for x in range(5)]
+	for x in range(5):
+		for y in range(5):
+			A_[x][y] = A[x][y] ^ ((A[(x+1) % 5][y] ^ 1) * A[(x+2) % 5][y])
+	return A_
 
 
 def getslicebits(slicei):
-    [[a3, a7, a10, _, _], [d0, a6, a9, _, _], [a2, a5, _, _, _], [a1, a4, a8, _, _], [a0, d1, _, _, _]] = slicei
-    slicein = [a3, a9, a4, a2, a8, a7, a0, a5, a10, a1, a6]
-    return slicein
+	[[a3, a7, a10, _, _], [d0, a6, a9, _, _], [a2, a5, _, _, _], [a1, a4, a8, _, _], [a0, d1, _, _, _]] = slicei
+	slicein = [a3, a9, a4, a2, a8, a7, a0, a5, a10, a1, a6]
+	return slicein
 
 
 def paritychecker( A, i, slicei):
@@ -429,6 +429,79 @@ def slices6(A, ind, values1, values2):
 	return values
 
 
+def slices12(A, ind, values1, values2):
+	"""
+	"""
+	# modify phi5
+	for i in range(len(values1)):
+		[ phi15, slice0, slice1, slice2, slice3, slice4, slice5, phi5 ] = values1[i]
+		phi5 = values1[i][7] + (2**5)*(slice3[1] ^ slice2[2]) + (2**6)*(slice4[1] ^ slice3[2]) + (2**7)*(slice5[1] ^ slice4[2]) + (2**8)*(slice5[2]) + (2**9)*(slice2[4] + slice0[5]) + (2**10)*(slice0[3] ^ slice5[5]) + (2**11)*(slice1[3]) + (2**12)*(slice2[3]) + (2**13)*(slice3[3]) + (2**14)*(slice4[3]) + (2**15)*(slice0[6] ^ slice3[8]) + (2**16)*(slice1[6] ^ slice4[8]) + (2**17)*(slice2[6] ^ slice5[8]) + (2**18)*(slice3[6]) + (2**19)*(slice0[7]) + (2**20)*(slice0[10]) + (2**21)*(slice1[10]) + (2**22)*(slice2[10]) + (2**23)*(slice0[9]) + (2**24)*(slice1[9]) + (2**25)*(slice2[9]) + (2**26)*(slice3[9]) + (2**27)*(slice4[9])
+		values1[i][7] = phi5
+	for i in range(len(values2)):
+		[ phi5, slice6, slice7, slice8, slice9, slice10, slice11, phi11 ] = values2[i]
+		phi5 = values2[i][0] + (2**5)*(slice6[0]) + (2**6)*(slice7[0]) + (2**7)*(slice8[0]) + (2**8)*(slice9[0] ^ slice6[1]) + (2**9)*(slice11[3]) + (2**10)*(slice7[4]) + (2**11)*(slice8[4] ^ slice6[5]) + (2**12)*(slice9[4] ^ slice7[5]) + (2**13)*(slice10[4] ^ slice8[5]) + (2**14)*(slice11[4] ^ slice9[5]) + (2**15)*(slice8[7]) +    (2**16)*(slice9[7]) + (2**17)*(slice10[7]) + (2**18)*(slice11[7] ^ slice6[8]) + (2**19)*(slice8[6] ^ slice11[8]) + (2**20)*(slice9[9]) + (2**21)*(slice10[9]) + (2**22)*(slice11[9]) + (2**23)*(slice6[10]) + (2**24)*(slice7[10]) + (2**25)*(slice8[10]) + (2**26)*(slice9[10]) + (2**27)*(slice10[10])
+		values2[i][0] = phi5
+	values1 = sorted(values1, key = lambda x : x[7])
+	values2 = sorted(values2, key = lambda x : x[0])
+	# Todo : Merging
+	values = []
+
+	n = len(values1)
+	m = len(values2)
+		
+	prev_i = 0
+	prev_j = 0
+
+	next_i = n
+	next_j = m
+	
+	i = 0
+	j = 0
+
+	flag = 1
+	kk=0
+	while flag == 1:
+		i =  prev_i
+		j = prev_j
+		while i + 1 < n:
+			if values1[i][7] < values1[i + 1][7]:
+				break
+			i = i + 1
+		next_i = i + 1
+
+		while j + 1 < m:
+			if values2[j][0] < values2[j + 1][0]:
+				break
+			j = j + 1
+		next_j = j + 1
+		
+		if values1[prev_i][7] == values2[prev_j][0]:
+			i = prev_i
+			j = prev_j
+			while i < next_i:
+				while j < next_j:
+					[ phi15, slice0, slice1, slice2, slice3, slice4, slice5, phi5 ] = values1[i]
+					[ phi5_, slice6, slice7, slice8, slice9, slice10, slice11, phi11 ] = values2[j]
+					values.append( [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, phi11 ] )
+					kk=kk+1
+					j+=1
+				i+=1
+				j=prev_j
+			prev_i = next_i
+			prev_j = next_j
+		elif values1[prev_i][7] > values2[prev_j][0]:
+			prev_j = next_j
+		else:
+			prev_i = next_i
+
+		if prev_i < n and prev_j < m:
+			flag = 1
+		else:
+			flag = 0
+	print("slice 12 solution ",kk)
+	return values
+
+
 if __name__ == '__main__':
 
 	state_size = 400
@@ -463,3 +536,17 @@ if __name__ == '__main__':
 		slice3_1 = slices3groups[i//3 + 1]
 		# slices6groups.append( merge3slices(A, i, slice3_0, slice3_1) )
 		slices6groups[i//6]  = slices6(A, i, slice3_0, slice3_1)
+
+	# deallocate memory from slices3groups
+	slices3groups = None
+
+	slices12groups = []
+	for i in range(0, 12, 12):
+		print("=============================================== 12 SLICE GROUP ================================================", i)
+		slice6_0 = slices6groups[i//6]
+		slice6_1 = slices6groups[i//6 + 1]
+		slices12groups = slices12(A, i, slice6_0, slice6_1) 
+	
+	slices6groups = None
+
+	
