@@ -295,7 +295,7 @@ def slices6(A, ind, values1, values2):
 		t = t//2
 		c4 = t % 2
 		for a1, a2, a3, a4, a5, a6, a7, a9, a10 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)):
-			a0 = c0 ^ a1 ^ a2 ^ a3 ^ d0
+			a0 = c3 ^ a1 ^ a2 ^ a3 ^ d0
 			a8 = c2 ^ a9 ^ a10
 			# iota step will not affect slice 3 and slice 9
 			iota = 0
@@ -343,7 +343,7 @@ def slices6(A, ind, values1, values2):
 		t = t//2
 		c4 = t % 2
 		for a1, a2, a3, a4, a5, a6, a7, a9, a10 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)): 
-			a0 = c0 ^ a1 ^ a2 ^ a3 ^ d0
+			a0 = c3 ^ a1 ^ a2 ^ a3 ^ d0
 			a8 = c2 ^ a9 ^ a10
 			# add iota only for slice 0, not effect on slice 6
 			iota = 0
@@ -529,7 +529,7 @@ def slices15(A, ind, values1, values2):
 		t = t//2
 		c4 = t % 2
 		for a1, a2, a3, a4, a5, a6, a7, a9, a10 in itertools.product(range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2), range(2)): 
-			a0 = c0 ^ a1 ^ a2 ^ a3 ^ d0
+			a0 = c3 ^ a1 ^ a2 ^ a3 ^ d0
 			a8 = c2 ^ a9 ^ a10
 			# add iota
 			# if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
