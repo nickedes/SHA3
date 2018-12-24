@@ -224,19 +224,19 @@ def slices3(A, ind):
 	flag = 1
 	print("=============================================== Merging ================================================")
 
-	kk=0
+	kk = 0
 	while flag == 1:
 		i = prev_i
 		j = prev_j
 		while i + 1 < n:
 			if values1[i][0][6] < values1[i + 1][0][6]:
 				break
-			i= i + 1
+			i = i + 1
 		next_i = i + 1
 		while j + 1 < m:
 			if values2[j][0][5] < values2[j + 1][0][5]:
 				break
-			j= j + 1
+			j = j + 1
 		next_j = j + 1
 
 		if values1[prev_i][0][6] == values2[prev_j][0][5]:
@@ -248,8 +248,8 @@ def slices3(A, ind):
 					parity = [ values1[i][0][0], values1[i][0][1], values1[i][0][2], values1[i][0][3] , values1[i][0][4], values1[i][0][5] ]
 					parity.append( values2[j][0][6] )
 					values.append( [  parity, values1[i][1], values2[j][1] ])
-					j+=1
-				i+=1
+					j += 1
+				i += 1
 				j = prev_j
 			prev_i = next_i
 			prev_j = next_j
