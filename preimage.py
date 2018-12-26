@@ -760,7 +760,8 @@ if __name__ == '__main__':
 		print("=============================================== 12 SLICE GROUP ================================================", i)
 		slice6_0 = slices6groups[i//6]
 		slice6_1 = slices6groups[i//6 + 1]
-		slices12groups = slices12(A, i, slice6_0, slice6_1)
+
+	slices12groups = slices12(A, i, slice6_0, slice6_1)
 	
 	slices6groups = None
 	slices3groups2 = slices3(A, 12)
