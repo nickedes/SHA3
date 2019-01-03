@@ -299,16 +299,16 @@ def slices6(A, ind, values1, values2):
 			a8 = c2 ^ a9 ^ a10
 			# iota step will not affect slice 3 and slice 9
 			iota = 0
-			# if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
-			slice3 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
-			parity = paritychecker( A, ind+3, slice3)
-			if len(parity) > 0:
-				phi2 = parity[5]
-				slice3in = getslicebits(slice3)
-				if phi3 not in list3:
-					list3[phi3] = [ [phi2, slice3in] ]
-				else:
-					list3[phi3].append([phi2, slice3in])
+			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
+				slice3 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+				parity = paritychecker( A, ind+3, slice3)
+				if len(parity) == 7:
+					phi2 = parity[5]
+					slice3in = getslicebits(slice3)
+					if phi3 not in list3:
+						list3[phi3] = [ [phi2, slice3in] ]
+					else:
+						list3[phi3].append([phi2, slice3in])
 					
 	for val in values2:
 		phi3 = val[0][5]
@@ -347,16 +347,16 @@ def slices6(A, ind, values1, values2):
 			iota = 0
 			if ind == 0:
 				iota = 1
-			# if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
-			slice0 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
-			parity = paritychecker( A, ind, slice0)
-			if len(parity) > 0:
-				phi15 = parity[5]
-				slice0in = getslicebits(slice0)
-				if phi0 not in list0:
-					list0[phi0] = [ [phi15, slice0in] ]
-				else:
-					list0[phi0].append([phi15, slice0in])
+			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
+				slice0 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+				parity = paritychecker( A, ind, slice0)
+				if len(parity) == 7:
+					phi15 = parity[5]
+					slice0in = getslicebits(slice0)
+					if phi0 not in list0:
+						list0[phi0] = [ [phi15, slice0in] ]
+					else:
+						list0[phi0].append([phi15, slice0in])
 	for val in values1:
 		phi0 = val[0][5]
 		phi2 = val[0][6]
@@ -530,16 +530,16 @@ def slices15(A, ind, values1, values2):
 			a0 = c3 ^ a1 ^ a2 ^ a3 ^ d0
 			a8 = c2 ^ a9 ^ a10
 			# add iota
-			# if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
-			slice12 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
-			parity = paritychecker( A, ind, slice12)
-			if len(parity) > 0:
-				phi11 = parity[5]
-				slice12in = getslicebits(slice12)
-				if phi3 not in list3:
-					list3[phi3] = [ [phi11, slice12in] ]
-				else:
-					list3[phi3].append([phi11, slice12in])
+			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
+				slice12 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+				parity = paritychecker( A, ind, slice12)
+				if len(parity) == 7:
+					phi11 = parity[5]
+					slice12in = getslicebits(slice12)
+					if phi3 not in list3:
+						list3[phi3] = [ [phi11, slice12in] ]
+					else:
+						list3[phi3].append([phi11, slice12in])
 	tr = len(values2)
 	zz = 0
 	for val in values2:
