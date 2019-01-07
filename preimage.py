@@ -146,14 +146,25 @@ def getslicebits(slicei):
 	return slicein
 
 
+def printSlice(State, Slicenum):
+	"""
+		Print the slice of the State
+	"""
+	Slice = [ [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+	for x in range(5):
+		for y in range(5):
+			Slice[x][y] = State[x][y][Slicenum]
+	print("Slice of State : ", Slice)
+
+
 def paritychecker( A, i, slicei):
 	"""
 		Checks and find the parity for previous slice based on the ith slice
 	"""
 	slicei = applyChi(slicei)
 	#iota step mapping for first round
-	if i == 0:
-		slicei[0][0] = slicei[0][0] ^ 1
+	# if i == 0:
+	# 	slicei[0][0] = slicei[0][0] ^ 1
 
 	# parity
 	c = [0 for x in range(5)]
@@ -630,7 +641,6 @@ def slices15(A, ind, values1, values2):
 		else:
 			flag = 0
 	print("slice 15 solution ",kk)
-	print("Interesection : ", len(phi11_s1), len(phi11_s2), phi11_s1.intersection(phi11_s2))
 	return values
 
 

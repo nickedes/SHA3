@@ -134,9 +134,15 @@ def getslicebits(slicei):
     return slicein
 
 
-
-
-
+def printSlice(State, Slicenum):
+    """
+        Print the slice of the State
+    """
+    Slice = [ [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+    for x in range(5):
+        for y in range(5):
+            Slice[x][y] = State[x][y][Slicenum]
+    print("Slice of State : ", Slice)
 
 
 def paritychecker( A, i, slicei):
@@ -144,7 +150,6 @@ def paritychecker( A, i, slicei):
         Checks and find the parity for previous slice based on the ith slice
     """
     #print("new call",i)
-
     slicei = applyChi(slicei)
     #iota step mapping for first round
     if i == 15:
@@ -351,8 +356,8 @@ def slices6(A, ind, values1, values2):
             a8 = c2 ^ a9 ^ a10
             # add iota only for slice 0, not effect on slice 6
             iota = 0
-            if ind == 15:
-                iota = 1
+            # if ind == 15:
+            #     iota = 1
             if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
                 slice0 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
                 parity = paritychecker( A, ind, slice0)
@@ -753,7 +758,7 @@ if __name__ == '__main__':
     # Step 1 : Iota inverse (we initially has 2 rounds, so round index for last round was 23)
     rc = 1
     print(A)
-    A = iotainverse(A, rc, w)
+    # A = iotainverse(A, rc, w)
     print(A)
     A = ChiInverse(A, w)
     print(A)
