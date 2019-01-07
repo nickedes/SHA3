@@ -1,4 +1,5 @@
 from main import *
+import random
 import itertools
 
 
@@ -735,52 +736,55 @@ if __name__ == '__main__':
 	# lane size
 	w = state_size//25
 
-	hexdigest = "000000000000000000000000"
+	while True:
+		hexdigest = ""
+		for i in range(24):
+			hexdigest += "{:x}".format(random.randint(0, 15))
+		input()
+		bitdigest = getreversePrintformat(hexdigest)
+		print(hexdigest)
+		# state 4 of attack
+		A = digestToState(bitdigest, w)
+		rc = 1
+		# A = iotainverse(A, rc, w)
+		A = ChiInverse(A, w)
+		A = piInverse(A, w)
+		A = rhoInverse(A, w)
+		
+		# Now A is State 3, Fig 9
+		# 4 groups of 3 slices
+		slices3groups = [ [] , [] , [], [] ]
 
-	bitdigest = getreversePrintformat(hexdigest)
-	print("bdigest",bitdigest)
-	# state 4 of attack
-	A = digestToState(bitdigest, w)
-	rc = 1
-	# A = iotainverse(A, rc, w)
-	A = ChiInverse(A, w)
-	A = piInverse(A, w)
-	A = rhoInverse(A, w)
-	
-	# Now A is State 3, Fig 9
-	# 4 groups of 3 slices
-	slices3groups = [ [] , [] , [], [] ]
+		for i in range(0, 12, 3):
+			print("=============================================== 3 SLICE GROUP ================================================", i)
+			slices3groups[i//3] = slices3(A, i)
+			print(len(slices3groups[i//3]))
 
-	for i in range(0, 12, 3):
-		print("=============================================== 3 SLICE GROUP ================================================", i)
-		slices3groups[i//3] = slices3(A, i)
-		print(len(slices3groups[i//3]))
+		slices6groups = [ [], [] ]
+		for i in range(0, 12, 6):
+			print("=============================================== 6 SLICE GROUP ================================================", i)
+			slice3_0 = slices3groups[i//3]
+			slice3_1 = slices3groups[i//3 + 1]
+			# slices6groups.append( merge3slices(A, i, slice3_0, slice3_1) )
+			slices6groups[i//6]  = slices6(A, i, slice3_0, slice3_1)
 
-	slices6groups = [ [], [] ]
-	for i in range(0, 12, 6):
-		print("=============================================== 6 SLICE GROUP ================================================", i)
-		slice3_0 = slices3groups[i//3]
-		slice3_1 = slices3groups[i//3 + 1]
-		# slices6groups.append( merge3slices(A, i, slice3_0, slice3_1) )
-		slices6groups[i//6]  = slices6(A, i, slice3_0, slice3_1)
+		# deallocate memory from slices3groups
+		slices3groups = None
 
-	# deallocate memory from slices3groups
-	slices3groups = None
+		slices12groups = []
+		for i in range(0, 12, 12):
+			print("=============================================== 12 SLICE GROUP ================================================", i)
+			slice6_0 = slices6groups[i//6]
+			slice6_1 = slices6groups[i//6 + 1]
 
-	slices12groups = []
-	for i in range(0, 12, 12):
-		print("=============================================== 12 SLICE GROUP ================================================", i)
-		slice6_0 = slices6groups[i//6]
-		slice6_1 = slices6groups[i//6 + 1]
+		slices12groups = slices12(A, i, slice6_0, slice6_1)
+		
+		slices6groups = None
+		slices3groups2 = slices3(A, 12)
+		print("=============================================== LAST 3 SLICE GROUP ================================================")
 
-	slices12groups = slices12(A, i, slice6_0, slice6_1)
-	
-	slices6groups = None
-	slices3groups2 = slices3(A, 12)
-	print("=============================================== LAST 3 SLICE GROUP ================================================")
-
-	slices15groups = slices15(A, 12, slices12groups, slices3groups2)
-	print("=============================================== merge of 12, 3 SLICE GROUPs ================================================")
-	print("=============================================== LAST merge To be done ================================================")
-	print("wait.............")
-	solutions = slices16(A, 0, slices15groups)
+		slices15groups = slices15(A, 12, slices12groups, slices3groups2)
+		print("=============================================== merge of 12, 3 SLICE GROUPs ================================================")
+		print("=============================================== LAST merge To be done ================================================")
+		print("wait.............")
+		solutions = slices16(A, 0, slices15groups)
