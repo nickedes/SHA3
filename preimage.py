@@ -19,7 +19,7 @@ def digestToState(bdigest, w):
 		From digest(binary) construct the state, with rest of lanes being 0 except the lanes with digest
 	"""
 	filledlanes = len(bdigest) // w
-
+	print(filledlanes)
 	totalLanes = 25
 	A = [ 
 			[ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ], 
@@ -30,7 +30,7 @@ def digestToState(bdigest, w):
 		]
 
 	H = [ [int(x) for x in bdigest[i : i + w]] for i in range(0, len(bdigest) - 15, w) ]
-	
+	print(H)
 	A[0][0] = H[0]
 	A[1][0] = H[1]
 	A[2][0] = H[2]
@@ -168,7 +168,7 @@ def paritychecker( A, i, slicei):
 	d[4] = A[3][3][i] ^ slicei[3][3] ^ c[2]
 	d[0] = A[4][4][i] ^ slicei[4][4] ^ c[3]
 
-	if d[4] == A[3][0][i] ^ slicei[3][0] ^ c[2] and d[0] == A[4][1][i] ^ slicei[4][1] ^ c[3]:
+	if (d[4] == A[3][0][i] ^ slicei[3][0] ^ c[2]) and (d[0] == A[4][1][i] ^ slicei[4][1] ^ c[3]):
 		phi1 = d[0] + 2*d[1] + 4*d[2] + 8*d[3] + 16*d[4]
 		phi2 = c[0] + 2*c[1] + 4*c[2] + 8*c[3] + 16*c[4]
 		d[5] = phi1
@@ -274,6 +274,7 @@ def slices3(A, ind):
 		#print(next_j)
 	print("=============================================== Merging Done================================================")
 	print("slice 3 solution",kk)
+	print(values[0])
 	return values
 
 
@@ -302,7 +303,7 @@ def slices6(A, ind, values1, values2):
 			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
 				slice3 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
 				parity = paritychecker( A, ind+3, slice3)
-				if len(parity) == 7:
+				if len(parity) > 0:
 					phi2 = parity[5]
 					slice3in = getslicebits(slice3)
 					if phi3 not in list3:
@@ -345,8 +346,8 @@ def slices6(A, ind, values1, values2):
 			a8 = c2 ^ a9 ^ a10
 			# add iota only for slice 0, not effect on slice 6
 			iota = 0
-			if ind == 0:
-				iota = 1
+			# if ind == 0:
+			# 	iota = 1
 			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
 				slice0 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
 				parity = paritychecker( A, ind, slice0)
@@ -533,7 +534,7 @@ def slices15(A, ind, values1, values2):
 			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
 				slice12 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
 				parity = paritychecker( A, ind, slice12)
-				if len(parity) == 7:
+				if len(parity) > 0:
 					phi11 = parity[5]
 					slice12in = getslicebits(slice12)
 					if phi3 not in list3:
@@ -724,13 +725,14 @@ if __name__ == '__main__':
 	# lane size
 	w = state_size//25
 
-	hexdigest = "100000000000000000000FF0"
+	hexdigest = "000000000000000000000000"
 
 	bitdigest = getreversePrintformat(hexdigest)
+	print("bdigest",bitdigest)
 	# state 4 of attack
 	A = digestToState(bitdigest, w)
 	rc = 1
-	A = iotainverse(A, rc, w)
+	# A = iotainverse(A, rc, w)
 	A = ChiInverse(A, w)
 	A = piInverse(A, w)
 	A = rhoInverse(A, w)

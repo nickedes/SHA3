@@ -740,7 +740,7 @@ if __name__ == '__main__':
 
     w = state_size//25
 
-    digest = "100000000000000000000FF0"
+    digest = "000000000000000000000000"
 
     bdigest = getreversePrintformat(digest)
     print("bdigest",bdigest)
