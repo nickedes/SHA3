@@ -284,6 +284,8 @@ def slices3(A, ind):
 		#print(prev_j)
 		#print(next_i)
 		#print(next_j)
+	values1.clear()
+	values2.clear()
 	print("=============================================== Merging Done================================================")
 	print("slice 3 solution",kk)
 	print(values[0])
@@ -438,6 +440,8 @@ def slices6(A, ind, values1, values2):
 			flag = 1
 		else:
 			flag = 0
+	values1.clear()
+	values2.clear()
 	print("slice 6 solutions ",kk)
 	return values
 
@@ -511,6 +515,8 @@ def slices12(A, ind, values1, values2):
 			flag = 1
 		else:
 			flag = 0
+	values1.clear()
+	values2.clear()
 	print("slice 12 solution ",kk)
 	return values
 
@@ -641,6 +647,8 @@ def slices15(A, ind, values1, values2):
 			flag = 1
 		else:
 			flag = 0
+	values1.clear()
+	values2.clear()
 	print("slice 15 solution ",kk)
 	return values
 
@@ -725,6 +733,8 @@ def slices16(A, ind, values1):
 			flag = 1
 		else:
 			flag = 0
+	values1.clear()
+	values2.clear()
 	print("slice 16 solutions ",kk)
 	return values
 
