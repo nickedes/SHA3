@@ -440,8 +440,8 @@ def slices6(A, ind, values1, values2):
 			flag = 1
 		else:
 			flag = 0
-	values1.clear()
-	values2.clear()
+	solution0.clear()
+	solution3.clear()
 	print("slice 6 solutions ",kk)
 	return values
 
