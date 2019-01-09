@@ -739,6 +739,21 @@ def slices16(A, ind, values1):
 	return values
 
 
+def Construct_State(Slices):
+	"""
+		Construct a state of Keccak from the given slices
+	"""
+	w = len(Slices)
+	A = [ [ [0 for z in range(w)] for y in range(5) ] for x in range(5) ]
+	for index, slicei in enumerate(Slices):
+		# index is the Slice number
+		for x in range(5):
+			for y in range(5):
+				# update the slice
+				A[x][y][index] = slicei[x][y]
+	return A
+
+
 if __name__ == '__main__':
 
 	state_size = 400
@@ -800,3 +815,10 @@ if __name__ == '__main__':
 		print("wait.............")
 		solutions = slices16(A, 0, slices15groups)
 		print(solutions)
+		for solution in solutions:
+			[ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, slice15, phi14 ] = solution
+			# construct state from slices
+			Slices = [slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, slice15]
+			Obtained_initialState = Construct_State(Slices)
+			msg = getString(Obtained_initialState, w)
+			print(msg)
