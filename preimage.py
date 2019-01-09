@@ -147,6 +147,14 @@ def getslicebits(slicei):
 	return slicein
 
 
+def getSlicefrombits(bits):
+	"""
+	"""
+	[a3, a9, a4, a2, a8, a7, a0, a5, a10, a1, a6] = bits
+	slicei = [[a3, a7, a10, _, _], [d0, a6, a9, _, _], [a2, a5, _, _, _], [a1, a4, a8, _, _], [a0, d1, _, _, _]]
+	return slicei
+
+
 def printSlice(State, Slicenum):
 	"""
 		Print the slice of the State
