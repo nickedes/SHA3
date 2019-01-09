@@ -292,8 +292,8 @@ def slices3(A, ind):
 		#print(prev_j)
 		#print(next_i)
 		#print(next_j)
-	values1.clear()
-	values2.clear()
+	del values1
+	del values2
 	print("=============================================== Merging Done================================================")
 	print("slice 3 solution",kk)
 	print(values[0])
@@ -448,8 +448,8 @@ def slices6(A, ind, values1, values2):
 			flag = 1
 		else:
 			flag = 0
-	solution0.clear()
-	solution3.clear()
+	del solution0
+	del solution3
 	print("slice 6 solutions ",kk)
 	return values
 
@@ -523,8 +523,8 @@ def slices12(A, ind, values1, values2):
 			flag = 1
 		else:
 			flag = 0
-	values1.clear()
-	values2.clear()
+	del values1
+	del values2
 	print("slice 12 solution ",kk)
 	return values
 
@@ -655,8 +655,8 @@ def slices15(A, ind, values1, values2):
 			flag = 1
 		else:
 			flag = 0
-	values1.clear()
-	values2.clear()
+	del values1
+	del values2
 	print("slice 15 solution ",kk)
 	return values
 
@@ -741,8 +741,8 @@ def slices16(A, ind, values1):
 			flag = 1
 		else:
 			flag = 0
-	values1.clear()
-	values2.clear()
+	del values1
+	del values2
 	print("slice 16 solutions ",kk)
 	return values
 
@@ -803,7 +803,7 @@ if __name__ == '__main__':
 			slices6groups[i//6]  = slices6(A, i, slice3_0, slice3_1)
 
 		# deallocate memory from slices3groups
-		slices3groups = None
+		del slices3groups
 
 		slices12groups = []
 		for i in range(0, 12, 12):
@@ -813,15 +813,17 @@ if __name__ == '__main__':
 
 		slices12groups = slices12(A, i, slice6_0, slice6_1)
 		
-		slices6groups = None
+		del slices6groups
 		slices3groups2 = slices3(A, 12)
 		print("=============================================== LAST 3 SLICE GROUP ================================================")
 
 		slices15groups = slices15(A, 12, slices12groups, slices3groups2)
+		del slices3groups2
 		print("=============================================== merge of 12, 3 SLICE GROUPs ================================================")
 		print("=============================================== LAST merge To be done ================================================")
 		print("wait.............")
 		solutions = slices16(A, 0, slices15groups)
+		del slices15groups
 		print(solutions)
 		for solution in solutions:
 			[ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, slice15, phi14 ] = solution
