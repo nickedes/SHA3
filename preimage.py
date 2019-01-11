@@ -829,6 +829,10 @@ if __name__ == '__main__':
 			[ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, slice15, phi14 ] = solution
 			# construct state from slices
 			Slices = [slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, slice15]
+			w = len(Slices)
+			for index, slicebits in enumerate(Slices):
+				Slices[index] = getSlicefrombits(slicebits)
 			Obtained_initialState = Construct_State(Slices)
 			msg = getString(Obtained_initialState, w)
-			print(msg)
+			print("msg : " , msg)
+
