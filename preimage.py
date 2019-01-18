@@ -172,8 +172,8 @@ def paritychecker( A, i, slicei):
 	"""
 	slicei = applyChi(slicei)
 	#iota step mapping for first round
-	# if i == 0:
-	# 	slicei[0][0] = slicei[0][0] ^ 1
+	if i == 0:
+		slicei[0][0] = slicei[0][0] ^ 1
 
 	# parity
 	c = [0 for x in range(5)]
@@ -230,7 +230,6 @@ def slices3(A, ind):
 
 	n = len(values1)
 	m = len(values2)
-
 
 	prev_i = 0
 	prev_j = 0
@@ -368,8 +367,8 @@ def slices6(A, ind, values1, values2):
 			a8 = c2 ^ a9 ^ a10
 			# add iota only for slice 0, not effect on slice 6
 			iota = 0
-			# if ind == 0:
-			# 	iota = 1
+			if ind == 0:
+				iota = 1
 			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
 				slice0 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
 				parity = paritychecker( A, ind, slice0)
@@ -780,7 +779,7 @@ if __name__ == '__main__':
 		# state 4 of attack
 		A = digestToState(bitdigest, w)
 		rc = 1
-		# A = iotainverse(A, rc, w)
+		A = iotainverse(A, rc, w)
 		A = ChiInverse(A, w)
 		A = piInverse(A, w)
 		A = rhoInverse(A, w)
