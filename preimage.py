@@ -773,7 +773,6 @@ if __name__ == '__main__':
 		for i in range(24):
 			hexdigest += "{:x}".format(random.randint(0, 15))
 		input()
-		hexdigest = "96b18cc347560813a3ecf260"
 		bitdigest = getreversePrintformat(hexdigest)
 		print(hexdigest)
 		# state 4 of attack
