@@ -68,6 +68,20 @@ for solution in solutions:
     for index, slicebits in enumerate(Slices):
         Slices[index] = getSlicefrombits(slicebits)
     Obtained_initialState = Construct_State(Slices)
+    print("===================Initial Checks : ===========================")
+    print("=================== Theta Check : ===========================")
+    afterTheta_State = theta(Obtained_initialState, w)
+    for x in range(5):
+        for y in range(5):
+            for z in range(w):
+                if afterTheta_State[x][y][z] != Obtained_initialState[x][y][z]:
+                    print("Bit MisMatch : ", (x, y , z))
+    if afterTheta_State == Obtained_initialState:
+        print("Pass!")
+    else:
+        print("theta Check failed!!")
+        exit()
+    print("===============================================================")
     msg = getString(Obtained_initialState, w)
     print("msg : " , msg)
     state_size = 400
