@@ -122,3 +122,7 @@ for solution in solutions:
     # digest = "100000000000000000000000"
     print("digest : ", S)
     printformat(S)
+
+# Next steps :
+# 1. Change implementation of rho and rhoInverse, should be similar to the one taken in attack
+# 2. observe the attack after above changes
