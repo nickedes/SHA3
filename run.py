@@ -67,8 +67,18 @@ for solution in solutions:
     w = len(Slices)
     for index, slicebits in enumerate(Slices):
         Slices[index] = getSlicefrombits(slicebits)
-    Obtained_initialState = Construct_State(Slices)
+    Obtained_SecondState = Construct_State(Slices)
+    Obtained_initialState = piInverse(rhoInverse(Obtained_SecondState, w), w)
     print("===================Initial Checks : ===========================")
+    # these lanes should be (0)
+    zerolanes = [(0,3), (0,4), (1,3), (1,4), (2,3), (2,4), (3,2), (3,3), (3,4), (4,2), (4,3), (4,4)]
+    for lane in zerolanes:
+        x,y = lane
+        for z in range(w):
+            if Obtained_initialState[x][y][z] != 0:
+                print(lane, " lane is not zero")
+                break
+
     print("=================== Theta Check : ===========================")
     afterTheta_State = theta(Obtained_initialState, w)
     for x in range(5):
