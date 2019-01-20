@@ -76,9 +76,8 @@ def rho(A, w):
     """
     # init for A_ ?
 
-    A_ = [[[A[x][y][z] for z in range(w)] for y in range(5)] for x in range(5)]
-    for z in range(w):
-        A_[0][0][z] = A[0][0][z]
+    A_ = [[[ A[x][y][z] for z in range(w)] for y in range(5)] for x in range(5)]
+
     x, y = 1, 0
     for t in range(24):
         for z in range(w):
