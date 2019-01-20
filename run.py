@@ -72,14 +72,6 @@ for solution in solutions:
     Obtained_SecondState = Construct_State(Slices)
     Obtained_initialState = piInverse(rhoInverse(Obtained_SecondState, w), w)
 
-    # check
-    A = Obtained_initialState
-    A_afterrho = rho(A, w)
-    A_ = rhoInverse(A_afterrho, w)
-
-    if A == A_:
-        input("it works!")
-
     print("===================Initial Checks : ===========================")
     # these lanes should be (0)
     zerolanes = [(0,3), (0,4), (1,3), (1,4), (2,3), (2,4), (3,2), (3,3), (3,4), (4,2), (4,3), (4,4)]
