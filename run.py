@@ -22,12 +22,11 @@ def piInverse(A, w):
     """
     pi step mapping - Rearrange the positions of the lanes
     """
-    # ToDo : check this inverse mapping
     A_ = [[[0 for z in range(w)] for y in range(5)] for x in range(5)]
     for x in range(5):
         for y in range(5):
             for z in range(w):
-                A_[y][x][z] = A[x % 5][(2*y + 3*x) % 5][z]
+                A_[x][y][z] = A[y % 5][(2*x + 3*y) % 5][z]
     # print("After pi")
     # printformat(getString(A_, w))
     # input()
@@ -66,7 +65,7 @@ for solution in solutions:
     for index, slicebits in enumerate(Slices):
         Slices[index] = getSlicefrombits(slicebits)
     Obtained_SecondState = Construct_State(Slices)
-    Obtained_initialState = piInverse(rhoInverse(Obtained_SecondState, w), w)
+    Obtained_initialState = rhoInverse(piInverse(Obtained_SecondState, w), w)
 
     print("===================Initial Checks : ===========================")
     # these lanes should be (0)
@@ -89,7 +88,7 @@ for solution in solutions:
         print("Pass!")
     else:
         print("theta Check failed!!")
-        exit()
+        # exit()
     print("===============================================================")
     msg = getString(Obtained_initialState, w)
     print("msg : " , msg)
