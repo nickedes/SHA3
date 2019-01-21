@@ -62,22 +62,28 @@ def getSlicefrombits(bits):
     state_slice = [ [ a3, 0, a2, a1, a0 ], [ a7, a6, a5, a4, 0], [ a10, a9, 0, a8, 0], [ 0, 0, 0, 0, 0], [ 0, 0, 0, 0, 0] ]
     return state_slice
 
-
-solutions = [[12, [0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0], [0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0], [1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1], [1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1], [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1], [1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0], [0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1], [1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1], [0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1], [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1], [0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1], [1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0], [1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0], [0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1], [0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1], [0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1], 62470]]
+# 34c63d2d5a8e4b30e3ebccaf
+solutions = [[15, [1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0], [1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0], [1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1], [1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1], [1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1], [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1], [1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0], [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0], [1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0], 29410]]
 
 for solution in solutions:
     [ phi15, slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, slice15, phi14 ] = solution
     # construct state from slices
-    Slices = [slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, slice15][::-1]
+    Slices = [slice0, slice1, slice2, slice3, slice4, slice5, slice6, slice7, slice8, slice9, slice10, slice11, slice12, slice13, slice14, slice15]
     w = len(Slices)
     for index, slicebits in enumerate(Slices):
         Slices[index] = getSlicefrombits(slicebits)
     Obtained_SecondState = Construct_State(Slices)
-    Obtained_initialState = rhoInverse(piInverse(Obtained_SecondState, w), w)
+    Obtained_initialState = rhoInverse( piInverse(Obtained_SecondState, w), w)
+
 
     print("===================Initial Checks : ===========================")
     # these lanes should be (0)
     zerolanes = [(0,3), (0,4), (1,3), (1,4), (2,3), (2,4), (3,2), (3,3), (3,4), (4,2), (4,3), (4,4)]
+
+    # checklanes = [(0,0), (1,0), (2, 0), (0, 1), (1, 1), (2, 1), (0, 2), (1, 2), (0, 3), (1, 3), (2, 3), (0, 4), (1, 4)]
+    # for lane in checklanes:
+    #     print(lane , " - after piInverse - ", picords(lane))
+    print("===============================================================")
     for lane in zerolanes:
         x,y = lane
         for z in range(w):
