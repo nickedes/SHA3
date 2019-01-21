@@ -32,6 +32,13 @@ def piInverse(A, w):
     # input()
     return A_
 
+def picords(lane):
+    """
+    """
+    x, y = lane
+    return (y, (2*x + 3*y) % 5)
+
+
 def Construct_State(Slices):
     """
         Construct a state of Keccak from the given slices
