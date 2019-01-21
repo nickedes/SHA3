@@ -335,7 +335,7 @@ def slices6(A, ind, values1, values2):
 			# iota step will not affect slice 3 and slice 9
 			iota = 0
 			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
-				slice3 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+				slice3 = [ [ a3, 0, a2, a1, a0 ], [ a7, a6, a5, a4, 0], [ a10, a9, 0, a8, 0], [ 0, 0, 0, 0, 0], [ 0, 0, 0, 0, 0] ]
 				parity = paritychecker( A, ind+3, slice3)
 				if len(parity) > 0:
 					phi2 = parity[5]
@@ -383,7 +383,7 @@ def slices6(A, ind, values1, values2):
 			if ind == 0:
 				iota = 1
 			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ^ iota ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
-				slice0 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+				slice0 = [ [ a3, 0, a2, a1, a0 ], [ a7, a6, a5, a4, 0], [ a10, a9, 0, a8, 0], [ 0, 0, 0, 0, 0], [ 0, 0, 0, 0, 0] ]
 				parity = paritychecker( A, ind, slice0)
 				if len(parity) == 7:
 					phi15 = parity[5]
@@ -570,7 +570,7 @@ def slices15(A, ind, values1, values2):
 			a8 = c2 ^ a9 ^ a10
 			# add iota
 			if ( c0 == a0 ^ a1 ^ a2 ^ a3 ^ ((a4 ^ 1)*a8) ^ ((a6 ^ 1)*a9) ^ ((a7 ^ 1)*a10) ^ d0 ) and ( c1 == a4 ^ a5 ^ a6 ^ a7 ^ d1 ) and ( c4 == (a1 ^ 1)*a4 ^ (a2 ^ 1)*a5 ^ (a0 ^ 1)*d1 ^ (d0 ^ 1)*a6 ^ (a3 ^ 1)*a7 ):
-				slice12 = [[a3, a7, a10, 0, 0], [d0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, d1, 0, 0, 0]]
+				slice12 = [ [ a3, 0, a2, a1, a0 ], [ a7, a6, a5, a4, 0], [ a10, a9, 0, a8, 0], [ 0, 0, 0, 0, 0], [ 0, 0, 0, 0, 0] ]
 				parity = paritychecker( A, ind, slice12)
 				if len(parity) > 0:
 					phi11 = parity[5]
@@ -679,7 +679,7 @@ def slices16(A, ind, values1):
 	# values for slice2
 	values2 = []
 	for a0, a1, a2, b0, b1, b2, c0, c1, c2, e0, e1 in itertools.product(range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2),range(2)):
-		slice2 = [ [a0, b2, c2, 0, 0], [0, e1, a1, 0, 0], [b0, c1, 0, 0, 0], [e0, a2, b1, 0, 0], [c0, 0, 0, 0, 0]]
+		slice2 = getSlicefrombits([a0, a1, a2, b0, b1, b2, c0, c1, c2, e0, e1])
 		parity = paritychecker(A, ind + 15, slice2)
 		if len(parity) == 7:
 			phi14 = parity[5]
