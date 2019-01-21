@@ -145,26 +145,27 @@ def getslicebits(slicei):
 
 
 def Construct_State(Slices):
-    """
-        Construct a state of Keccak from the given slices
-    """
-    w = len(Slices)
-    A = [ [ [0 for z in range(w)] for y in range(5) ] for x in range(5) ]
-    for index, slicei in enumerate(Slices):
-        # index is the Slice number
-        for x in range(5):
-            for y in range(5):
-                # update the slice
-                A[x][y][index] = slicei[x][y]
-    return A
+	"""
+		Construct a state of Keccak from the given slices
+	"""
+	w = len(Slices)
+	A = [ [ [0 for z in range(w)] for y in range(5) ] for x in range(5) ]
+	for index, slicei in enumerate(Slices):
+		# index is the Slice number
+		for x in range(5):
+			for y in range(5):
+				# update the slice
+				A[x][y][index] = slicei[x][y]
+	return A
 
 
 def getSlicefrombits(bits):
-    """
-    """
-    [a3, a9, a4, a2, a8, a7, a0, a5, a10, a1, a6] = bits
-    slicei = [[a3, a7, a10, 0, 0], [0, a6, a9, 0, 0], [a2, a5, 0, 0, 0], [a1, a4, a8, 0, 0], [a0, 0, 0, 0, 0]]
-    return slicei
+	"""
+		Construct slice from state bits
+	"""
+	[a3, a9, a4, a2, a8, a7, a0, a5, a10, a1, a6] = bits
+	state_slice = [ [ a3, 0, a2, a1, a0 ], [ a7, a6, a5, a4, 0], [ a10, a9, 0, a8, 0], [ 0, 0, 0, 0, 0], [ 0, 0, 0, 0, 0] ]
+	return state_slice
 
 
 def printSlice(State, Slicenum):
