@@ -94,21 +94,21 @@ def ChiInverse(A, w):
 
 
 def rhoInverse(A, w):
-    """
-    rho step mapping - Rotate the bits of each lane by an offset.
-    """
-    # ToDo : check, still rhoInverse fixed
-    A_ = [[[ 0 for z in range(w)] for y in range(5)] for x in range(5)]
+	"""
+	rho step mapping - Rotate the bits of each lane by an offset.
+	"""
+	# ToDo : check, still rhoInverse fixed
+	A_ = [[[ 0 for z in range(w)] for y in range(5)] for x in range(5)]
 
-    rhoOffsets = [[0, 36, 3, 105, 210], [1, 300, 10, 45, 66], [190, 6, 171, 15, 253], [28, 55, 153, 21, 120], [91, 276, 231, 136, 78]]
-    for x in range(5):
-        for y in range(5):
-            for z in range(w):
-                A_[x][y][z] = A[x][y][(z - rhoOffsets[x][y] ) % w]
-    # print("After rho")
-    # printformat(getString(A_, w))
-    # input()
-    return A_
+	rhoOffsets = [[0, 36, 3, 105, 210], [1, 300, 10, 45, 66], [190, 6, 171, 15, 253], [28, 55, 153, 21, 120], [91, 276, 231, 136, 78]]
+	for x in range(5):
+		for y in range(5):
+			for z in range(w):
+				A_[x][y][z] = A[x][y][(z - rhoOffsets[x][y] ) % w]
+	# print("After rho")
+	# printformat(getString(A_, w))
+	# input()
+	return A_
 
 
 def piInverse(A, w):
