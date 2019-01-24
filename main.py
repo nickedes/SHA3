@@ -82,7 +82,7 @@ def rho(A, w):
     for x in range(5):
         for y in range(5):
             for z in range(w):
-                A_[x][y][z] = A[x][y][(z + rhoOffsets[x][y] ) % w]
+                A_[x][y][z] = A[x][y][(z - rhoOffsets[x][y] ) % w]
     # print("After rho")
     # printformat(getString(A_, w))
     # input()
